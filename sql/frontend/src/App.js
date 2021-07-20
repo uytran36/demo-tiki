@@ -1,5 +1,5 @@
 import axios from "axios";
-import KhachHang from "./pages/khachhang";
+import Temp from "./pages/khachhang";
 
 function App() {
   const callAPI = () => {
@@ -13,7 +13,7 @@ function App() {
 
   return (
     <div>
-      <KhachHang />
+      <Temp />
     </div>
   );
 }
