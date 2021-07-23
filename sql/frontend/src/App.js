@@ -9,7 +9,7 @@ function App() {
       .then((res) => console.log(res.data));
   };
 
-  callAPI();
+  // callAPI();
 
   return (
     <div>
