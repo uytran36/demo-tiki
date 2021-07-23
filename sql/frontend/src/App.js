@@ -1,5 +1,6 @@
 import axios from "axios";
-import Temp from "./pages/khachhang";
+
+import Nhaban from "./pages/nhaban";
 
 function App() {
   const callAPI = () => {
@@ -13,7 +14,7 @@ function App() {
 
   return (
     <div>
-      <Temp />
+      <Nhaban />
     </div>
   );
 }
