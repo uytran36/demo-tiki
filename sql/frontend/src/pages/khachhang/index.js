@@ -7,7 +7,7 @@ import Login from "./components/login/Login";
 import Register from "./components/register/Register";
 import Cart from "./components/cart/Cart";
 
-const { Header, Content, Footer } = Layout;
+const { Header, Content } = Layout;
 
 const KhachHang = () => {
   return (
