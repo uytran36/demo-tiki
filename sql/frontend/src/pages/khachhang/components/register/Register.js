@@ -1,5 +1,7 @@
 import { Form, Input, Select, Button, DatePicker } from "antd";
-import './Register.css';
+import "./Register.css";
+import { useState } from "react";
+import moment from 'moment'
 
 const { Option } = Select;
 
@@ -37,13 +39,28 @@ const tailFormItemLayout = {
 
 const Register = () => {
   const [form] = Form.useForm();
+  const [registerInfo, setRegisterInfo] = useState({
+    email: "",
+    password: "",
+    name: "",
+    birthday: "",
+    phoneNum: "",
+    sex: "",
+    address: "",
+  });
 
   const onFinish = (values) => {
-    console.log("Received values of form: ", values);
-  };
-
-  const onChange = (date, dateString) => {
-    console.log(date, dateString);
+    const info = {
+      email: values.email,
+      password: values.password,
+      name: values.name,
+      birthday: moment(values.dateOfBirth).format("MM-DD-YYYY"),
+      phoneNum: values.phone,
+      sex: values.gender === "male" ? "Nam" : "Nữ",
+      address: values.address,
+    };
+    setRegisterInfo(info);
+    console.log(info);
   };
 
   return (
@@ -138,7 +155,7 @@ const Register = () => {
             },
           ]}
         >
-          <DatePicker onChange={onChange} />
+          <DatePicker />
         </Form.Item>
 
         <Form.Item

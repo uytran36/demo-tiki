@@ -6,6 +6,7 @@ import Products from "./components/product/Products";
 import Login from "./components/login/Login";
 import Register from "./components/register/Register";
 import Cart from "./components/cart/Cart";
+import Profile from "./components/profile/Profile";
 
 const { Header, Content } = Layout;
 
@@ -33,6 +34,9 @@ const KhachHang = () => {
             </Route>
             <Route exact path="/cart">
               <Cart />
+            </Route>
+            <Route exact path="/profile">
+              <Profile />
             </Route>
           </Switch>
         </Content>

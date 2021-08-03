@@ -1,9 +1,25 @@
 import { Form, Input, Button } from "antd";
 import "./Login.css";
+import { useState } from "react";
+import { useHistory, Redirect } from "react-router-dom";
 
 const Login = () => {
+  const [loginInfo, setLoginInfo] = useState({
+    email: "",
+    password: "",
+  });
+
+  // const history = useHistory();
+
   const onFinish = (values) => {
-    console.log("Success:", values);
+    const info = {
+      email: values.email,
+      password: values.password,
+    };
+
+    setLoginInfo(info);
+    window.localStorage.setItem("auth", info.email);
+    return <Redirect to="/" />;
   };
 
   const onFinishFailed = (errorInfo) => {
