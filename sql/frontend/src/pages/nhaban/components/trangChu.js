@@ -1,5 +1,6 @@
 import { Layout, Typography, Row, Col, Statistic, Card } from "antd";
 import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Column } from "@ant-design/charts";
 import DoanhThu from "./doanhThu";
 
@@ -179,10 +180,10 @@ const TrangChu = () => {
             <Card
               title="Hiệu quả hoạt động"
               style={{ width: 800 }}
-              extra={<a href="/doanhThu">Xem chi tiết</a>}
+              extra={<Link to="/nhaban/doanhThu">Xem chi tiết</Link>}
             >
               <Column {...config} />
-            </Card>
+            </Card>F
           </Col>
         </Row>
       </Content>

@@ -1,6 +1,6 @@
 import "./style.css";
 import React, { useState } from "react";
-import { Layout, Card, Input, Col, Row, Button, Typography } from "antd";
+import { Layout, Card, Input, Col, Row, Button, Typography, Form } from "antd";
 
 const { Content } = Layout;
 const { Title, Text } = Typography;
@@ -9,74 +9,131 @@ const { TextArea } = Input;
 const onChange = (e) => {
   console.log("Change:", e.target.value);
 };
+const formItemLayout = {
+  labelCol: {
+    xs: {
+      span: 24,
+    },
+    sm: {
+      span: 8,
+    },
+  },
+  wrapperCol: {
+    xs: {
+      span: 24,
+    },
+    sm: {
+      span: 16,
+    },
+  },
+};
+
 const ChiTietSP = () => {
+  const [form] = Form.useForm();
+
+  const onFinish = (values) => {
+    console.log("Received values of form: ", values);
+  };
   return (
     <Layout>
       <Content>
         <div className="contentTTNB">
           <div className="site-card-border-less-wrapper">
             <div>
-              <Title level={2}>Tạo Sản Phẩm</Title>
+              <Title level={2}>Chi tiết Sản Phẩm</Title>
             </div>
             <Card bordered={false}>
-              <Input.Group size="medium">
-                <Row>
-                  <Col span={5}>
-                    <div className="bordertextTTNB">
-                      <Text className="textTTNB">Mã Sản Phẩm </Text>
-                      <br />
-                    </div>
-                    <div className="bordertextTTNB">
-                      <Text className="textTTNB">Tên Sản Phẩm </Text>
-                      <br />
-                    </div>
-                    <div className="bordertextTTNB">
-                      <Text className="textTTNB">Số lượng tồn </Text>
-                      <br />
-                    </div>
-                    <div className="bordertextTTNB">
-                      <Text className="textTTNB">Loại sản phẩm</Text>
-                      <br />
-                    </div>
-                    <div className="bordertextTTNB">
-                      <Text className="textTTNB">Giá giảm </Text>
-                      <br />
-                    </div>
-                    <div className="bordertextTTNB">
-                      <Text className="textTTNB">Giá bán </Text>
-                      <br />
-                    </div>
-                    <div className="bordertextTTNB">
-                      <Text className="textTTNB">Tổng tiền </Text>
-                      <br />
-                    </div>
-                    <div className="bordertextTTNB">
-                      <Text className="textTTNB">Thành tiền </Text>
-                      <br />
-                    </div>
-                    <div className="bordertextTTNB">
-                      <Text className="textTTNB">Hoa hồng </Text>
-                      <br />
-                    </div>
-                    <div className="bordertextTTNB">
-                      <Text className="textTTNB">Mô tả </Text>
-                      <br />
-                    </div>
-                  </Col>
-                  <Col span={19}>
-                    <Input defaultValue="26888888" />
-                    <Input defaultValue="ABCDDD" />
-                    <Input defaultValue="1" />
-                    <Input defaultValue="abc" />
+              <div>
+                <Form
+                  {...formItemLayout}
+                  form={form}
+                  onFinish={onFinish}
+                  scrollToFirstError
+                  wrapperCol={{ span: 10 }}
+                >
+                  <Form.Item
+                    name="masp"
+                    label="Mã Sản Phẩm"
+                    rules={[{ required: true }]}
+                  >
+                    <Input defaultValue="2656351" />
+                  </Form.Item>
+
+                  <Form.Item
+                    name="tensp"
+                    label="Tên Sản Phẩm"
+                    rules={[{ required: true }]}
+                  >
+                    <Input defaultValue="ABC" />
+                  </Form.Item>
+
+                  <Form.Item
+                    name="slton"
+                    label="Số lượng tồn "
+                    rules={[{ required: true }]}
+                  >
+                    <Input defaultValue="6351" />
+                  </Form.Item>
+
+                  <Form.Item
+                    name="LoaiSP"
+                    label="Loại sản phẩm"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please select type!",
+                      },
+                    ]}
+                  >
+                    <Input defaultValue="Điện tử" />
+                  </Form.Item>
+
+                  <Form.Item
+                    name="giagiam"
+                    label="Giá giảm"
+                    rules={[{ required: true }]}
+                  >
                     <Input defaultValue="0571665464" />
-                    <Input defaultValue="149 " />
+                  </Form.Item>
+
+                  <Form.Item
+                    name="giaban"
+                    label="Giá bán"
+                    rules={[{ required: true }]}
+                  >
                     <Input defaultValue="0571665464" />
+                  </Form.Item>
+
+                  <Form.Item
+                    name="tongtien"
+                    label="Tổng tiền"
+                    rules={[{ required: true }]}
+                  >
+                    <Input defaultValue="0571665464" />
+                  </Form.Item>
+                  <Form.Item
+                    name="thanhtien"
+                    label="Thành tiền"
+                    rules={[{ required: true }]}
+                  >
+                    <Input defaultValue="0571665464" />
+                  </Form.Item>
+                  <Form.Item
+                    name="hoahog"
+                    label="Hoa hồng"
+                    rules={[{ required: true }]}
+                  >
                     <Input defaultValue=" 0571665464" />
-                    <Input defaultValue=" 232" />
-                    <TextArea showCount maxLength={100} onChange={onChange} />
-                  </Col>
-                </Row>
-              </Input.Group>
+                  </Form.Item>
+                  <Form.Item
+                    name="mota"
+                    label="Mô tả"
+                    rules={[{ required: true }]}
+                  >
+                    <TextArea rows={4} defaultValue=" 232" />
+                  </Form.Item>
+                </Form>
+              </div>
             </Card>
           </div>
           <div>

@@ -1,88 +1,152 @@
 import "./style.css";
 import React, { useState } from "react";
-import {
-  Layout,
-  Card,
-  Input,
-  Col,
-  Row,
-  Button,
-  Typography,
-} from "antd";
+import { Layout, Card, Typography, Space } from "antd";
+import { Form, Input, Select, Button } from "antd";
 
 const { Content } = Layout;
 const { Title, Text } = Typography;
+const { Option } = Select;
+const formItemLayout = {
+  labelCol: {
+    xs: {
+      span: 24,
+    },
+    sm: {
+      span: 8,
+    },
+  },
+  wrapperCol: {
+    xs: {
+      span: 24,
+    },
+    sm: {
+      span: 16,
+    },
+  },
+};
 
 const ThongTinHD = () => {
+  const [form] = Form.useForm();
+
+  const onFinish = (values) => {
+    console.log("Received values of form: ", values);
+  };
   return (
     <Layout>
       <Content>
         <div className="contentTTNB">
           <div className="site-card-border-less-wrapper">
-              <div> 
-                  <Title level={2}>Thông Tin Nhà Bán</Title>
-              </div>
-            <Card
-              bordered={false}
-            >
-              <Input.Group size="medium">
-                <Row>
-                  <Col span={5}>
-                    <div className="bordertextTTNB">
-                      <Text className="textTTNB">Mã Nhà Bán </Text>
-                      <br />
-                    </div>
-                    <div className="bordertextTTNB">
-                      <Text className="textTTNB">Tên Nhà Bán </Text>
-                      <br />
-                    </div>
-                    <div className="bordertextTTNB">
-                      <Text className="textTTNB">E-mail </Text>
-                      <br />
-                    </div>
-                    <div className="bordertextTTNB">
-                      <Text className="textTTNB">Số Điện Thoại </Text>
-                      <br />
-                    </div>
-                    <div className="bordertextTTNB">
-                      <Text className="textTTNB">Mật khẩu </Text>
-                      <br />
-                    </div>
-                    <div className="bordertextTTNB">
-                      <Text className="textTTNB">Số nhà </Text>
-                      <br />
-                    </div>
-                    <div className="bordertextTTNB">
-                      <Text className="textTTNB">Đường </Text>
-                      <br />
-                    </div>
-                    <div className="bordertextTTNB">
-                      <Text className="textTTNB">Phường </Text>
-                      <br />
-                    </div>
-                    <div className="bordertextTTNB">
-                      <Text className="textTTNB">Quận </Text>
-                      <br />
-                    </div>
-                    <div className="bordertextTTNB">
-                      <Text className="textTTNB">Thành phố </Text>
-                      <br />
-                    </div>
-                  </Col>
-                  <Col span={19}>
+            <div>
+              <Title level={2}>Thông Tin Nhà Bán</Title>
+            </div>
+            <Card bordered={false}>
+              <div className="formTTNB">
+                <Form
+                  {...formItemLayout}
+                  form={form}
+                  onFinish={onFinish}
+                  scrollToFirstError
+                  wrapperCol={{ span: 10 }}
+                >
+                  <Form.Item
+                    name="manb"
+                    label="Mã Nhà Bán"
+                    rules={[{ type: "manb" }, { required: true }]}
+                  >
                     <Input defaultValue="26888888" />
+                  </Form.Item>
+
+                  <Form.Item
+                    name="tennb"
+                    label="Tên Nhà Bán"
+                    rules={[{ type: "tennb" }, { required: true }]}
+                  >
                     <Input defaultValue="Nguyễn Trọng Khang" />
-                    <Input  type="email"  defaultValue="abc@gmail.com" />
-                    <Input defaultValue="0571665464" />
-                    <Input.Password placeholder="input password" defaultValue="fsdhfkshfsf" />
-                    <Input defaultValue="149 " />
+                  </Form.Item>
+
+                  <Form.Item
+                    name="email"
+                    label="E-mail"
+                    rules={[
+                      {
+                        type: "email",
+                      },
+                      {
+                        required: true,
+                      },
+                    ]}
+                  >
+                    <Input type="email" defaultValue="abc@gmail.com" />
+                  </Form.Item>
+
+                  <Form.Item
+                    name="sdt"
+                    label="Số Điện Thoại"
+                    rules={[
+                      {
+                        required: true,
+                      },
+                    ]}
+                  >
+                    <Input defaultValue="0485461213" />
+                  </Form.Item>
+
+                  <Form.Item
+                    name="password"
+                    label="Mật khẩu "
+                    rules={[
+                      {
+                        required: true,
+                      },
+                    ]}
+                  >
+                    <Input.Password
+                      placeholder="input password"
+                      defaultValue="fsdhfkshfsf"
+                    />
+                  </Form.Item>
+
+                  <Form.Item
+                    name="sonha"
+                    label="Số nhà"
+                    rules={[{ required: true }]}
+                  >
+                    <Input defaultValue="149" />
+                  </Form.Item>
+
+                  <Form.Item
+                    name="duong"
+                    label="Đường"
+                    rules={[{ required: true }]}
+                  >
                     <Input defaultValue="Nguyễn Trọng Tuyển" />
-                    <Input defaultValue=" P.8M" />
-                    <Input defaultValue=" Quận Phú Nhuận" />
-                    <Input defaultValue=" TP.HCM" />
-                  </Col>
-                </Row>
-              </Input.Group>
+                  </Form.Item>
+
+                  <Form.Item
+                    name="phuong"
+                    label="Phường"
+                    rules={[{ required: true }]}
+                  >
+                    <Input defaultValue="8" />
+                  </Form.Item>
+
+                  <Form.Item
+                    name="quan"
+                    label="Quận"
+                    rules={[{ required: true }]}
+                  >
+                    <Input defaultValue="Phú Nhuận" />
+                  </Form.Item>
+
+                  <Form.Item
+                    name="thanhpho"
+                    label="Thành Phố"
+                    rules={[{ required: true }]}
+                  >
+                    <Input defaultValue="Hồ Chí Minh" />
+                  </Form.Item>
+                </Form>
+              </div>
             </Card>
           </div>
           <div className="btnSaveTTNB">

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import DNhap from "./dangNhap";
 import "./style.css";
 import {
   Layout,
@@ -83,9 +84,9 @@ const DangKy = () => {
   }));
   return (
     <Layout>
-         <div className="titleDK">
-          <Title>Đăng Ký Bán Hàng cùng Tiki</Title>
-        </div>
+      <div className="titleDK">
+        <Title>Đăng Ký Bán Hàng cùng Tiki</Title>
+      </div>
       <div className="formDK">
         <Form
           {...formItemLayout}
@@ -159,22 +160,34 @@ const DangKy = () => {
             ]}
           >
             <Select placeholder="chọn loại sản phẩm">
-              <Option value="Điện thoại - Máy tính bảng">Điện thoại - Máy tính bảng</Option>
+              <Option value="Điện thoại - Máy tính bảng">
+                Điện thoại - Máy tính bảng
+              </Option>
               <Option value="Điện tử - Điện lạnh">Điện tử - Điện lạnh</Option>
-              <Option value="Phụ kiện - Thiết bị số">Phụ kiện - Thiết bị số</Option>
+              <Option value="Phụ kiện - Thiết bị số">
+                Phụ kiện - Thiết bị số
+              </Option>
               <Option value="Laptop- Thiết bị IT">Laptop- Thiết bị IT</Option>
-              <Option value="Máy ảnh - Thiết bị quay phim">Máy ảnh - Thiết bị quay phim</Option>
+              <Option value="Máy ảnh - Thiết bị quay phim">
+                Máy ảnh - Thiết bị quay phim
+              </Option>
 
               <Option value="Điện gia dùng">Điện gia dùng</Option>
 
               <Option value="Nhà cửa đời sống">Nhà cửa đời sống</Option>
-              <Option value="Hàng tiêu dùng - Thực phẩm">Hàng tiêu dùng - Thực phẩm</Option>
+              <Option value="Hàng tiêu dùng - Thực phẩm">
+                Hàng tiêu dùng - Thực phẩm
+              </Option>
               <Option value="Đồ chơi - Mẹ và Bé">Đồ chơi - Mẹ và Bé</Option>
               <Option value="Làm đẹp - Sức khỏe">Làm đẹp - Sức khỏe</Option>
-              <Option value="Thời trang - phụ kiện">Thời trang - phụ kiện</Option>
+              <Option value="Thời trang - phụ kiện">
+                Thời trang - phụ kiện
+              </Option>
               <Option value="Thể thao - dã ngoại">Thể thao - dã ngoại</Option>
               <Option value="Xe máy, ô tô, xe đạp">Xe máy, ô tô, xe đạp</Option>
-              <Option value="Sách - VPP và Quà tặng">Sách - VPP và Quà tặng</Option>
+              <Option value="Sách - VPP và Quà tặng">
+                Sách - VPP và Quà tặng
+              </Option>
             </Select>
           </Form.Item>
           <Form.Item
@@ -295,6 +308,11 @@ const DangKy = () => {
             <Button type="primary" htmlType="submit" className="btnDK">
               Đăng ký
             </Button>
+            <div style={{ margin: 2 }}>
+              <a href="/nhaban/dangNhap">
+                Bạn đã có tài khoản. Đăng nhập ngay!
+              </a>
+            </div>
           </Form.Item>
         </Form>
       </div>
