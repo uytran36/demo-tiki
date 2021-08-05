@@ -6,7 +6,7 @@ const dbConfig = {
   user: "sa",
   password: "123",
   server: "localhost\\TRANUY2",
-  database: "CUAHANG",
+  database: "Tiki",
   trustServerCertificate: true,
 };
 
@@ -32,7 +32,6 @@ router.get("/", (req, res, next) => {
         .request()
         .query("select * from CT_HoaDon")
         .then((result) => {
-          //arrow function
           res.send(result.recordset);
         });
     })

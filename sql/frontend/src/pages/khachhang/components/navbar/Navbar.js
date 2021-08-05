@@ -10,14 +10,8 @@ import SearchBar from "./navbarComponents/SearchBar";
 import UserComponent from "./navbarComponents/User";
 import Cart from "./navbarComponents/Cart";
 import AuthUser from "./navbarComponents/AuthUser";
-import {useState, useEffect} from 'react';
 
-export default function Navbar() {
-  const [auth, setAuth] = useState(window.localStorage.getItem("auth"));
-
-  useEffect(() => {
-    setAuth(window.localStorage.getItem("auth"));
-  }, [window.localStorage.getItem("auth")])  
+export default function Navbar({auth, setAuth}) {
   
   return (
     <div>
@@ -37,8 +31,7 @@ export default function Navbar() {
           <SearchBar />
         </Col>
         <Col flex="150px">
-          {auth === null ? <UserComponent /> : <AuthUser user={auth} />}
-          
+          {auth === null ? <UserComponent /> : <AuthUser user={auth} setAuth={setAuth} />}
         </Col>
         <Col flex="150px">
           <Cart />

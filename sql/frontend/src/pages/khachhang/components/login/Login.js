@@ -2,14 +2,24 @@ import { Form, Input, Button } from "antd";
 import "./Login.css";
 import { useState } from "react";
 import { useHistory, Redirect } from "react-router-dom";
+import axios from "axios";
 
-const Login = () => {
+const Login = ({ setAuth }) => {
   const [loginInfo, setLoginInfo] = useState({
     email: "",
     password: "",
   });
 
-  // const history = useHistory();
+  const history = useHistory();
+
+  // const callAPI = () => {
+  //   //get post put delete
+  //   axios
+  //     .get("http://localhost:5000/testapi")
+  //     .then((res) => console.log(res.data));
+  // };
+
+  // callAPI();
 
   const onFinish = (values) => {
     const info = {
@@ -19,7 +29,9 @@ const Login = () => {
 
     setLoginInfo(info);
     window.localStorage.setItem("auth", info.email);
-    return <Redirect to="/" />;
+    setAuth(info.email);
+    history.push("/");
+    // return <Redirect to="/" />;
   };
 
   const onFinishFailed = (errorInfo) => {
