@@ -1,0 +1,47 @@
+.header-navbar {
+  background-color: #017fff;
+}
+.ant-layout-header {
+  height: 105px;
+  line-height: 0px;
+  padding-top: 20px;
+}
+.ant-input-group-wrapper {
+  width: 100% !important;
+}
+.logo {
+  display: block !important;
+  margin: auto auto !important;
+}
+.dropdown-danhmuc,
+.wrap-dropdown a,
+.ant-dropdown-link,
+.cart {
+  color: #fff;
+}
+
+.row1 {
+  grid-area: top;
+  padding-top: 10px;
+}
+.row2 {
+  padding-top: 10px;
+  grid-area: bottom;
+}
+.col-drop {
+  text-align: center;
+  display: grid;
+  grid-template-areas:
+    "top"
+    "bottom";
+  font-size: 15px;
+}
+.user-dropdown {
+  margin-left: 20px;
+  font-size: 15px;
+  margin-top: 10px;
+}
+.cart {
+  margin-top: 10px;
+  font-size: 15px;
+}
