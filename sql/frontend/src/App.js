@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import Nhaban from "./pages/nhaban";
+import NVQT from "./pages/NVQT";
 
 function App() {
   const callAPI = () => {
@@ -15,6 +16,7 @@ function App() {
   return (
     <div>
       <Nhaban />
+      <NVQT />
     </div>
   );
 }

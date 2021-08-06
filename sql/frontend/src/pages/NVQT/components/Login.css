@@ -1,0 +1,9 @@
+.form-login {
+  width: 30%;
+  display: block;
+  margin: 100px 500px;
+}
+.form-login button {
+  display: block;
+  margin: auto auto;
+}
