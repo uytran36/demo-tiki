@@ -5,7 +5,6 @@ import Nhaban from "./pages/nhaban";
 function App() {
   return (
     <div>
-      {/* */}
       <Nhaban />
     </div>
   );
