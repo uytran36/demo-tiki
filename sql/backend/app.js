@@ -9,10 +9,18 @@ var cors = require("cors");
 
 //Initializing connection string
 const dbConfig = {
-  user: "sa",
+  /*user: "sa",
   password: "123",
   server: "localhost\\TRANUY2",
   database: "CUAHANG",
+  trustServerCertificate: true,
+  */
+
+  //nha ban
+  user: "nhanvien",
+  password: "nv",
+  server: "localhost\\SQLDU",
+  database: "Tiki",
   trustServerCertificate: true,
 };
 

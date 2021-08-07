@@ -9,6 +9,7 @@ import {
   Button,
   Tooltip,
 } from "antd";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { DatePicker } from "antd";
 import moment from "moment";
 import { Typography } from "antd";
@@ -34,7 +35,7 @@ const columns = [
     dataIndex: "MaSP",
     key: "MaSP",
     width: "10%",
-    render: (text) => <a>{text}</a>,
+    render: (text) => <Link to="/nhaban/ctsp">{text}</Link>,
   },
   {
     title: "Tên Sản Phẩm",

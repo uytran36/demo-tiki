@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Tabs, Layout } from "antd";
 import { Typography } from "antd";
 import "./style.css";
-import ThongTinHD from "./thongTinHD";
 const { Title } = Typography;
 const { TabPane } = Tabs;
 const { Content } = Layout;
@@ -16,15 +15,7 @@ const columns = [
     title: "Mã Đơn Hàng",
     dataIndex: "MaHD",
     key: "MaHD",
-    render: (text) => {
-      return (
-          <Layout>
-            <Content>
-            <Link to="/thongTinHD">{text}</Link>
-            </Content>
-          </Layout>
-      );
-    },
+    render: (text) => <Link to="/nhaban/tthd">{text}</Link>,
   },
   {
     title: "Tình trạng",
