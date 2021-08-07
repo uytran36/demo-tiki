@@ -5,8 +5,8 @@ var router = express.Router();
 const dbConfig = {
   user: "sa",
   password: "123",
-  server: "localhost\\TRANUY2",
-  database: "CUAHANG",
+  server: "localhost\\LONGHA",
+  database: "Tiki",
   trustServerCertificate: true,
 };
 
