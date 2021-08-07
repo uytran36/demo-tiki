@@ -2,16 +2,32 @@ const utils = require("../utils");
 const config = require("../../config");
 const sql = require("mssql");
 
-const getKhachHang = async () => {
+const getKhachHangByEmail = async (data) => {
   try {
     let pool = await sql.connect(config);
     const sqlQueries = await utils.loadSqlQueries("khachHang");
-    const khachHangList = await pool.request().query(sqlQueries.khachHangList);
+    const khachHangList = await pool
+      .request()
+      .input("Email", sql.NVarChar(50), data.email)
+      .query(sqlQueries.getKhachHangEmail);
     return khachHangList.recordset;
   } catch (error) {
     console.log(error.message);
   }
 };
+
+const getAmountKH = async () => {
+   try {
+    let pool = await sql.connect(config);
+    const sqlQueries = await utils.loadSqlQueries("khachHang");
+    const amount = await pool
+      .request()
+      .query(sqlQueries.getAmountKH);
+    return amount.recordset;
+  } catch (error) {
+    console.log(error.message);
+  }
+}
 
 const createKH = async (khachHangData) => {
   try {
@@ -40,7 +56,57 @@ const createKH = async (khachHangData) => {
     return error.message;
   }
 };
+
+const updateKM = async (maKhuyenMai, khuyenMaiData) => {
+  try {
+    let pool = await sql.connect(config);
+    const sqlQueries = await utils.loadSqlQueries("khachHang");
+    console.log(khuyenMaiData);
+    const insertKH = await pool
+      .request()
+      .input("MaKM", sql.Int, maKhuyenMai)
+      .input("Ten", sql.NVarChar(50), khuyenMaiData.Ten)
+      .query(sqlQueries.updateKhuyenMai);
+    return insertKH.recordset;
+  } catch (error) {
+    console.log("error");
+    return error.message;
+  }
+};
+
+const getSPPage = async(page) => {
+  try {
+    let pool = await sql.connect(config);
+    const sqlQueries = await utils.loadSqlQueries("khachHang");
+    const sanPhamList = await pool
+      .request()
+      .input("page", sql.Int, page)
+      .query(sqlQueries.getSPPage);
+    return sanPhamList.recordset;
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+const getSPID = async(id) => {
+  try {
+    let pool = await sql.connect(config);
+    const sqlQueries = await utils.loadSqlQueries("khachHang");
+    const sanPhamList = await pool
+      .request()
+      .input("MaSP", sql.Int, id)
+      .query(sqlQueries.getSPID);
+    return sanPhamList.recordset;
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
 module.exports = {
-  getKhachHang,
+  getKhachHangByEmail,
+  getAmountKH,
   createKH,
+  updateKM,
+  getSPPage,
+  getSPID,
 };

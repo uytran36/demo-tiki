@@ -1,5 +1,7 @@
-import { Image, Row, Col, Button, InputNumber, Card, Avatar } from "antd";
+import { Image, Row, Col, Button, InputNumber, Card, Tag } from "antd";
 import Icon from "@ant-design/icons";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const StarSvg = () => (
   <svg height="15px" viewBox="0 -10 511.98685 511" width="15px">
@@ -18,11 +20,30 @@ const description = (
   </div>
 );
 
-export default function ProductDetail() {
+function ProductDetail() {
+  const [product, setProduct] = useState({});
+  const [store, setStore] = useState({})
+
+  useEffect(() => {
+    const path = window.location.pathname;
+    const id = path.split("/")[2];
+    axios
+      .get("http://localhost:5000/api/ctsp/" + id)
+      .then((res) => {
+        if(res.data.lenght !== 0) {
+          setProduct(res.data[0]);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   const { Meta } = Card;
   function onChange(value) {
     console.log("changed", value);
   }
+
   return (
     <div>
       <Row>
@@ -38,13 +59,24 @@ export default function ProductDetail() {
               <Row>
                 <Col flex="auto">
                   <div className="product-content">
-                    <p style={{fontSize: 30, fontWeight: 900}}>Chuột Logitech B100</p>
-                    <b>2.000.000</b>
+                    <p style={{ fontSize: 30, fontWeight: 900 }}>
+                      {product.TenSP}
+                    </p>
+                    <b>{product.ThanhTienSP}.000 Đồng</b>
+                    <div >
+                      <Tag color="#ff424e">
+                        -
+                        {Math.ceil(
+                          (product.GiaGiamSP / product.GiaBanSP) * 100
+                        )}
+                        %
+                      </Tag>
+                    </div>
                     <div>Số lượng</div>
                     <InputNumber
                       min={1}
                       max={10}
-                      defaultValue={3}
+                      defaultValue={1}
                       onChange={onChange}
                     />
                     <Button type="primary" danger>
@@ -53,15 +85,10 @@ export default function ProductDetail() {
                   </div>
                 </Col>
                 <Col flex="auto">
+                  <div></div>
                   <div className="product-owner">
                     <Card style={{ width: 300, marginTop: 16 }}>
-                      <Meta
-                        avatar={
-                          <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                        }
-                        title="Store 1"
-                        description={description}
-                      />
+                      <Meta title="Store 1" description={description} />
                     </Card>
                   </div>
                 </Col>
@@ -73,3 +100,5 @@ export default function ProductDetail() {
     </div>
   );
 }
+
+export default ProductDetail;

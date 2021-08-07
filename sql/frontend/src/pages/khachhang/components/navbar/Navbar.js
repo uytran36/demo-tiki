@@ -11,8 +11,9 @@ import UserComponent from "./navbarComponents/User";
 import Cart from "./navbarComponents/Cart";
 import AuthUser from "./navbarComponents/AuthUser";
 
-export default function Navbar({auth, setAuth}) {
-  
+export default function Navbar({ auth, setAuth }) {
+
+
   return (
     <div>
       <Row>
@@ -31,7 +32,11 @@ export default function Navbar({auth, setAuth}) {
           <SearchBar />
         </Col>
         <Col flex="150px">
-          {auth === null ? <UserComponent /> : <AuthUser user={auth} setAuth={setAuth} />}
+          {auth === null ? (
+            <UserComponent />
+          ) : (
+            <AuthUser user={auth} setAuth={setAuth} />
+          )}
         </Col>
         <Col flex="150px">
           <Cart />

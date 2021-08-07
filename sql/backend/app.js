@@ -58,9 +58,7 @@ app.use(
     extended: true,
   })
 );
-// express.urlencoded({
-//   extended: true
-// });
+
 app.use(cors());
 
 app.use("/api", tikiRoutes.routes);

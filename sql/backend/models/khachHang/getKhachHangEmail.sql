@@ -1,4 +1,4 @@
-SELECT TOP (1000) [MaKH]
+SELECT  [MaKH]
       ,[Ten]
       ,[Sdt]
       ,[SoNha]
@@ -12,3 +12,4 @@ SELECT TOP (1000) [MaKH]
       ,[NgaySinh]
       ,[TikiXu]
   FROM [Tiki].[dbo].[KhachHang]
+  WHERE [Email] = @Email

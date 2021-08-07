@@ -12,22 +12,24 @@ const StarSvg = () => (
 
 const StarIcon = (props) => <Icon component={StarSvg} {...props} />;
 
-const Badge = () => {
+const Badge = ({product}) => {
   return (
     <div className="badge">
       <div className="name-item">
-        <b>Chuột Logitech B100</b>
+        <b>{product.TenSP}</b>
       </div>
       <div className="rating">
-          <StarIcon/> 4.2
+        <StarIcon /> 4.2
       </div>
       <div className="price-discount">
         <Row>
           <Col flex="auto">
-            <div className="price">2.000.000</div>
+            <div className="price">{product.ThanhTienSP}.000</div>
           </Col>
           <Col flex="auto">
-            <Tag color="#ff424e">-20%</Tag>
+            <Tag color="#ff424e">
+              -{Math.ceil((product.GiaGiamSP / product.GiaBanSP) * 100)}%
+            </Tag>
           </Col>
         </Row>
       </div>

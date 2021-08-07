@@ -1,0 +1,1 @@
+SELECT * FROM NhaBan INNER JOIN SanPham ON SanPham.MaNhaBan = NhaBan.MaNhaBan

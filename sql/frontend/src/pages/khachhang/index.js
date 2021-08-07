@@ -16,8 +16,7 @@ const KhachHang = () => {
   const [auth, setAuth] = useState(null);
 
   useEffect(() => {
-    console.log("watched");
-    setAuth(window.localStorage.getItem("auth"));
+    setAuth(window.localStorage.getItem("KH"));
   }, [auth]);
 
   return (
@@ -35,7 +34,7 @@ const KhachHang = () => {
                 <Products />
               </div>
             </Route>
-            <Route exact path="/productdetail">
+            <Route exact path="/productdetail/:id">
               <ProductDetail />
             </Route>
             <Route exact path="/register">

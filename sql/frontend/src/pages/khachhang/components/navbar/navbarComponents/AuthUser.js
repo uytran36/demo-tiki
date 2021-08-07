@@ -8,7 +8,7 @@ const AuthUser = ({ user, setAuth }) => {
   const history = useHistory();
 
   const onClickLogout = () => {
-    window.localStorage.removeItem("auth");
+    window.localStorage.removeItem("KH");
     setAuth(null);
     history.push("/login");
   };
