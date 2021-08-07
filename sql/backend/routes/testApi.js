@@ -2,10 +2,19 @@ var express = require("express");
 var sql = require("mssql");
 
 var router = express.Router();
+/*
 const dbConfig = {
   user: "sa",
   password: "123",
   server: "localhost\\TRANUY2",
+  database: "Tiki",
+  trustServerCertificate: true,
+};
+*/
+const dbConfig = {
+  user: "nhanvien",
+  password: "nv",
+  server: "localhost\\SQLDU",
   database: "Tiki",
   trustServerCertificate: true,
 };

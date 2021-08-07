@@ -1,0 +1,7 @@
+SELECT [MaNhaBan]
+      ,[TenNhaBan]
+      ,[SDTNhaBan]
+      ,[EmailNhaBan]
+      ,[DiaChiNhaBan]
+      ,[MatKhauNhaBan]
+  FROM [Tiki].[dbo].[NhaBan]

@@ -1,0 +1,1 @@
+select count(*) as slSP from SanPham 
