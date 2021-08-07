@@ -65,7 +65,9 @@
   margin: 2;
 }
 /*THONG TIN NHA BAN*/
-
+.btnSaveTTNB{
+  margin-left: 120%;
+}
 /*DANH SACH SAN PHAM*/
 .btnCreateDSSP {
   margin-left: 700px;

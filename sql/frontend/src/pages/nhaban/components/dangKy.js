@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DNhap from "./dangNhap";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
 import "./style.css";
 import {
   Layout,
@@ -49,39 +51,54 @@ const tailFormItemLayout = {
 
 const DangKy = () => {
   const [form] = Form.useForm();
+  const history = useHistory();
+  const [amount, setAmount] = useState(0);
+
+  useEffect(() => {
+    axios
+    .get("http://localhost:5000/api/nhaban/slnb").then((response) => {
+      if(response.data.length > 0) {
+        setAmount(response.data[0].slNB);
+        console.log(response.data);
+      }
+    }).catch((error) => {
+      console.error(error);
+    })
+  }, [])
 
   const onFinish = (values) => {
-    console.log("Received values of form: ", values);
+    let today = new Date();
+    let newdate = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = today.getFullYear();
+    let Nyyyy = today.getFullYear() + 1;
+    today = mm + '/' + dd + '/' + yyyy;
+    newdate = mm + '/' + dd + '/' + Nyyyy;
+
+    const info = {
+      MaNhaBan: amount,
+      TenNhaBan: values.TenNhaBan,
+      SDTNhaBan : values.SDTNhaBan,
+      EmailNhaBan : values.EmailNhaBan,
+      DiaChiNhaBan: values.DiaChiNhaBan,
+      MatKhauNhaBan: values.MatKhauNhaBan,
+      NgayLapHD: today,
+      NgayHetHanHD: newdate,
+      MoTaHD : "HD" + amount,
+    };
+
+    axios.post("http://localhost:5000/api/nhaban", JSON.stringify(info), {
+      headers: {'Content-Type': 'application/json'},
+    }).then(response => {
+      console.log(response);
+      history.push("/nhaban/dangnhap");
+    }).catch(err => {
+      console.log(err);
+    })  
   };
 
-  const prefixSelector = (
-    <Form.Item name="prefix" noStyle>
-      <Select
-        style={{
-          width: 70,
-        }}
-      >
-        <Option value="86">+86</Option>
-        <Option value="87">+87</Option>
-      </Select>
-    </Form.Item>
-  );
-  const [autoCompleteResult, setAutoCompleteResult] = useState([]);
 
-  const onWebsiteChange = (value) => {
-    if (!value) {
-      setAutoCompleteResult([]);
-    } else {
-      setAutoCompleteResult(
-        [".com", ".org", ".net"].map((domain) => `${value}${domain}`)
-      );
-    }
-  };
-
-  const websiteOptions = autoCompleteResult.map((website) => ({
-    label: website,
-    value: website,
-  }));
   return (
     <Layout>
       <div className="titleDK">
@@ -93,30 +110,10 @@ const DangKy = () => {
           form={form}
           name="register"
           onFinish={onFinish}
-          initialValues={{
-            residence: ["zhejiang", "hangzhou", "xihu"],
-            prefix: "86",
-          }}
           scrollToFirstError
         >
           <Form.Item
-            name="HoTenChuCH"
-            label="Họ tên chủ cửa hàng"
-            rules={[
-              {
-                message: "The input is not valid !",
-              },
-              {
-                required: true,
-                message: "Please input your Full Name",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            name="TenCH"
+            name="TenNhaBan"
             label="Tên cửa hàng"
             rules={[
               {
@@ -130,68 +127,7 @@ const DangKy = () => {
           </Form.Item>
 
           <Form.Item
-            name="Url"
-            label="Url cửa hàng"
-            tooltip="This is the link to your store!"
-            rules={[
-              {
-                required: true,
-                message: "Please input url!",
-              },
-            ]}
-          >
-            <AutoComplete
-              options={websiteOptions}
-              onChange={onWebsiteChange}
-              placeholder="website"
-            >
-              <Input />
-            </AutoComplete>
-          </Form.Item>
-
-          <Form.Item
-            name="LoaiSP"
-            label="Loại sản phẩm của cửa hàng sẽ bán"
-            rules={[
-              {
-                required: true,
-                message: "Please select type!",
-              },
-            ]}
-          >
-            <Select placeholder="chọn loại sản phẩm">
-              <Option value="Điện thoại - Máy tính bảng">
-                Điện thoại - Máy tính bảng
-              </Option>
-              <Option value="Điện tử - Điện lạnh">Điện tử - Điện lạnh</Option>
-              <Option value="Phụ kiện - Thiết bị số">
-                Phụ kiện - Thiết bị số
-              </Option>
-              <Option value="Laptop- Thiết bị IT">Laptop- Thiết bị IT</Option>
-              <Option value="Máy ảnh - Thiết bị quay phim">
-                Máy ảnh - Thiết bị quay phim
-              </Option>
-
-              <Option value="Điện gia dùng">Điện gia dùng</Option>
-
-              <Option value="Nhà cửa đời sống">Nhà cửa đời sống</Option>
-              <Option value="Hàng tiêu dùng - Thực phẩm">
-                Hàng tiêu dùng - Thực phẩm
-              </Option>
-              <Option value="Đồ chơi - Mẹ và Bé">Đồ chơi - Mẹ và Bé</Option>
-              <Option value="Làm đẹp - Sức khỏe">Làm đẹp - Sức khỏe</Option>
-              <Option value="Thời trang - phụ kiện">
-                Thời trang - phụ kiện
-              </Option>
-              <Option value="Thể thao - dã ngoại">Thể thao - dã ngoại</Option>
-              <Option value="Xe máy, ô tô, xe đạp">Xe máy, ô tô, xe đạp</Option>
-              <Option value="Sách - VPP và Quà tặng">
-                Sách - VPP và Quà tặng
-              </Option>
-            </Select>
-          </Form.Item>
-          <Form.Item
-            name="email"
+            name="EmailNhaBan"
             label="E-mail"
             rules={[
               {
@@ -208,7 +144,7 @@ const DangKy = () => {
           </Form.Item>
 
           <Form.Item
-            name="phone"
+            name="SDTNhaBan"
             label="Số điện thoại"
             rules={[
               {
@@ -220,33 +156,27 @@ const DangKy = () => {
             <Row gutter={8}>
               <Col span={12}>
                 <Input
-                  addonBefore={prefixSelector}
                   style={{
                     width: "100%",
                   }}
                 />
               </Col>
-              <Col span={12}>
-                <Button>Xác nhận</Button>
-              </Col>
             </Row>
           </Form.Item>
 
           <Form.Item
-            name="residence"
+            name="DiaChiNhaBan"
             label="Địa chỉ"
             rules={[
               {
-                type: "array",
                 required: true,
-                message: "Please select your habitual residence!",
               },
             ]}
           >
             <Input />
           </Form.Item>
           <Form.Item
-            name="password"
+            name="MatKhauNhaBan"
             label="Mật khẩu"
             rules={[
               {
@@ -262,7 +192,7 @@ const DangKy = () => {
           <Form.Item
             name="confirm"
             label="Xác thực mật khẩu"
-            dependencies={["password"]}
+            dependencies={["MatKhauNhaBan"]}
             hasFeedback
             rules={[
               {
@@ -271,7 +201,7 @@ const DangKy = () => {
               },
               ({ getFieldValue }) => ({
                 validator(_, value) {
-                  if (!value || getFieldValue("password") === value) {
+                  if (!value || getFieldValue("MatKhauNhaBan") === value) {
                     return Promise.resolve();
                   }
 

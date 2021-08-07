@@ -145,15 +145,17 @@ const ThongTinHD = () => {
                   >
                     <Input defaultValue="Hồ Chí Minh" />
                   </Form.Item>
+
+                  <Form.Item >
+                    <Button type="primary" htmlType="submit" className="btnSaveTTNB">
+                      Lưu
+                    </Button>
+                  </Form.Item>
                 </Form>
               </div>
             </Card>
           </div>
-          <div className="btnSaveTTNB">
-            <Button type="primary" className="btnSaveTTHD">
-              Lưu
-            </Button>
-          </div>
+         
         </div>
       </Content>
     </Layout>

@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
 import LogoTiki from "../../khachhang/logoTiki.png";
 import "./style.css";
 import "antd/dist/antd.css";
@@ -26,15 +26,19 @@ import ChiTietSP from "./chitietSP";
 const { Header, Sider, Content, Footer } = Layout;
 const Nhaban = (props) => {
   const [collapsed, setCollapsed] = useState(false);
+  const history = useHistory();
   const toggle = () => {
     setCollapsed(!collapsed);
   };
+  const loginNB = () =>{
+    history.push("/nhaban/dangnhap");
+  }
   return (
     <Router>
       <Layout>
         <Sider trigger={null} collapsible collapsed={collapsed}>
           <div className="login">
-            <Button type="primary" >
+            <Button type="primary" onClick={loginNB}>
               Đăng nhập
             </Button>
           </div>
