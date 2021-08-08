@@ -68,6 +68,27 @@ const getSanPhamID = async (req, res, next) => {
   }
 };
 
+const getNhaBanSP = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const NB = await khData.getNBSP(id);
+    res.send(NB);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
+
+const getReviewSP = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const review = await khData.getReview(id);
+    res.send(review);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
+
+
 module.exports = {
   addKhachHang,
   updateKhuyenMai,
@@ -75,4 +96,6 @@ module.exports = {
   getAmountKhachHang,
   getSanPhamPage,
   getSanPhamID,
+  getNhaBanSP,
+  getReviewSP,
 };

@@ -33,7 +33,7 @@ const createKH = async (khachHangData) => {
   try {
     let pool = await sql.connect(config);
     const sqlQueries = await utils.loadSqlQueries("khachHang");
-    console.log(khachHangData);
+
     const insertKH = await pool
       .request()
       .input("MaKH", sql.Int, khachHangData.MaKH)
@@ -102,6 +102,34 @@ const getSPID = async(id) => {
   }
 }
 
+const getNBSP = async (id) => {
+  try {
+    let pool = await sql.connect(config);
+    const sqlQueries = await utils.loadSqlQueries("khachHang");
+    const sanPhamList = await pool
+      .request()
+      .input("MaSP", sql.Int, id)
+      .query(sqlQueries.getNBSP);
+    return sanPhamList.recordset;
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+const getReview = async (id) => {
+  try {
+    let pool = await sql.connect(config);
+    const sqlQueries = await utils.loadSqlQueries("khachHang");
+    const sanPhamList = await pool
+      .request()
+      .input("MaSP", sql.Int, id)
+      .query(sqlQueries.getReview);
+    return sanPhamList.recordset;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
 module.exports = {
   getKhachHangByEmail,
   getAmountKH,
@@ -109,4 +137,6 @@ module.exports = {
   updateKM,
   getSPPage,
   getSPID,
+  getNBSP,
+  getReview,
 };

@@ -1,0 +1,28 @@
+INSERT INTO [HoaDon]
+    (
+    [MaKH]
+    ,[MaNVGH]
+    ,[MaKMai]
+    ,[NgayLap]
+    ,[TongTien]
+    ,[TinhTrang]
+    ,[SLTikiXu]
+    ,[PhiVC]
+    ,[ThanhTienHD]
+    ,[NgayGiaoTC]
+    ,[GhiChu]
+    )
+VALUES 
+    (
+    @MaKH,
+    @MaNVGH,
+    @MaKMai,
+    @NgayLap,
+    @TongTien,
+    @TinhTrang
+    ,@SLTikiXu
+    ,@PhiVC
+    ,@ThanhTienHD
+    ,@NgayGiaoTC
+    ,@GhiChu
+    )   

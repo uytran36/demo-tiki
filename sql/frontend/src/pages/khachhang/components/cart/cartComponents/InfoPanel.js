@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Card, Divider, Row, Col, Button } from "antd";
 import Icon from "@ant-design/icons";
+import { useState, useEffect } from "react";
 
 const DiscountCouponSvg = () => (
   <svg width="15px" height="15px" viewBox="0 0 480 480">
@@ -104,7 +105,19 @@ const DiscountCouponIcon = (props) => (
   <Icon component={DiscountCouponSvg} {...props} />
 );
 
-const InfoPanel = () => {
+const InfoPanel = ({ bill }) => {
+  const [customer, setCustomer] = useState({});
+  const [discount, setDiscount] = useState(0);
+
+  useEffect(() => {
+    const kh = window.localStorage.getItem("KH");
+    setCustomer(JSON.parse(kh));
+  }, []);
+
+  const createBill = () => {
+    console.log("clicked");
+  };
+
   return (
     <div>
       <div className="address-card">
@@ -114,10 +127,20 @@ const InfoPanel = () => {
           extra={<a href="#">Thay đổi</a>}
           style={{ width: 300 }}
         >
-          <b>Trần Khánh Gia Uy</b>
+          <b>{customer.Ten}</b>
           <Divider type="vertical" />
-          <b>0123456789</b>
-          <p>1 Paster, Phường 1, Quận 1, Thành phố Hồ Chí Minh</p>
+          <b>{customer.Sdt}</b>
+          <p>
+            {customer.SoNha +
+              " " +
+              customer.Duong +
+              ", Phường " +
+              customer.Phuong +
+              ", Quận " +
+              customer.Quan +
+              ", " +
+              customer.ThanhPho}
+          </p>
         </Card>
       </div>
       <div className="discount-card">
@@ -138,26 +161,36 @@ const InfoPanel = () => {
           <Row>
             <Col flex={2}>Tạm tính</Col>
             <Col flex={1}>
-              <b>0đ</b>
+              <b>
+                {bill.reduce((acc, cur) => {
+                  return acc + cur.ThanhTien;
+                }, 0)}
+                .000 Đồng
+              </b>
             </Col>
           </Row>
           <Row>
             <Col flex={2}>Giảm giá</Col>
             <Col flex={1}>
-              <b>0đ</b>
+              <b>{discount}.000 Đồng</b>
             </Col>
           </Row>
           <Divider />
           <Row>
             <Col flex={2}>Tổng cộng</Col>
             <Col flex={1}>
-              <b className="total">0đ</b>
+              <b className="total">
+                {bill.reduce((acc, cur) => {
+                  return acc + cur.ThanhTien;
+                }, 0) - discount}
+                .000 Đồng
+              </b>
             </Col>
           </Row>
         </Card>
       </div>
       <div className="button-buy">
-        <Button type="primary" danger block>
+        <Button type="primary" danger block onClick={createBill}>
           Mua hàng
         </Button>
       </div>

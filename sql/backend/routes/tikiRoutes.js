@@ -3,13 +3,17 @@ const khachHangController = require("../controllers/khachHangController");
 const nhaBanController = require("../controllers/nhaBanController");
 const router = express.Router();
 
+//khach hang
 router.post("/khachhang", khachHangController.getKHByEmail);
 router.get("/amountkh", khachHangController.getAmountKhachHang);
 router.post("/addkhachhang", khachHangController.addKhachHang);
 router.put("/khuyenmai/:id", khachHangController.updateKhuyenMai);
 router.get("/sanpham/:page", khachHangController.getSanPhamPage);
 router.get("/ctsp/:id", khachHangController.getSanPhamID);
+router.get("/nbsp/:id", khachHangController.getNhaBanSP);
+router.get("/review/:id", khachHangController.getReviewSP);
 
+//nha ban
 router.post("/nhaban/hoadon", nhaBanController.getAllHoaDon);
 router.post("/nhaban/sanpham", nhaBanController.addSanPham);
 router.put("/nhaban/sanpham/:id", nhaBanController.capnhatSP);

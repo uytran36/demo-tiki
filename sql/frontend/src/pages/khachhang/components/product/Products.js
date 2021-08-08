@@ -26,11 +26,11 @@ const Products = () => {
   return (
     <div>
       <div className="site-card-wrapper">
-        <Row style={{width:1200}}>
+        <Row style={{ width: 1200 }}>
           {products.map((item) => {
             return (
               <Col flex={1}>
-                <Link to={`/productdetail/${item.MaSP}`} >
+                <Link to={`/productdetail/${item.MaSP}`}>
                   <Card
                     hoverable
                     style={{ width: 240 }}
@@ -43,7 +43,6 @@ const Products = () => {
             );
           })}
         </Row>
-
       </div>
       <div className="paging" style={{ marginLeft: 500 }}>
         <Pagination

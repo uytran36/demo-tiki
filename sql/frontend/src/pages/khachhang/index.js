@@ -16,6 +16,11 @@ const KhachHang = () => {
   const [auth, setAuth] = useState(null);
 
   useEffect(() => {
+    let temp = window.localStorage.getItem("cart");
+    if (temp === null) {
+      window.localStorage.setItem("cart", []);
+    }
+
     setAuth(window.localStorage.getItem("KH"));
   }, [auth]);
 
