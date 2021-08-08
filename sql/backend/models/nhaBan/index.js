@@ -32,7 +32,6 @@ const updateSP = async (sanPhamData, MaSP) => {
   try {
     let pool = await sql.connect(config);
     const sqlQueries = await utils.loadSqlQueries("nhaBan");
-    console.log(sanPhamData);
     const updateSP = await pool
       .request()
       .input("MaSP", sql.Int, MaSP)
@@ -141,11 +140,11 @@ const doanhThu = async (data) => {
   try {
     let pool = await sql.connect(config);
     const sqlQueries = await utils.loadSqlQueries("nhaBan");
-    console.log(data)
+
     const getNB = await pool
       .request()
       .input("MaNhaBan", sql.Int, data.MaNhaBan)
-      .input("NgayGiaoTC", sql.DateTime, data.NgayGiaoTC)
+      .input("NgayGiaoTC", sql.Date, data.NgayGiaoTC)
       .query(sqlQueries.doanhThuTN);
     return getNB.recordset;
   } catch (error) {
@@ -157,9 +156,10 @@ const getCTHoaDon = async (data) => {
   try {
     let pool = await sql.connect(config);
     const sqlQueries = await utils.loadSqlQueries("nhaBan");
-    const CThoaDonList = await pool.request().
-    input("MaNhaBan", sql.Int, data.MaNhaBan)
-    .query(sqlQueries.CTHDList);
+    const CThoaDonList = await pool
+      .request()
+      .input("MaNhaBan", sql.Int, data.MaNhaBan)
+      .query(sqlQueries.CTHDList);
     return CThoaDonList.recordset;
   } catch (error) {
     console.log(error.message);
@@ -170,16 +170,65 @@ const getHoaDon = async (data) => {
   try {
     let pool = await sql.connect(config);
     const sqlQueries = await utils.loadSqlQueries("nhaBan");
-    const hoaDonList = await pool.request()
-    .input("MaNhaBan", sql.Int, data.MaNhaBan)
-    .query(sqlQueries.hoaDonList);
-    
+    const hoaDonList = await pool
+      .request()
+      .input("MaNhaBan", sql.Int, data.MaNhaBan)
+      .query(sqlQueries.hoaDonList);
+
     return hoaDonList.recordset;
   } catch (error) {
     console.log(error.message);
   }
 };
 
+const getSanPham = async (data) => {
+  try {
+    let pool = await sql.connect(config);
+    const sqlQueries = await utils.loadSqlQueries("nhaBan");
+    const getNB = await pool
+      .request()
+      .input("MaNhaBan", sql.Int, data.MaNhaBan)
+      .query(sqlQueries.sanPhamList);
+    return getNB.recordset;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+const updateNB = async (nhaBanData, MaNhaBan) => {
+  try {
+    let pool = await sql.connect(config);
+    const sqlQueries = await utils.loadSqlQueries("nhaBan");
+    console.log(nhaBanData);
+    const updateNB = await pool
+      .request()
+      .input("MaNhaBan", sql.Int, MaNhaBan)
+      .input("TenNhaBan", sql.NVarChar(100), nhaBanData.TenNhaBan)
+      .input("SDTNhaBan", sql.Char(10), nhaBanData.SDTNhaBan)
+      .input("EmailNhaBan", sql.NChar(100), nhaBanData.EmailNhaBan)
+      .input("DiaChiNhaBan", sql.NVarChar(255), nhaBanData.DiaChiNhaBan)
+      .input("MatKhauNhaBan", sql.VarChar(50), nhaBanData.MatKhauNhaBan)
+      .query(sqlQueries.updateNhaBan);
+    return updateNB.recordset;
+  } catch (error) {
+    console.log("error");
+    return error.message;
+  }
+};
+
+const getOneHD = async (data) => {
+  try {
+    let pool = await sql.connect(config);
+    const sqlQueries = await utils.loadSqlQueries("nhaBan");
+    const get = await pool
+      .request()
+      .input("MaHD", sql.Int, data)
+      .query(sqlQueries.getOneHoaDon);
+    return get.recordset;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 
 module.exports = {
   getHoaDon,
@@ -192,5 +241,8 @@ module.exports = {
   amountHD,
   amountSP,
   doanhThu,
-  getCTHoaDon
+  getCTHoaDon,
+  getSanPham,
+  updateNB,
+  getOneHD
 };

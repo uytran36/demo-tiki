@@ -1,16 +1,8 @@
-import {
-  Tabs,
-  Layout,
-  Table,
-  Tag,
-  Space,
-  Col,
-  Row,
-  Button,
-  Tooltip,
-} from "antd";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Layout, Table, Col, Row, Button, Tooltip, Form } from "antd";
+
 import { DatePicker } from "antd";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import moment from "moment";
 import { Typography } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
@@ -20,22 +12,13 @@ const { Content } = Layout;
 
 const { Title } = Typography;
 
-const { RangePicker } = DatePicker;
-
-const dateFormat = "YYYY/MM/DD";
-const monthFormat = "YYYY/MM";
-
-const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY"];
-
-const customFormat = (value) => `custom format: ${value.format(dateFormat)}`;
-
 const columns = [
   {
     title: "Mã Sản Phẩm",
     dataIndex: "MaSP",
     key: "MaSP",
     width: "10%",
-    render: (text) => <Link to="/nhaban/ctsp">{text}</Link>,
+    sorter: (a, b) => a.MaSP - b.MaSP,
   },
   {
     title: "Tên Sản Phẩm",
@@ -44,8 +27,8 @@ const columns = [
   },
   {
     title: "Số lượng",
-    dataIndex: "SoLug",
-    key: "SoLug",
+    dataIndex: "SoLuong",
+    key: "SoLuong",
   },
   {
     title: "Tổng tiền",
@@ -54,27 +37,36 @@ const columns = [
   },
 ];
 
-const data = [
-  {
-    MaSP: "1",
-    TenSP: "John Brown",
-    SoLug: 32,
-    TongTien: "1000000",
-  },
-  {
-    MaSP: "2",
-    TenSP: "Jim Green",
-    SoLug: 42,
-    TongTien: "1000000",
-  },
-  {
-    MaSP: "3",
-    TenSP: "Joe Black",
-    SoLug: 32,
-    TongTien: "1000000",
-  },
-];
 function DoanhThu() {
+  const [form] = Form.useForm();
+  const dateFormat = "YYYY/MM/DD";
+  const [listProduct, setListProduct] = useState([]);
+  const worker = {
+    inputdate: moment("2020-06-09T12:40:14+0000"),
+  };
+
+  function onClickD() {
+    let dataW = JSON.parse(window.localStorage.getItem("auth"));
+    let inputdate = form.getFieldValue("inputdate");
+    const info = {
+      MaNhaBan: dataW.MaNhaBan,
+      NgayGiaoTC: moment(inputdate).format(dateFormat),
+    };
+
+    console.log(info);
+    axios
+      .post("http://localhost:5000/api/nhaban/dttn", JSON.stringify(info), {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then((res) => {
+        setListProduct(res.data);
+        console.log(listProduct);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   return (
     <Layout>
       <Content>
@@ -86,10 +78,11 @@ function DoanhThu() {
             <Col span={7}>
               <Row style={{ margin: 5 }}>
                 <Col>
-                  <DatePicker
-                    defaultValue={moment("2015/01/01", dateFormat)}
-                    format={dateFormat}
-                  />
+                  <Form form={form} initialValues={worker}>
+                    <Form.Item name="inputdate">
+                      <DatePicker format={dateFormat} />
+                    </Form.Item>
+                  </Form>
                 </Col>
                 <Col className="btnsearchDT">
                   <Tooltip title="search">
@@ -97,6 +90,7 @@ function DoanhThu() {
                       type="primary"
                       shape="circle"
                       icon={<SearchOutlined />}
+                      onClick={onClickD}
                     />
                   </Tooltip>
                 </Col>
@@ -105,7 +99,7 @@ function DoanhThu() {
           </Row>
         </div>
         <div>
-          <Table columns={columns} dataSource={data} />
+          <Table columns={columns} dataSource={listProduct} />
         </div>
       </Content>
     </Layout>
