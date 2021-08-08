@@ -24,6 +24,9 @@ router.post("/nhaban/dttn", nhaBanController.dtTN);
 router.post("/nhaban/cthd", nhaBanController.CTHD);
 router.post("/nhaban/splist", nhaBanController.getSP);
 router.get("/nhaban/hoadon/:id", nhaBanController.get1HD);
+router.post("/nhaban/thang", nhaBanController.dtThanghmot);
+
+
 module.exports = {
   routes: router,
 };

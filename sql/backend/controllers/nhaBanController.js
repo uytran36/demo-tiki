@@ -138,6 +138,17 @@ const get1HD = async (req, res, next) => {
   }
 };
 
+const dtThanghmot = async (req, res, next) => {
+  try {
+    const data = req.body;
+    const sp = await nbData.dtMonthmot(data);
+    res.send(sp);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
+
+
 module.exports = {
   getAllHoaDon,
   addSanPham,
@@ -152,5 +163,6 @@ module.exports = {
   CTHD,
   getSP,
   capnhatNB,
-  get1HD
+  get1HD,
+  dtThanghmot
 };
