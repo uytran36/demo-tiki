@@ -1,4 +1,4 @@
-select cthd.* from SanPham as sp
+select cthd.MaHD, sp.TenSP, cthd.SoLuong, cthd.ThanhTien from SanPham as sp
 INNER JOIN CT_HoaDon as cthd ON sp.MaSP = cthd.MaSP
-JOIN HoaDon as hd ON cthd.MaHD = hd.MaHD
-where sp.MaNhaBan = @MaNhaBan 
+INNER JOIN HoaDon as hd ON cthd.MaHD = hd.MaHD
+AND sp.MaNhaBan = @MaNhaBan 

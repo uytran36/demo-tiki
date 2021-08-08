@@ -33,25 +33,27 @@ function EditModal(props) {
     let GiaBanSP = form.getFieldValue("GiaBanSP");
     let GiaGiamSP = form.getFieldValue("GiaGiamSP");
     let ThanhTienSP = form.getFieldValue("ThanhTienSP");
-    let MaLoaiSP = form.getFieldValue("MaLoaiSP"); //coi lai
+    let MaLoaiSP = form.getFieldValue("MaLoaiSP");
     let url = form.getFieldValue("url");
+    let dataW = JSON.parse(window.localStorage.getItem("auth"));
 
     const info = {
-      MaSP: props.product.MaSP,
-      TenSP: TenSP,
-      MoTaSP: MoTaSP,
-      SLTonSP: SLTonSP,
-      GiaBanSP: GiaBanSP,
-      GiaGiamSP: GiaGiamSP,
-      ThanhTienSP: ThanhTienSP,
-      MaLoaiSP: maLoai,
-      url: url,
+      TenSP: TenSP === undefined ? props.product.TenSP : TenSP,
+      MoTaSP: MoTaSP === undefined ? props.product.MoTaSP : MoTaSP,
+      SLTonSP: SLTonSP === undefined ? props.product.SLTonSP : SLTonSP,
+      GiaBanSP: GiaBanSP === undefined ? props.product.GiaBanSP : GiaBanSP,
+      GiaGiamSP: GiaGiamSP === undefined ? props.product.GiaGiamSP : GiaGiamSP,
+      ThanhTienSP:
+        ThanhTienSP === undefined ? props.product.ThanhTienSP : ThanhTienSP,
+      HoaHong: 0.05,
+      MaLoaiSP: MaLoaiSP === undefined ? props.product.MaLoaiSP : maLoai,
+      MaNhaBan: dataW.MaNhaBan,
+      url: url === undefined ? props.product.url : url,
     };
 
     axios
       .put(
-        "https://60b0f8b91f26610017fff943.mockapi.io/api/v1/todo_data/" +
-          props.product.MaSP,
+        "http://localhost:5000/api/nhaban/sanpham/" + props.product.MaSP,
         JSON.stringify(info),
         {
           headers: {
@@ -74,9 +76,9 @@ function EditModal(props) {
     props.setVisibleFalse();
   };
 
-   function onChangeSelect(value) {
-     setMaLoai(value);
-   }
+  function onChangeSelect(value) {
+    setMaLoai(value);
+  }
   return (
     <>
       <Modal
@@ -85,7 +87,7 @@ function EditModal(props) {
         onOk={handleOk}
         onCancel={handleCancel}
       >
-        <Form {...layout} name="nest-messages">
+        <Form {...layout} form={form} name="nest-messages">
           <Form.Item name="TenSP" label="Tên sản phẩm">
             <Input defaultValue={props.product.TenSP} />
           </Form.Item>
@@ -113,19 +115,19 @@ function EditModal(props) {
               <Option value={0}>Điện thoại - Máy tính bảng</Option>
               <Option value={1}>Điện tử - Điện lạnh</Option>
               <Option value={2}>Phụ kiện - Thiết bị số</Option>
-              <Option value="3">Laptop- Thiết bị IT</Option>
-              <Option value="4">Máy ảnh - Thiết bị quay phim</Option>
+              <Option value={3}>Laptop- Thiết bị IT</Option>
+              <Option value={4}>Máy ảnh - Thiết bị quay phim</Option>
 
-              <Option value="5">Điện gia dùng</Option>
+              <Option value={5}>Điện gia dùng</Option>
 
-              <Option value="6">Nhà cửa đời sống</Option>
-              <Option value="7">Hàng tiêu dùng - Thực phẩm</Option>
-              <Option value="8">Đồ chơi - Mẹ và Bé</Option>
-              <Option value="9">Làm đẹp - Sức khỏe</Option>
-              <Option value="10">Thời trang - phụ kiện</Option>
-              <Option value="11">Thể thao - dã ngoại</Option>
-              <Option value="12">Xe máy, ô tô, xe đạp</Option>
-              <Option value="13">Sách - VPP và Quà tặng</Option>
+              <Option value={6}>Nhà cửa đời sống</Option>
+              <Option value={7}>Hàng tiêu dùng - Thực phẩm</Option>
+              <Option value={8}>Đồ chơi - Mẹ và Bé</Option>
+              <Option value={9}>Làm đẹp - Sức khỏe</Option>
+              <Option value={10}>Thời trang - phụ kiện</Option>
+              <Option value={11}>Thể thao - dã ngoại</Option>
+              <Option value={12}>Xe máy, ô tô, xe đạp</Option>
+              <Option value={13}>Sách - VPP và Quà tặng</Option>
             </Select>
           </Form.Item>
           <Form.Item name="url" label="Đường dẫn hình ảnh">
@@ -140,6 +142,21 @@ function EditModal(props) {
 function AddModal(props) {
   const [isModalVisible, setIsModalVisible] = useState(props.visible);
   const [form] = Form.useForm();
+  const [amount, setAmount] = useState(0);
+  const [maLoai, setMaLoai] = useState(-1);
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/nhaban/slsp")
+      .then((response) => {
+        if (response.data.length > 0) {
+          setAmount(response.data[0].slSP);
+          console.log(response.data);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   const handleOk = () => {
     let TenSP = form.getFieldValue("TenSP");
@@ -148,36 +165,46 @@ function AddModal(props) {
     let GiaBanSP = form.getFieldValue("GiaBanSP");
     let GiaGiamSP = form.getFieldValue("GiaGiamSP");
     let ThanhTienSP = form.getFieldValue("ThanhTienSP");
-    let MaLoaiSP = form.getFieldValue("MaLoaiSP");
+    // let MaLoaiSP = form.getFieldValue("MaLoaiSP");
     let url = form.getFieldValue("url");
+    let dataW = JSON.parse(window.localStorage.getItem("auth"));
 
     const info = {
-      MaSP: props.product.MaSP, //lay amount tu api
+      MaSP: amount, //lay amount tu api
       TenSP: TenSP,
       MoTaSP: MoTaSP,
       SLTonSP: SLTonSP,
       GiaBanSP: GiaBanSP,
       GiaGiamSP: GiaGiamSP,
       ThanhTienSP: ThanhTienSP,
-      MaLoaiSP: MaLoaiSP,
+      HoaHong: 0.05,
+      MaLoaiSP: maLoai,
+      MaNhaBan: dataW.MaNhaBan,
       url: url,
     };
 
+    console.log(info);
+
     axios
-      .put(
-        "https://60b0f8b91f26610017fff943.mockapi.io/api/v1/todo_data/" +
-          props.product.MaSP,
-        JSON.stringify(info),
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
+      .post("http://localhost:5000/api/nhaban/sanpham", JSON.stringify(info), {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
       .then((res) => {
         console.log(res.data);
         setIsModalVisible(false);
         props.setVisibleFalse();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    axios
+      .post("http://localhost:5000/api/nhaban/splist", JSON.stringify(info), {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then((res) => {
+        props.setListProduct(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -190,7 +217,7 @@ function AddModal(props) {
   };
 
   function onChangeSelect(value) {
-    console.log(`selected ${value}`);
+    setMaLoai(value);
   }
   return (
     <>
@@ -200,7 +227,7 @@ function AddModal(props) {
         onOk={handleOk}
         onCancel={handleCancel}
       >
-        <Form {...layout} name="nest-messages">
+        <Form {...layout} form={form} name="nest-messages">
           <Form.Item name="TenSP" label="Tên sản phẩm">
             <Input />
           </Form.Item>
@@ -221,22 +248,22 @@ function AddModal(props) {
           </Form.Item>
           <Form.Item name="MaLoaiSP" label="Loại sản phẩm">
             <Select placeholder="chọn loại sản phẩm" onChange={onChangeSelect}>
-              <Option value="0">Điện thoại - Máy tính bảng</Option>
-              <Option value="1">Điện tử - Điện lạnh</Option>
-              <Option value="2">Phụ kiện - Thiết bị số</Option>
-              <Option value="3">Laptop- Thiết bị IT</Option>
-              <Option value="4">Máy ảnh - Thiết bị quay phim</Option>
+              <Option value={0}>Điện thoại - Máy tính bảng</Option>
+              <Option value={1}>Điện tử - Điện lạnh</Option>
+              <Option value={2}>Phụ kiện - Thiết bị số</Option>
+              <Option value={3}>Laptop- Thiết bị IT</Option>
+              <Option value={4}>Máy ảnh - Thiết bị quay phim</Option>
 
-              <Option value="5">Điện gia dùng</Option>
+              <Option value={5}>Điện gia dùng</Option>
 
-              <Option value="6">Nhà cửa đời sống</Option>
-              <Option value="7">Hàng tiêu dùng - Thực phẩm</Option>
-              <Option value="8">Đồ chơi - Mẹ và Bé</Option>
-              <Option value="9">Làm đẹp - Sức khỏe</Option>
-              <Option value="10">Thời trang - phụ kiện</Option>
-              <Option value="11">Thể thao - dã ngoại</Option>
-              <Option value="12">Xe máy, ô tô, xe đạp</Option>
-              <Option value="13">Sách - VPP và Quà tặng</Option>
+              <Option value={6}>Nhà cửa đời sống</Option>
+              <Option value={7}>Hàng tiêu dùng - Thực phẩm</Option>
+              <Option value={8}>Đồ chơi - Mẹ và Bé</Option>
+              <Option value={9}>Làm đẹp - Sức khỏe</Option>
+              <Option value={10}>Thời trang - phụ kiện</Option>
+              <Option value={11}>Thể thao - dã ngoại</Option>
+              <Option value={12}>Xe máy, ô tô, xe đạp</Option>
+              <Option value={13}>Sách - VPP và Quà tặng</Option>
             </Select>
           </Form.Item>
           <Form.Item name="url" label="Đường dẫn hình ảnh">
@@ -253,17 +280,24 @@ const DoanhThu = (props) => {
   const [editVisible, setEditVisible] = useState(false);
   const [addVisible, setAddVisible] = useState(false);
   const [product, setProduct] = useState({});
+  let dataW = JSON.parse(window.localStorage.getItem("auth"));
+  const info = {
+    MaNhaBan: dataW.MaNhaBan,
+  };
 
   useEffect(() => {
     axios
-      .get("https://60b0f8b91f26610017fff943.mockapi.io/api/v1/todo_data")
+      .post("http://localhost:5000/api/nhaban/splist", JSON.stringify(info), {
+        headers: { "Content-Type": "application/json" },
+      })
       .then((res) => {
         setListProduct(res.data);
+        console.log(listProduct);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [listProduct]);
 
   const onClickEdit = (item) => {
     setProduct(item);
@@ -276,12 +310,20 @@ const DoanhThu = (props) => {
 
   const onClickDelete = (item) => {
     axios
-      .delete(
-        "https://60b0f8b91f26610017fff943.mockapi.io/api/v1/todo_data/" +
-          item.id
-      )
+      .delete("http://localhost:5000/api/nhaban/sanpham/" + item.MaSP)
       .then((response) => {
         console.log(response);
+      });
+
+    axios
+      .post("http://localhost:5000/api/nhaban/splist", JSON.stringify(info), {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then((res) => {
+        setListProduct(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
@@ -290,6 +332,7 @@ const DoanhThu = (props) => {
       title: "Mã sản phẩm",
       dataIndex: "MaSP",
       key: "MaSP",
+      sorter: (a, b) => a.MaSP - b.MaSP,
     },
     {
       title: "Tên sản phẩm",
@@ -327,11 +370,6 @@ const DoanhThu = (props) => {
       key: "MaLoaiSP",
     },
     {
-      title: "Đường dẫn sản phẩm",
-      dataIndex: "url",
-      key: "url",
-    },
-    {
       title: "Hành động",
       key: "action",
       render: (text, record) => (
@@ -353,7 +391,6 @@ const DoanhThu = (props) => {
     setAddVisible(false);
   };
 
-  const data = listProduct;
   return (
     <div>
       <Row>
@@ -366,7 +403,7 @@ const DoanhThu = (props) => {
           </Button>
         </Col>
       </Row>
-      <Table columns={columns} dataSource={data} />
+      <Table columns={columns} dataSource={listProduct} />
       <EditModal
         key={editVisible}
         visible={editVisible}
@@ -376,6 +413,7 @@ const DoanhThu = (props) => {
       <AddModal
         key={addVisible}
         visible={addVisible}
+        setListProduct={setListProduct}
         setVisibleFalse={setVisibleFalse}
       />
     </div>

@@ -1,11 +1,10 @@
 import "./style.css";
-import React, { useState } from "react";
-import { Layout, Card, Typography, Space } from "antd";
-import { Form, Input, Select, Button } from "antd";
-
+import { Layout, Card, Typography, notification } from "antd";
+import { Form, Input, Button } from "antd";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 const { Content } = Layout;
-const { Title, Text } = Typography;
-const { Option } = Select;
+const { Title } = Typography;
 const formItemLayout = {
   labelCol: {
     xs: {
@@ -27,9 +26,50 @@ const formItemLayout = {
 
 const ThongTinHD = () => {
   const [form] = Form.useForm();
+  const [nhaBanData, setData] = useState([]);
+  let dataW = JSON.parse(window.localStorage.getItem("auth"));
 
   const onFinish = (values) => {
-    console.log("Received values of form: ", values);
+    const info = {
+      TenNhaBan:
+        values.TenNhaBan !== undefined ? values.TenNhaBan : dataW.TenNhaBan,
+      SDTNhaBan:
+        values.SDTNhaBan !== undefined ? values.SDTNhaBan : dataW.SDTNhaBan,
+      EmailNhaBan:
+        values.EmailNhaBan !== undefined
+          ? values.EmailNhaBan
+          : dataW.EmailNhaBan,
+      DiaChiNhaBan:
+        values.DiaChiNhaBan !== undefined
+          ? values.DiaChiNhaBan
+          : dataW.DiaChiNhaBan,
+      MatKhauNhaBan:
+        values.MatKhauNhaBan !== undefined
+          ? values.MatKhauNhaBan
+          : dataW.MatKhauNhaBan,
+    };
+
+    axios
+      .put(
+        "http://localhost:5000/api/nhaban/" + dataW.MaNhaBan,
+        JSON.stringify(info),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+        notification.open({
+          message: "Notification",
+          description: "Đã lưu thành công",
+        });
+        console.log(info);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
     <Layout>
@@ -48,106 +88,32 @@ const ThongTinHD = () => {
                   scrollToFirstError
                   wrapperCol={{ span: 10 }}
                 >
-                  <Form.Item
-                    name="manb"
-                    label="Mã Nhà Bán"
-                    rules={[{ type: "manb" }, { required: true }]}
-                  >
-                    <Input defaultValue="26888888" />
+                  <Form.Item name="TenNhaBan" label="Tên Nhà Bán">
+                    <Input defaultValue={dataW.TenNhaBan} />
                   </Form.Item>
 
-                  <Form.Item
-                    name="tennb"
-                    label="Tên Nhà Bán"
-                    rules={[{ type: "tennb" }, { required: true }]}
-                  >
-                    <Input defaultValue="Nguyễn Trọng Khang" />
+                  <Form.Item name="EmailNhaBan" label="E-mail">
+                    <Input type="email" defaultValue={dataW.EmailNhaBan} />
                   </Form.Item>
 
-                  <Form.Item
-                    name="email"
-                    label="E-mail"
-                    rules={[
-                      {
-                        type: "email",
-                      },
-                      {
-                        required: true,
-                      },
-                    ]}
-                  >
-                    <Input type="email" defaultValue="abc@gmail.com" />
+                  <Form.Item name="SDTNhaBan" label="Số Điện Thoại">
+                    <Input defaultValue={dataW.SDTNhaBan} />
                   </Form.Item>
 
-                  <Form.Item
-                    name="sdt"
-                    label="Số Điện Thoại"
-                    rules={[
-                      {
-                        required: true,
-                      },
-                    ]}
-                  >
-                    <Input defaultValue="0485461213" />
+                  <Form.Item name="MatKhauNhaBan" label="Mật khẩu ">
+                    <Input.Password defaultValue={dataW.MatKhauNhaBan} />
                   </Form.Item>
 
-                  <Form.Item
-                    name="password"
-                    label="Mật khẩu "
-                    rules={[
-                      {
-                        required: true,
-                      },
-                    ]}
-                  >
-                    <Input.Password
-                      placeholder="input password"
-                      defaultValue="fsdhfkshfsf"
-                    />
+                  <Form.Item name="DiaChiNhaBan" label="Địa chỉ">
+                    <Input defaultValue={dataW.DiaChiNhaBan} />
                   </Form.Item>
 
-                  <Form.Item
-                    name="sonha"
-                    label="Số nhà"
-                    rules={[{ required: true }]}
-                  >
-                    <Input defaultValue="149" />
-                  </Form.Item>
-
-                  <Form.Item
-                    name="duong"
-                    label="Đường"
-                    rules={[{ required: true }]}
-                  >
-                    <Input defaultValue="Nguyễn Trọng Tuyển" />
-                  </Form.Item>
-
-                  <Form.Item
-                    name="phuong"
-                    label="Phường"
-                    rules={[{ required: true }]}
-                  >
-                    <Input defaultValue="8" />
-                  </Form.Item>
-
-                  <Form.Item
-                    name="quan"
-                    label="Quận"
-                    rules={[{ required: true }]}
-                  >
-                    <Input defaultValue="Phú Nhuận" />
-                  </Form.Item>
-
-                  <Form.Item
-                    name="thanhpho"
-                    label="Thành Phố"
-                    rules={[{ required: true }]}
-                  >
-                    <Input defaultValue="Hồ Chí Minh" />
-                  </Form.Item>
-
-                  <Form.Item >
-                    <Button type="primary" htmlType="submit" className="btnSaveTTNB">
+                  <Form.Item>
+                    <Button
+                      type="primary"
+                      htmlType="submit"
+                      className="btnSaveTTNB"
+                    >
                       Lưu
                     </Button>
                   </Form.Item>
@@ -155,7 +121,6 @@ const ThongTinHD = () => {
               </div>
             </Card>
           </div>
-         
         </div>
       </Content>
     </Layout>

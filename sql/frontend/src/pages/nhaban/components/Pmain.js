@@ -17,11 +17,11 @@ import {
 
 import TrangChu from "./trangChu";
 import DsSanPham from "./dsSanPham";
-import DsHoaDon from "./dsHoaDon";
+import DsCTHoaDon from "./dsCTHoaDon";
 import DoanhThu from "./doanhThu";
 import ThongTinNB from "./thongTinNB";
 import ThongTinHD from "./thongTinHD";
-import ChiTietSP from "./chitietSP";
+
 
 const { Header, Sider, Content, Footer } = Layout;
 const Nhaban = (props) => {
@@ -54,7 +54,7 @@ const Nhaban = (props) => {
               <Link to="/nhaban/dssp">Danh sách sản phẩm</Link>
             </Menu.Item>
             <Menu.Item key="3" icon={<ContainerOutlined />}>
-              <Link to="/nhaban/dshd">Danh sách hóa đơn</Link>
+              <Link to="/nhaban/dscthd">Danh sách hóa đơn</Link>
             </Menu.Item>
             <Menu.Item key="4" icon={<BarChartOutlined />}>
               <Link to="/nhaban/doanhthu">Doanh Thu</Link>
@@ -90,8 +90,8 @@ const Nhaban = (props) => {
               <Route exact path="/nhaban/dssp">
                 <DsSanPham />
               </Route>
-              <Route exact path="/nhaban/dshd">
-                <DsHoaDon />
+              <Route exact path="/nhaban/dscthd">
+                <DsCTHoaDon />
               </Route>
               <Route exact path="/nhaban/doanhthu">
                 <DoanhThu />
@@ -99,11 +99,8 @@ const Nhaban = (props) => {
               <Route exact path="/nhaban/ttnb">
                 <ThongTinNB />
               </Route>
-              <Route exact path="/nhaban/tthd">
+              <Route exact path="/nhaban/hoadon/:id">
                 <ThongTinHD />
-              </Route>
-              <Route exact path="/nhaban/ctsp">
-                <ChiTietSP />
               </Route>
             </Switch>
           </Content>
