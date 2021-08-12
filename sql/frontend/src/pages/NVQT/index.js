@@ -22,6 +22,8 @@ import Promo from "./components/Promo";
 import LuongNVGH from "./components/LuongNVGH";
 import LuongNVQLK from "./components/LuongNVQLK";
 import TaoNVQLK from "./components/TaoNVQLK";
+import DSKH from "./components/DSKH";
+import NVQLK from "./components/NVQLK";
 
 const { Header, Sider, Content, Footer } = Layout;
 
@@ -63,6 +65,12 @@ class NVQT extends React.Component {
                   <Menu.Item key="4" icon={<UserOutlined />}>
                     <Link to="/TaoNVQLK">Thêm nhân viên quản lý kho</Link>
                   </Menu.Item>
+                  <Menu.Item key="5" icon={<UserOutlined />}>
+                    <Link to="/DSKH">Danh sách khách hàng</Link>
+                  </Menu.Item>
+                  <Menu.Item key="6" icon={<UserOutlined />}>
+                    <Link to="/NVQLK">Danh sách nhân viên quản lý kho</Link>
+                  </Menu.Item>
                 </Menu>
             </Sider>
             <Layout className="site-layout">
@@ -99,6 +107,12 @@ class NVQT extends React.Component {
                   </Route>
                   <Route exact path="/TaoNVQLK">
                     <TaoNVQLK />
+                  </Route>
+                  <Route exact path="/DSKH">
+                    <DSKH />
+                  </Route>
+                  <Route exact path="/NVQLK">
+                    <NVQLK />
                   </Route>
                 </Switch>
             </Content>

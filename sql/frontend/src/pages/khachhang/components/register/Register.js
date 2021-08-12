@@ -1,5 +1,9 @@
 import { Form, Input, Select, Button, DatePicker } from "antd";
-import './Register.css';
+import "./Register.css";
+import { useState, useEffect } from "react";
+import moment from "moment";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 const { Option } = Select;
 
@@ -36,14 +40,57 @@ const tailFormItemLayout = {
 };
 
 const Register = () => {
+  const [amount, setAmount] = useState(0);
+
   const [form] = Form.useForm();
+  const history = useHistory();
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/amountkh")
+      .then((res) => {
+        if (res.data.length !== 0) {
+          setAmount(res.data[0].SL);
+          console.log(res.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const onFinish = (values) => {
-    console.log("Received values of form: ", values);
-  };
+    const listAddress = values.address.split(", ");
 
-  const onChange = (date, dateString) => {
-    console.log(date, dateString);
+    const info = {
+      MaKH: amount,
+      Email: values.email,
+      MatKhau: values.password,
+      Ten: values.name,
+      NgaySinh: moment(values.dateOfBirth).format("MM-DD-YYYY"),
+      Sdt: values.phone,
+      GioiTinh: values.gender === "male" ? "Nam" : "Nữ",
+      SoNha: listAddress[0],
+      Duong: listAddress[1],
+      Phuong: listAddress[2],
+      Quan: listAddress[3],
+      ThanhPho: listAddress[4],
+      TikiXu: 0,
+    };
+
+    axios
+      .post("http://localhost:5000/api/addkhachhang", JSON.stringify(info), {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        history.push("/login");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -138,7 +185,7 @@ const Register = () => {
             },
           ]}
         >
-          <DatePicker onChange={onChange} />
+          <DatePicker />
         </Form.Item>
 
         <Form.Item
@@ -177,7 +224,7 @@ const Register = () => {
         <Form.Item
           name="address"
           label="Địa chỉ"
-          tooltip="Địa chỉ của bạn là gì?"
+          tooltip="Nhập địa chỉ theo định dạng: số nhà, đường, phường, quận, thành phố"
           rules={[
             {
               required: true,

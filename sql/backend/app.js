@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
-const testApiRoutes = require("./routes/testApi")
+const tikiRoutes = require("./routes/tikiRoutes");
 const session = require("express-session");
 const sql = require("mssql");
 var cors = require("cors");
@@ -13,6 +13,14 @@ const dbConfig = {
   server: "localhost\\LONGHA",
   database: "Tiki",
   trustServerCertificate: true,
+  
+
+  //nha ban
+  // user: "nhanvien",
+  // password: "nv",
+  // server: "localhost\\SQLDU",
+  // database: "Tiki",
+  // trustServerCertificate: true,
 };
 
 function connectToMSSQL() {
@@ -27,8 +35,6 @@ function connectToMSSQL() {
       console.log(err);
     });
 }
-
-
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -51,14 +57,18 @@ app.use(
   })
 );
 
-// app.set("view engine", "pug");
-// app.set("views", "../frontend/views");
 // app.use(express.static("../frontend"));
 
-app.use(bodyParser.urlencoded());
+app.use(express.json());
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
+
 app.use(cors());
 
-app.use("/testapi", testApiRoutes);
+app.use("/api", tikiRoutes.routes);
 
 connectToMSSQL();
 module.exports = app;

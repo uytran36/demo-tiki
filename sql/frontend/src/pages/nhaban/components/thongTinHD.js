@@ -1,5 +1,6 @@
 import "./style.css";
 import React, { useState } from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import {
   Layout,
   Card,
@@ -11,12 +12,8 @@ import {
   Button,
   Typography,
 } from "antd";
+import { Form, Space } from "antd";
 
-import {
-  HighlightOutlined,
-  SmileOutlined,
-  SmileFilled,
-} from "@ant-design/icons";
 const { Content } = Layout;
 const { Title, Paragraph, Text } = Typography;
 const { Option } = Select;
@@ -30,7 +27,7 @@ const columns = [
     title: "Tên Sản Phẩm",
     dataIndex: "TenSP",
     key: "TenSP",
-    render: (text) => <a>{text}</a>,
+    render: (text) => <Link to="/nhaban/ctsp">{text}</Link>,
   },
   {
     title: "Số lượng",
@@ -69,64 +66,147 @@ function handleChange(value) {
 }
 
 const ThongTinHD = () => {
+  const onFinish = (values) => {
+    console.log("Received values of form: ", values);
+  };
+
   return (
     <Layout>
       <Content>
         <div className="site-input-group-wrapper">
           <div className="site-card-border-less-wrapper">
             <Row>
-              <Col span={10}>
+              <Col span={12}>
                 <Card title="Thông Tin Hóa Đơn" bordered={false}>
-                  <Input.Group size="medium">
-                    <Row>
-                      <Col span={10}>
-                        <div className="bordertextTTNB">
-                          <Text className="textTTNB">Mã Hóa Đơn </Text>
-                          <br />
-                        </div>
-                        <div className="bordertextTTNB">
-                          <Text className="textTTNB">Ngày lập Hóa Đơn </Text>
-                          <br />
-                        </div>
-                        <div className="bordertextTTNB">
-                          <Text className="textTTNB">Tổng tiền</Text>
-                          <br />
-                        </div>
-                      </Col>
-                      <Col span={14}>
-                        <Input defaultValue="26888888" />
-                        <Input defaultValue="6:30 12/08/2021" />
-                        <Input defaultValue="0571" />
-                      </Col>
-                    </Row>
-                  </Input.Group>
+                  <div>
+                    <Form
+                      name="complex-form"
+                      onFinish={onFinish}
+                      labelCol={{ span: 7 }}
+                      wrapperCol={{ span: 16 }}
+                    >
+                      <Form.Item label="Mã Hóa Đơn">
+                        <Space>
+                          <Form.Item
+                            name="mahd"
+                            noStyle
+                            rules={[{ required: true }]}
+                          >
+                            <Input defaultValue="26888888" readOnly />
+                          </Form.Item>
+                        </Space>
+                      </Form.Item>
+                    </Form>
+                  </div>
+
+                  <div>
+                    <Form
+                      name="complex-form"
+                      onFinish={onFinish}
+                      labelCol={{ span: 7 }}
+                      wrapperCol={{ span: 16 }}
+                    >
+                      <Form.Item label="Ngày lập Hóa Đơn ">
+                        <Space>
+                          <Form.Item
+                            name="ngaylaphd"
+                            noStyle
+                            rules={[{ required: true }]}
+                          >
+                            <Input defaultValue="26/08/2020" readOnly />
+                          </Form.Item>
+                        </Space>
+                      </Form.Item>
+                    </Form>
+                  </div>
+                  <div>
+                    <Form
+                      name="complex-form"
+                      onFinish={onFinish}
+                      labelCol={{ span: 7 }}
+                      wrapperCol={{ span: 16 }}
+                    >
+                      <Form.Item label="Tổng tiền">
+                        <Space>
+                          <Form.Item
+                            name="tongtien"
+                            noStyle
+                            rules={[{ required: true }]}
+                          >
+                            <Input defaultValue="26888888" readOnly />
+                          </Form.Item>
+                        </Space>
+                      </Form.Item>
+                    </Form>
+                  </div>
                 </Card>
               </Col>
-              <Col span={14}>
+              <Col span={12}>
                 <Card title="Thông Tin Khách Hàng" bordered={false}>
-                  <Input.Group size="medium">
-                    <Row>
-                      <Col span={8}>
-                        <div className="bordertextTTNB">
-                          <Text className="textTTNB">Họ Tên </Text>
-                          <br />
-                        </div>
-                        <div className="bordertextTTNB">
-                          <Text className="textTTNB">Địa chỉ </Text>
-                          <br />
-                        </div>
-                        <div className="bordertextTTNB">
-                          <Text className="textTTNB">Số điện thoại</Text>
-                          <br />
-                        </div>
-                      </Col>
-                      <Col span={16}>
-                        <Input defaultValue="Nguyễn Trọng Khang" />
-                        <Input defaultValue="149 Nguyễn Trọng Tuyển, P.8, Quận Phú Nhuận, TP.HCM" />
-                        <Input defaultValue="0571665464" />
-                      </Col>
-                    </Row>
-                  </Input.Group>
+                  <div>
+                    <Form
+                      name="complex-form"
+                      onFinish={onFinish}
+                      labelCol={{ span: 7 }}
+                      wrapperCol={{ span: 10 }}
+                    >
+                      <Form.Item label="Họ Tên">
+                        <Space>
+                          <Form.Item
+                            name="hoten"
+                            noStyle
+                            rules={[{ required: true }]}
+                          >
+                            <Input defaultValue="Nguyễn Trọng Khang" readOnly />
+                          </Form.Item>
+                        </Space>
+                      </Form.Item>
+                    </Form>
+                  </div>
+
+                  <div>
+                    <Form
+                      name="complex-form"
+                      onFinish={onFinish}
+                      labelCol={{ span: 7 }}
+                      wrapperCol={{ span: 16 }}
+                    >
+                      <Form.Item label="Địa chỉ ">
+                        <Space>
+                          <Form.Item
+                            name="diachi"
+                            noStyle
+                            rules={[{ required: true }]}
+                          >
+                            <Input
+                              defaultValue="149 Nguyễn Trọng Tuyển, P.8, Quận Phú Nhuận, TP.HCM"
+                              readOnly
+                            />
+                          </Form.Item>
+                        </Space>
+                      </Form.Item>
+                    </Form>
+                  </div>
+                  <div>
+                    <Form
+                      name="complex-form"
+                      onFinish={onFinish}
+                      labelCol={{ span: 7 }}
+                      wrapperCol={{ span: 16 }}
+                    >
+                      <Form.Item label="Số điện thoại">
+                        <Space>
+                          <Form.Item
+                            name="sdt"
+                            noStyle
+                            rules={[{ required: true }]}
+                          >
+                            <Input defaultValue="0571665464" readOnly />
+                          </Form.Item>
+                        </Space>
+                      </Form.Item>
+                    </Form>
+                  </div>
                 </Card>
               </Col>
             </Row>
@@ -149,8 +229,8 @@ const ThongTinHD = () => {
                     <div>
                       <Select
                         defaultValue="Chờ xác nhận"
-                        style={{ width: 150, margin: 2 }}
                         onChange={handleChange}
+                        className="textStatusTTHD"
                       >
                         <Option value="Đang xử lý">Đang xử lý</Option>
                         <Option value="Đang vận chuyển">Đang vận chuyển</Option>

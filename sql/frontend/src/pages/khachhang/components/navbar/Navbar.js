@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Link } from "react-router-dom";
 import { Row, Col } from "antd";
@@ -8,8 +9,11 @@ import DropdownComponent from "./navbarComponents/Dropdown";
 import SearchBar from "./navbarComponents/SearchBar";
 import UserComponent from "./navbarComponents/User";
 import Cart from "./navbarComponents/Cart";
+import AuthUser from "./navbarComponents/AuthUser";
 
-export default function Navbar() {
+export default function Navbar({ auth, setAuth }) {
+
+
   return (
     <div>
       <Row>
@@ -28,7 +32,11 @@ export default function Navbar() {
           <SearchBar />
         </Col>
         <Col flex="150px">
-          <UserComponent />
+          {auth === null ? (
+            <UserComponent />
+          ) : (
+            <AuthUser user={auth} setAuth={setAuth} />
+          )}
         </Col>
         <Col flex="150px">
           <Cart />
