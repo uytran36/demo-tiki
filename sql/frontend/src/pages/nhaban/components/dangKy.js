@@ -56,48 +56,52 @@ const DangKy = () => {
 
   useEffect(() => {
     axios
-    .get("http://localhost:5000/api/nhaban/slnb").then((response) => {
-      if(response.data.length > 0) {
-        setAmount(response.data[0].slNB);
-        console.log(response.data);
-      }
-    }).catch((error) => {
-      console.error(error);
-    })
-  }, [])
+      .get("http://localhost:5000/api/nhaban/slnb")
+      .then((response) => {
+        if (response.data.length > 0) {
+          setAmount(response.data[0].slNB);
+          console.log(response.data);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   const onFinish = (values) => {
     let today = new Date();
     let newdate = new Date();
-    let dd = String(today.getDate()).padStart(2, '0');
-    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let dd = String(today.getDate()).padStart(2, "0");
+    let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
     let yyyy = today.getFullYear();
     let Nyyyy = today.getFullYear() + 1;
-    today = mm + '/' + dd + '/' + yyyy;
-    newdate = mm + '/' + dd + '/' + Nyyyy;
+    today = mm + "/" + dd + "/" + yyyy;
+    newdate = mm + "/" + dd + "/" + Nyyyy;
 
     const info = {
       MaNhaBan: amount,
       TenNhaBan: values.TenNhaBan,
-      SDTNhaBan : values.SDTNhaBan,
-      EmailNhaBan : values.EmailNhaBan,
+      SDTNhaBan: values.SDTNhaBan,
+      EmailNhaBan: values.EmailNhaBan,
       DiaChiNhaBan: values.DiaChiNhaBan,
       MatKhauNhaBan: values.MatKhauNhaBan,
       NgayLapHD: today,
       NgayHetHanHD: newdate,
-      MoTaHD : "HD" + amount,
+      MoTaHD: "HD" + amount,
     };
 
-    axios.post("http://localhost:5000/api/nhaban", JSON.stringify(info), {
-      headers: {'Content-Type': 'application/json'},
-    }).then(response => {
-      console.log(response);
-      history.push("/nhaban/dangnhap");
-    }).catch(err => {
-      console.log(err);
-    })  
+    axios
+      .post("http://localhost:5000/api/nhaban", JSON.stringify(info), {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then((response) => {
+        console.log(response);
+        history.push("/nhaban/dangnhap");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
-
 
   return (
     <Layout>

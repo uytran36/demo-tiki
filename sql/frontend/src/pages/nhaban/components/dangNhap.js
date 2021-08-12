@@ -9,7 +9,7 @@ import axios from "axios";
 const { Title } = Typography;
 const { Content } = Layout;
 
-const DangNhap = () => {
+const DangNhap = (props) => {
   const history = useHistory();
   const [listNhaBan, setListNhaBan] = useState([]);
 
@@ -25,7 +25,6 @@ const DangNhap = () => {
   }, []);
 
   const onFinish = (values) => {
-  
     const info = {
       email: values.email,
       password: values.password,
@@ -40,7 +39,8 @@ const DangNhap = () => {
     });
     console.log(data[0]);
     if (data.length > 0) {
-      history.push("/nhaban/");
+      history.push("/nhaban");
+      props.setAuth(data[0]);
       window.localStorage.setItem("auth", JSON.stringify(data[0]));
     }
   };

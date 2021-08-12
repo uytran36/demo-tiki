@@ -107,6 +107,48 @@ const CTHD = async (req, res, next) => {
   }
 };
 
+const getSP = async (req, res, next) => {
+  try {
+    const data = req.body;
+    const sp = await nbData.getSanPham(data);
+    res.send(sp);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
+
+const capnhatNB = async (req, res, next)  => {
+  try {
+    const data = req.body;
+    const manb = req.params.id;
+    const update = await nbData.updateNB(data, manb);
+    res.send(update);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+}
+
+const get1HD = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const hd = await nbData.getOneHD(id);
+    res.send(hd);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
+
+const dtThanghmot = async (req, res, next) => {
+  try {
+    const data = req.body;
+    const sp = await nbData.dtMonthmot(data);
+    res.send(sp);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
+
+
 module.exports = {
   getAllHoaDon,
   addSanPham,
@@ -118,5 +160,9 @@ module.exports = {
   slgHD,
   slgSP,
   dtTN,
-  CTHD
+  CTHD,
+  getSP,
+  capnhatNB,
+  get1HD,
+  dtThanghmot
 };

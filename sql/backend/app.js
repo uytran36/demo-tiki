@@ -8,19 +8,20 @@ var cors = require("cors");
 
 //Initializing connection string
 const dbConfig = {
+  /*
   user: "sa",
   password: "123",
   server: "localhost\\LONGHA",
   database: "Tiki",
   trustServerCertificate: true,
-  
+  */
 
   //nha ban
-  // user: "nhanvien",
-  // password: "nv",
-  // server: "localhost\\SQLDU",
-  // database: "Tiki",
-  // trustServerCertificate: true,
+  user: "nhanvien",
+  password: "nv",
+  server: "localhost\\SQLDU",
+  database: "Tiki",
+  trustServerCertificate: true,
 };
 
 function connectToMSSQL() {
