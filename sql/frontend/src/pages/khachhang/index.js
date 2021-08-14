@@ -8,6 +8,7 @@ import Login from "./components/login/Login";
 import Register from "./components/register/Register";
 import Cart from "./components/cart/Cart";
 import Profile from "./components/profile/Profile";
+import Thank from "./components/thankyou/";
 import { useState, useEffect } from "react";
 
 const { Header, Content } = Layout;
@@ -18,7 +19,7 @@ const KhachHang = () => {
   useEffect(() => {
     let temp = window.localStorage.getItem("cart");
     if (temp === null) {
-      window.localStorage.setItem("cart", []);
+      window.localStorage.setItem("cart", JSON.stringify([]));
     }
 
     setAuth(window.localStorage.getItem("KH"));
@@ -34,10 +35,53 @@ const KhachHang = () => {
         </Header>
         <Content style={{ padding: "0 50px" }}>
           <Switch>
+            <Route exact path="/search/:value">
+              <Products />
+            </Route>
             <Route exact path="/">
-              <div className="site-layout-content">
-                <Products />
-              </div>
+              <Products />
+            </Route>
+            <Route exact path="/phone">
+              <Products />
+            </Route>
+            <Route exact path="/tv">
+              <Products />
+            </Route>
+            <Route exact path="/accessories">
+              <Products />
+            </Route>
+            <Route exact path="/laptop">
+              <Products />
+            </Route>
+            <Route exact path="/camera">
+              <Products />
+            </Route>
+            <Route exact path="/appliance">
+              <Products />
+            </Route>
+            <Route exact path="/house">
+              <Products />
+            </Route>
+            <Route exact path="/food">
+              <Products />
+            </Route>
+            <Route exact path="/toys">
+              <Products />
+            </Route>
+            <Route exact path="/beauty">
+              <Products />
+            </Route>
+            <Route exact path="/fashion">
+              <Products />
+            </Route>
+            <Route exact path="/sport">
+              <Products />
+            </Route>
+            <Route exact path="/bike">
+              <Products />
+            </Route>
+            <Route exact path="/book">
+              <Products />
             </Route>
             <Route exact path="/productdetail/:id">
               <ProductDetail />
@@ -53,6 +97,15 @@ const KhachHang = () => {
             </Route>
             <Route exact path="/profile">
               <Profile />
+            </Route>
+            <Route exact path="/profile/bill">
+              <Profile />
+            </Route>
+            <Route exact path="/profile/discount">
+              <Profile />
+            </Route>
+            <Route exact path="/thankyou">
+              <Thank />
             </Route>
           </Switch>
         </Content>

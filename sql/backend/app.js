@@ -6,23 +6,23 @@ const tikiRoutes = require("./routes/tikiRoutes");
 const session = require("express-session");
 const sql = require("mssql");
 var cors = require("cors");
-
+const timeout = require("connect-timeout");
 //Initializing connection string
 const dbConfig = {
-  /*
+  
   user: "sa",
   password: "123",
   server: "localhost\\TRANUY2",
   database: "CUAHANG",
   trustServerCertificate: true,
-  */
+  
 
   //nha ban
-  user: "nhanvien",
-  password: "nv",
-  server: "localhost\\SQLDU",
-  database: "Tiki",
-  trustServerCertificate: true,
+  // user: "nhanvien",
+  // password: "nv",
+  // server: "localhost\\SQLDU",
+  // database: "Tiki",
+  // trustServerCertificate: true,
 };
 
 function connectToMSSQL() {
@@ -37,6 +37,9 @@ function connectToMSSQL() {
       console.log(err);
     });
 }
+
+
+app.use(timeout("30s"));
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -58,8 +61,6 @@ app.use(
     saveUninitialized: false,
   })
 );
-
-// app.use(express.static("../frontend"));
 
 app.use(express.json());
 app.use(

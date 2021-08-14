@@ -135,7 +135,7 @@ const Register = () => {
 
         <Form.Item
           name="confirm"
-          label="Confirm Password"
+          label="Xác nhận mật khẩu"
           dependencies={["password"]}
           hasFeedback
           rules={[

@@ -1,4 +1,3 @@
-/*
 module.exports = {
   user: "sa",
   password: "123",
@@ -6,11 +5,11 @@ module.exports = {
   database: "Tiki",
   trustServerCertificate: true,
 };
-*/
- module.exports = {
-  user: "nhanvien",
-  password: "nv",
-  server: "localhost\\SQLDU",
-  database: "Tiki",
-  trustServerCertificate: true,
-};
+
+//  module.exports = {
+//   user: "nhanvien",
+//   password: "nv",
+//   server: "localhost\\SQLDU",
+//   database: "Tiki",
+//   trustServerCertificate: true,
+// };

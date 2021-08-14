@@ -29,12 +29,30 @@ const TableItem = ({ bill, setBill }) => {
         ThanhTien: item.ThanhTien,
       };
     });
-    console.log(bill);
+ 
     window.localStorage.setItem("cart", JSON.stringify(cart));
   }
 
   const onClickDelete = (record) => {
-    console.log(record);
+    const temp = bill;
+    const index = temp.indexOf(record);
+    if (index > -1) {
+      temp.splice(index, 1);
+    }
+
+    setBill(temp);
+
+    const cart = temp.map((item) => {
+      return {
+        MaSP: item.key,
+        Ten: item.Ten,
+        SoLuong: item.SoLuong,
+        DonGia: item.DonGia,
+        ThanhTien: item.ThanhTien,
+      };
+    });
+
+    window.localStorage.setItem("cart", JSON.stringify(cart));
   }
 
   const columns = [
@@ -66,7 +84,7 @@ const TableItem = ({ bill, setBill }) => {
       render: (text) => <div>{text}.000 Đồng</div>,
     },
     {
-      title: () => <DeleteOutlined />,
+      title: "Action",
       render: (_, record) => (
         <div>
           <DeleteOutlined onClick={() => onClickDelete(record)}/>
@@ -75,12 +93,9 @@ const TableItem = ({ bill, setBill }) => {
     },
   ];
 
-
-
   return (
     <div>
       <Table
-       
         columns={columns}
         dataSource={bill}
       />

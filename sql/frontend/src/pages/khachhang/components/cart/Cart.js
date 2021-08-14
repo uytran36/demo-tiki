@@ -1,13 +1,12 @@
 import TableItem from "./cartComponents/TableItem";
 import InfoPanel from "./cartComponents/InfoPanel";
-import { Row, Col } from "antd";
+import { Row, Col, Spin } from "antd";
 import "./Cart.css";
 import { useState, useEffect } from "react";
-import axios from "axios";
 
 const Cart = () => {
   const [bill, setBill] = useState([]);
-
+  const [spin, setSpin] = useState(false);
 
   useEffect(() => {
     const cart = JSON.parse(window.localStorage.getItem("cart"));
@@ -27,16 +26,18 @@ const Cart = () => {
 
   return (
     <div className="wrap-cart">
-      <h3>Giỏ hàng</h3>
-      <Row>
-        <Col flex={10}>
-          <TableItem bill={bill} setBill={setBill} />
-        </Col>
-        <Col flex={2}></Col>
-        <Col flex="300px">
-          <InfoPanel bill={bill} />
-        </Col>
-      </Row>
+      <Spin spinning={spin}>
+        <h3>Giỏ hàng</h3>
+        <Row>
+          <Col flex={10}>
+            <TableItem bill={bill} setBill={setBill} />
+          </Col>
+          <Col flex={2}></Col>
+          <Col flex="300px">
+            <InfoPanel bill={bill} setBill={setBill} setSpin={setSpin}/>
+          </Col>
+        </Row>
+      </Spin>
     </div>
   );
 };

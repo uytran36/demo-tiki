@@ -1,3 +1,4 @@
+declare @outputtable table (MaHD int);
 INSERT INTO [HoaDon]
     (
     [MaKH]
@@ -12,6 +13,7 @@ INSERT INTO [HoaDon]
     ,[NgayGiaoTC]
     ,[GhiChu]
     )
+output inserted.MaHD into @outputtable(MaHD)
 VALUES 
     (
     @MaKH,
@@ -19,10 +21,11 @@ VALUES
     @MaKMai,
     @NgayLap,
     @TongTien,
-    @TinhTrang
-    ,@SLTikiXu
-    ,@PhiVC
-    ,@ThanhTienHD
-    ,@NgayGiaoTC
-    ,@GhiChu
+    @TinhTrang,
+    @SLTikiXu,
+    @PhiVC,
+    @ThanhTienHD,
+    @NgayGiaoTC,
+    @GhiChu
     )   
+SELECT * FROM @outputtable
