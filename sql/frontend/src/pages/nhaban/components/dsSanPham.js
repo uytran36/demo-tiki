@@ -368,6 +368,38 @@ const DoanhThu = (props) => {
       title: "Loại sản phẩm",
       dataIndex: "MaLoaiSP",
       key: "MaLoaiSP",
+      render: (text) => {
+        switch (text) {
+          case 0:
+            return <div>Điện thoại - Máy tính bảng</div>;
+          case 1:
+            return <div>Điện tử - Điện lạnh</div>;
+          case 2:
+            return <div>Phụ kiện - Thiết bị số</div>;
+          case 3:
+            return <div>Laptop- Thiết bị IT</div>;
+          case 4:
+            return <div>Máy ảnh - Thiết bị quay phim</div>;
+          case 5:
+            return <div>Điện gia dùng</div>;
+          case 6:
+            return <div>Nhà cửa đời sống</div>;
+          case 7:
+            return <div>Hàng tiêu dùng - Thực phẩm</div>;
+          case 8:
+            return <div>Đồ chơi - Mẹ và Bé</div>;
+          case 9:
+            return <div>Làm đẹp - Sức khỏe</div>;
+          case 10:
+            return <div>Thời trang - phụ kiện</div>;
+          case 11:
+            return <div>Thể thao - dã ngoại</div>;
+          case 12:
+            return <div>Xe máy, ô tô, xe đạp</div>;
+          default:
+            return <div>Sách - VPP và Quà tặng</div>;
+        }
+      },
     },
     {
       title: "Hành động",

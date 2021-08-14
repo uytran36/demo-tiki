@@ -1,6 +1,7 @@
 const express = require("express");
 const khachHangController = require("../controllers/khachHangController");
 const nhaBanController = require("../controllers/nhaBanController");
+const NVQTController = require("../controllers/NVQTController");
 const router = express.Router();
 
 //khach hang
@@ -38,6 +39,17 @@ router.post("/nhaban/dttn", nhaBanController.dtTN);
 router.post("/nhaban/cthd", nhaBanController.CTHD);
 router.post("/nhaban/splist", nhaBanController.getSP);
 router.get("/nhaban/hoadon/:id", nhaBanController.get1HD);
+router.post("/nhaban/thang", nhaBanController.dtThanghmot);
+
+
+router.post("/NVQT/taoNVQLK", NVQTController.addNhanVien);
+router.get("/NVQT/listKH/:page",NVQTController.getKH);
+router.get("/NVQT/listLuongNVGH/:page", NVQTController.getBDL_NVGH)
+router.get("/NVQT/AmountLSBDL_NVGH", NVQTController.SL_LSBDL_NVGH)
+router.get("/NVQT/listLuongNVQLK/:page", NVQTController.getBDL_NVQLK)
+router.get("/NVQT/listNVQLK/", NVQTController.layNVQLK)
+router.delete("/NVQT/xoaNVQLK/:MaNV", NVQTController.xoaNVQLK)
+
 module.exports = {
   routes: router,
 };

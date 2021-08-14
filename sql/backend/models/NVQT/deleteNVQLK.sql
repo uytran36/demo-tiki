@@ -1,0 +1,1 @@
+DELETE FROM [Tiki].[dbo].[NhanVienQuanLyKho] WHERE MaNV = @MaNV

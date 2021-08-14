@@ -1,7 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
-const testApiRoutes = require("./routes/testApi");
 const tikiRoutes = require("./routes/tikiRoutes");
 const session = require("express-session");
 const sql = require("mssql");
@@ -12,8 +11,8 @@ const dbConfig = {
   
   user: "sa",
   password: "123",
-  server: "localhost\\TRANUY2",
-  database: "CUAHANG",
+  server: "localhost\\LONGHA",
+  database: "Tiki",
   trustServerCertificate: true,
   
 
