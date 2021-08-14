@@ -1,7 +1,7 @@
 import axios from "axios";
-
-import Nhaban from "./pages/nhaban";
-
+import NhaBan from "./pages/nhaban";
+import NhanVienGH from "./pages/nhanviengh";
+import NhanVienQL from "./pages/nhanvienql";
 function App() {
   const callAPI = () => {
     //get post put delete
@@ -14,7 +14,8 @@ function App() {
 
   return (
     <div>
-      <Nhaban />
+      <NhanVienQL/>
+      {/* <NhaBan/> */}
     </div>
   );
 }
