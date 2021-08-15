@@ -3,7 +3,7 @@ import { Table, InputNumber } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 
-const TableItem = ({ bill, setBill }) => {
+const TableItem = ({ bill, setBill, control, setControl }) => {
 
   function onChange(value, record) {
     const r = {
@@ -31,6 +31,7 @@ const TableItem = ({ bill, setBill }) => {
     });
  
     window.localStorage.setItem("cart", JSON.stringify(cart));
+    setControl(!control);
   }
 
   const onClickDelete = (record) => {
@@ -53,6 +54,7 @@ const TableItem = ({ bill, setBill }) => {
     });
 
     window.localStorage.setItem("cart", JSON.stringify(cart));
+    setControl(!control);
   }
 
   const columns = [
