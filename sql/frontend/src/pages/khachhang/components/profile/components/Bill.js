@@ -2,7 +2,7 @@ import { useState, useEffect, Button, Input, Form, InputNumber } from "react";
 import { Table, Modal } from "antd";
 import DetailBill from "./DetailBill";
 import axios from "axios";
-import {FaStar} from 'react-icon/fa'
+import { FaStar } from "react-icons/fa";
 
 const ReviewModal = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -45,10 +45,17 @@ const ReviewModal = () => {
                     name="rating"
                     value={ratingValue}
                     onClick={() => setRating(ratingValue)}
-                    onMouseOver={() => setHover(ratingValue)}
-                    onMouseOut={() => setHover(null)}
                   />
-                  <FaStar className="star" />
+                  <FaStar
+                    className="star"
+                    color={
+                      ratingValue <= (hover || rating) ? "#ffc107" : "#e4e5e9"
+                    }
+                    size={100}
+                    onMouseEnter={() => setHover(ratingValue)}
+                    onMouseLeave={() => setHover(null)}
+                  />
+                  <div>Rating: {rating}</div>
                 </label>
               );
             }),
@@ -95,6 +102,7 @@ const Bill = () => {
   return (
     <div>
       <Table columns={columns} dataSource={data} />
+      <ReviewModal />
     </div>
   );
 };
