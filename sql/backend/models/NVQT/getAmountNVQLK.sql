@@ -1,1 +1,0 @@
-SELECT COUNT(*) AS SLNV FROM [Tiki].[dbo].[NhanVienQuanLyKho]

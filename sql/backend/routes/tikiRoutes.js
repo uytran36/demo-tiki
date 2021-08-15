@@ -32,9 +32,15 @@ router.post("/NVQT/taoNVQLK", NVQTController.addNhanVien);
 router.get("/NVQT/listKH/:page",NVQTController.getKH);
 router.get("/NVQT/listLuongNVGH/:page", NVQTController.getBDL_NVGH)
 router.get("/NVQT/AmountLSBDL_NVGH", NVQTController.SL_LSBDL_NVGH)
+router.get("/NVQT/AmountLSBDL_NVQLK", NVQTController.SL_LSBDL_NVQLK)
 router.get("/NVQT/listLuongNVQLK/:page", NVQTController.getBDL_NVQLK)
 router.get("/NVQT/listNVQLK/", NVQTController.layNVQLK)
 router.delete("/NVQT/xoaNVQLK/:MaNV", NVQTController.xoaNVQLK)
+router.put("/NVQT/EditNVQLK/:MaNV", NVQTController.editNVQLK)
+
+router.get("/NVQT/listNhaBan/:page", NVQTController.getNB)
+router.put("/NVQT/editNB/:id", NVQTController.editNB)
+router.delete("/NVQT/xoaNB/:MaNB", NVQTController.xoaNB)
 
 module.exports = {
   routes: router,
