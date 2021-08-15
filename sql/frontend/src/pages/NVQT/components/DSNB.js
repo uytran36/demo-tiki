@@ -51,12 +51,6 @@ function EditModal(props) {
       .catch((err) => {
         console.log(err);
       });
-
-      axios.get("http://localhost:5000/api/NVQT/listNhaBan/" + page).then((res) => {
-            setListNhaBan(res.data);
-        }).catch((err) => {
-          console.log(err);
-        });
   };
 
   const handleCancel = () => {
@@ -143,113 +137,126 @@ function EditModal(props) {
 
 
 function DSNB() {
-    const [listNhaBan, setListNhaBan] = useState([]);
-    const [current, setCurrent] = useState(1);
-    const [amountNB, setAmountNB] = useState(0);
-    const [NhaBan, setNhaBan] = useState({});
-    const [editVisible, setEditVisible] = useState(false);
-    const [addVisible, setAddVisible] = useState(false);
+  const [listNhaBan, setListNhaBan] = useState([]);
+  const [current, setCurrent] = useState(1);
+  const [amountNB, setAmountNB] = useState(0);
+  const [NhaBan, setNhaBan] = useState({});
+  const [editVisible, setEditVisible] = useState(false);
+  const [addVisible, setAddVisible] = useState(false);
 
-    useEffect(() => {
-        axios
-          .get("http://localhost:5000/api/NVQT/listNhaBan/1")
-          .then((res) => {
-            setListNhaBan(res.data);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-
-        axios
-          .get("http://localhost:5000/api/nhaban/slnb")
-          .then((res) => {
-            setAmountNB(res.data[0].slNB);
-          })
-          .catch((err) => {
-            console.log(err);
-          })
-      }, []);
-
-    const onChange = (page) => {
-        setCurrent(page);
-        axios.get("http://localhost:5000/api/NVQT/listNhaBan/" + page).then((res) => {
-            setListNhaBan(res.data);
-        }).catch((err) => {
+  useEffect(() => {
+      axios
+        .get("http://localhost:5000/api/NVQT/listNhaBan/1")
+        .then((res) => {
+          setListNhaBan(res.data);
+        })
+        .catch((err) => {
           console.log(err);
         });
-    };
 
-    const onClickEdit = (item) => {
-      setNhaBan(item);
-      setEditVisible(true);
-    };
+      axios
+        .get("http://localhost:5000/api/nhaban/slnb")
+        .then((res) => {
+          setAmountNB(res.data[0].slNB);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    }, []);
+
+  const onChange = (page) => {
+      setCurrent(page);
+      axios.get("http://localhost:5000/api/NVQT/listNhaBan/" + page).then((res) => {
+          setListNhaBan(res.data);
+      }).catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const onClickEdit = (item) => {
+    setNhaBan(item);
+    setEditVisible(true);
+  };
+
+
+  const setVisibleFalse = () => {
+    setEditVisible(false);
+    setAddVisible(false);
+  };
+
+  const columns = [
+    {
+      title: "Mã Nhà Bán",
+      dataIndex: "MaNhaBan",
+      key: "MaNhaBan",
+    },
+    {
+      title: "Tên Nhà Bán",
+      key: "TenNhaBan",
+      dataIndex: "TenNhaBan",
+    },
+    {
+      title: "Địa chỉ Nhà Bán",
+      key: "DiaChiNhaBan",
+      dataIndex: "DiaChiNhaBan",
+    },
+    {
+      title: "Email Nhà Bán",
+      key: "EmailNhaBan",
+      dataIndex: "EmailNhaBan",
+    },
+    {
+      title: "SĐT",
+      key: "SDTNhaBan",
+      dataIndex: "SDTNhaBan",
+    },
+    {
+      title: "Hành động",
+      key: "action",
+      render: (_, record) => (
+        <Space size="middle">
+          <EditTwoTone
+            className="edit-button"
+            onClick={() => onClickEdit(record)}
+          />
+        </Space>
+      ),
+    },
+  ];
   
+return (
+  <div>
+      <div>
+        <Layout>
+          <Content>
+            <Title level={2} classname="titlename">
+              Danh sách nhà bán
+            </Title>
+            <Table columns={columns} dataSource={listNhaBan} pagination={false} />
+          </Content>
+        </Layout>
+      </div>
 
-    const setVisibleFalse = () => {
-      setEditVisible(false);
-      setAddVisible(false);
-    };
-
-    const columns = [
-      {
-        title: "Mã Nhà Bán",
-        dataIndex: "MaNhaBan",
-        key: "MaNhaBan",
-      },
-      {
-        title: "Tên Nhà Bán",
-        key: "TenNhaBan",
-        dataIndex: "TenNhaBan",
-      },
-      {
-        title: "Địa chỉ Nhà Bán",
-        key: "DiaChiNhaBan",
-        dataIndex: "DiaChiNhaBan",
-      },
-      {
-        title: "Email Nhà Bán",
-        key: "EmailNhaBan",
-        dataIndex: "EmailNhaBan",
-      },
-      {
-        title: "SĐT",
-        key: "SDTNhaBan",
-        dataIndex: "SDTNhaBan",
-      },
-      {
-        title: "Hành động",
-        key: "action",
-        render: (_, record) => (
-          <Space size="middle">
-            <EditTwoTone
-              className="edit-button"
-              onClick={() => onClickEdit(record)}
-            />
-          </Space>
-        ),
-      },
-    ];
-    
-  return (
-    <div>
-        <div>
-      <Layout>
-        <Content>
-          <Title level={2} classname="titlename">
-            Danh sách nhà bán
-          </Title>
-          <Table columns={columns} dataSource={listNhaBan} pagination={false} />
-        </Content>
-      </Layout>
-    </div>
-
-    <div className="paging" style={{ marginLeft: 500 }}>
-        <Pagination
-        current={current}
-        pageSize={10}
-        total={amountNB}
-        onChange={onChange}
-        showSizeChanger={false}
+      <div className="paging" style={{ marginLeft: 500 }}>
+          <Pagination
+          current={current}
+          pageSize={10}
+          total={amountNB}
+          onChange={onChange}
+          showSizeChanger={false}
+          />
+      </div>
+      <EditModal
+          key={editVisible}
+          visible={editVisible}
+          NhaBan={NhaBan}
+          setListNhaBan={setListNhaBan}
+          setVisibleFalse={setVisibleFalse}
         />
-    </div>
-
+  </div>
+);
+
+}
+
+
+export default DSNB;
