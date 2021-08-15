@@ -8,26 +8,22 @@ const Login = ({ setAuth }) => {
 
   const onFinish = (values) => {
     const data = JSON.stringify(values);
-    
+
     axios
-      .post(
-        "http://localhost:5000/api/khachhang",
-        data,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
+      .post("http://localhost:5000/api/khachhang", data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
       .then((res) => {
-        console.log(res.data.MaKH);
-        if (res.data.length !== 0) {
-          window.localStorage.setItem("KH", JSON.stringify(res.data));
+        if(res.data.length !== 0) {
+          window.localStorage.setItem("KH", JSON.stringify(res.data[0]));
           history.push("/");
-          setAuth(res.data);
+          setAuth(res.data[0]);
         }
-      }).catch(err => {
-        console.log(err)
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 

@@ -1,11 +1,23 @@
-import axios from "axios";
-
-import Nhaban from "./pages/nhaban";
+import { useState, useEffect } from "react";
+import NhaBan from "./pages/nhaban";
+import KhachHang from "./pages/khachhang";
 
 function App() {
+  const [route, setRoute] = useState(null);
+
+  useEffect(() => {
+    const path = window.location.pathname;
+    const params = path.split("/")[1];
+    setRoute(params);
+  }, []);
+
   return (
     <div>
-      <Nhaban />
+      {/* <Nhaban /> */}
+      {
+        route === "nhaban" ? <NhaBan /> : <KhachHang />
+      }
+      {/* <KhachHang /> */}
     </div>
   );
 }
