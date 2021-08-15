@@ -83,12 +83,13 @@ const TrangChu = () => {
           title="Hiệu quả hoạt động theo tháng"
           extra={<Link to="/nhaban/doanhThu">Xem chi tiết</Link>}
         >
-          <Chart
+          {/* <Chart
             config={config}
             setConfig={setConfig}
             data={data}
             setData={setData}
-          />
+          /> */}
+
         </Card>
       </Content>
     </Layout>
