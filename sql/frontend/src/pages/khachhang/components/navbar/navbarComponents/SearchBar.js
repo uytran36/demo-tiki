@@ -1,5 +1,6 @@
 import { Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
+import { useHistory } from "react-router-dom";
 
 const { Search } = Input;
 const suffix = (
@@ -12,7 +13,15 @@ const suffix = (
 );
 
 const SearchBar = () => {
-  const onSearch = (value) => console.log(value);
+  const history = useHistory();
+
+  const onSearch = (value) => {
+    if (value !== "") {
+      history.push("/search/" + value);
+    } else {
+      history.push("/");
+    }
+  };
 
   return (
     <Search

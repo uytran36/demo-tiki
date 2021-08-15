@@ -1,12 +1,11 @@
-import axios from "axios";
-
 import Nhaban from "./pages/nhaban";
-import NVQT from "./pages/NVQT";
+import KhachHang from "./pages/khachhang";
 
 function App() {
   return (
     <div>
-      <NVQT />
+      {/* <Nhaban /> */}
+      <KhachHang />
     </div>
   );
 }

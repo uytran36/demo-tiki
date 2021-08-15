@@ -1,5 +1,7 @@
 import { Menu, Row, Col } from "antd";
 import Icon, { MenuOutlined, CaretDownOutlined } from "@ant-design/icons";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const UserSvg = () => (
   <svg width="15px" height="15px" viewBox="0 0 512 512">
@@ -107,6 +109,12 @@ const BillIcon = (props) => <Icon component={BillSvg} {...props} />;
 const DiscountIcon = (props) => <Icon component={DiscountSvg} {...props} />;
 
 const Sidebar = () => {
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    setUser(JSON.parse(window.localStorage.getItem("KH")));
+  }, []);
+
   return (
     <div className="sidebar-container">
       <Row>
@@ -119,7 +127,7 @@ const Sidebar = () => {
         </Col>
         <Col flex="150px">
           <div>Tài khoản của</div>
-          <div>Trần Khánh Gia Uy</div>
+          <div>{user.Ten}</div>
         </Col>
       </Row>
 
@@ -134,18 +142,21 @@ const Sidebar = () => {
               <UserIcon />
             </Col>
             <Col flex="auto">
-              <div>Thông tin tài khoản</div>
+              <Link to="/profile">
+                <div>Thông tin tài khoản</div>
+              </Link>
             </Col>
           </Row>
         </Menu.Item>
         <Menu.Item key="2">
           <Row>
-            {" "}
             <Col flex="20px">
               <BillIcon />
             </Col>
             <Col flex="auto">
-              <div>Quản lý đơn hàng</div>
+              <Link to="/profile/bill">
+                <div>Quản lý đơn hàng</div>
+              </Link>
             </Col>
           </Row>
         </Menu.Item>
@@ -155,7 +166,9 @@ const Sidebar = () => {
               <DiscountIcon />
             </Col>
             <Col flex="auto">
-              <div>Kho mã giảm giá</div>
+              <Link to="/profile/discount">
+                <div>Kho mã giảm giá</div>
+              </Link>
             </Col>
           </Row>
         </Menu.Item>

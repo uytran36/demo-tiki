@@ -4,13 +4,27 @@ const nhaBanController = require("../controllers/nhaBanController");
 const NVQTController = require("../controllers/NVQTController");
 const router = express.Router();
 
+//khach hang
 router.post("/khachhang", khachHangController.getKHByEmail);
 router.get("/amountkh", khachHangController.getAmountKhachHang);
 router.post("/addkhachhang", khachHangController.addKhachHang);
 router.put("/khuyenmai/:id", khachHangController.updateKhuyenMai);
 router.get("/sanpham/:page", khachHangController.getSanPhamPage);
+router.get("/amountsp", khachHangController.getAmountSanPham);
+router.get("/loaisp/:type/:page", khachHangController.getSPType);
+router.get("/amountloaisp/:type", khachHangController.getAmountSPType);
 router.get("/ctsp/:id", khachHangController.getSanPhamID);
+router.get("/nbsp/:id", khachHangController.getNhaBanSP);
+router.get("/review/:id", khachHangController.getReviewSP);
+router.post("/createhd", khachHangController.createHD);
+router.post("/createcthd", khachHangController.createCTHD);
+router.get("/amountcthd", khachHangController.getAmountCT_HoaDon);
+router.get("/amountspbyname/:str", khachHangController.getAmountSanPhamByName)
+router.get("/find/:str/:page", khachHangController.findSanPham)
+router.put("/khachhang/:id",khachHangController.updateKhachHang);
+router.get("/discount/:id", khachHangController.getDiscountKH);
 
+//nha ban
 router.post("/nhaban/hoadon", nhaBanController.getAllHoaDon);
 router.post("/nhaban/sanpham", nhaBanController.addSanPham);
 router.put("/nhaban/sanpham/:id", nhaBanController.capnhatSP);

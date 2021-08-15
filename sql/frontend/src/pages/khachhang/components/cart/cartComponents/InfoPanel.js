@@ -1,6 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Card, Divider, Row, Col, Button } from "antd";
+import { Card, Divider, Row, Col, Button, InputNumber, Spin } from "antd";
 import Icon from "@ant-design/icons";
+import { useHistory } from "react-router-dom";
+import { useState, useEffect } from "react";
+import moment from "moment";
+import axios from "axios";
 
 const DiscountCouponSvg = () => (
   <svg width="15px" height="15px" viewBox="0 0 480 480">
@@ -104,63 +108,197 @@ const DiscountCouponIcon = (props) => (
   <Icon component={DiscountCouponSvg} {...props} />
 );
 
-const InfoPanel = () => {
+const InfoPanel = ({ bill, setBill, setSpin }) => {
+  const [customer, setCustomer] = useState({});
+  const [discount, setDiscount] = useState(0);
+  const [tikiXu, setTikiXu] = useState(0);
+  const [amountCTHD, setAmountCTHD] = useState(0);
+
+  const history = useHistory();
+
+  useEffect(() => {
+    const kh = window.localStorage.getItem("KH");
+    setCustomer(JSON.parse(kh));
+    axios.get("http://localhost:5000/api/amountcthd").then((res) => {
+      if (res.data.length !== 0) {
+        setAmountCTHD(res.data[0].Amount);
+      }
+    });
+  }, []);
+
+  const createBill = () => {
+    setSpin(true);
+    let tt = 0;
+    for (let item of bill) {
+      tt += item.ThanhTien;
+    }
+
+    const hd = {
+      MaKH: customer.MaKH,
+      MaNVGH: 1,
+      MaKMai: null,
+      NgayLap: moment().format("MM-DD-YYYY"),
+      TongTien: tt,
+      TinhTrang: "Chưa bàn giao",
+      SLTikiXu: tikiXu,
+      PhiVC: 15,
+      ThanhTienHD: tt - tikiXu - discount + 15,
+      NgayGiaoTC: null,
+      GhiChu: "",
+    };
+
+    axios
+      .post("http://localhost:5000/api/createhd", JSON.stringify(hd), {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        const cthd = bill.map((item, index) => {
+          return {
+            MaHD: res.data[0].MaHD,
+            MaSP: item.key,
+            SoLuong: item.SoLuong,
+            ThanhTien: item.ThanhTien,
+            MaCTHD: amountCTHD + index,
+          };
+        });
+
+        for (let item of cthd) {
+          axios
+            .post(
+              "http://localhost:5000/api/createcthd",
+              JSON.stringify(item),
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              }
+            )
+            .then((res) => {
+              setSpin(false);
+              setBill([]);
+              window.localStorage.setItem("cart", JSON.stringify([]));
+              history.push("/thankyou");
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    
+  };
+
+  const onChangeTikiXu = (value) => {
+    console.log("tiki xu:" + value);
+  };
+
   return (
     <div>
-      <div className="address-card">
-        <Card
-          size="small"
-          title="Giao tới"
-          extra={<a href="#">Thay đổi</a>}
-          style={{ width: 300 }}
-        >
-          <b>Trần Khánh Gia Uy</b>
-          <Divider type="vertical" />
-          <b>0123456789</b>
-          <p>1 Paster, Phường 1, Quận 1, Thành phố Hồ Chí Minh</p>
-        </Card>
-      </div>
-      <div className="discount-card">
-        <Card
-          size="small"
-          title="Tiki khuyến mãi"
-          extra={<p>Chỉ chọn 1</p>}
-          style={{ width: 300 }}
-        >
-          <a>
-            <DiscountCouponIcon />
-            Chọn mã khuyến mãi
-          </a>
-        </Card>
-      </div>
-      <div className="price-total">
-        <Card style={{ width: 300 }}>
-          <Row>
-            <Col flex={2}>Tạm tính</Col>
-            <Col flex={1}>
-              <b>0đ</b>
-            </Col>
-          </Row>
-          <Row>
-            <Col flex={2}>Giảm giá</Col>
-            <Col flex={1}>
-              <b>0đ</b>
-            </Col>
-          </Row>
-          <Divider />
-          <Row>
-            <Col flex={2}>Tổng cộng</Col>
-            <Col flex={1}>
-              <b className="total">0đ</b>
-            </Col>
-          </Row>
-        </Card>
-      </div>
-      <div className="button-buy">
-        <Button type="primary" danger block>
-          Mua hàng
-        </Button>
-      </div>
+      <Spin size="large" spinning={amountCTHD !== 0 ? false : true}>
+        <div className="address-card">
+          <Card
+            size="small"
+            title="Giao tới"
+            extra={<a href="#">Thay đổi</a>}
+            style={{ width: 300 }}
+          >
+            <b>{customer.Ten}</b>
+            <Divider type="vertical" />
+            <b>{customer.Sdt}</b>
+            <p>
+              {customer.SoNha +
+                " " +
+                customer.Duong +
+                ", Phường " +
+                customer.Phuong +
+                ", Quận " +
+                customer.Quan +
+                ", " +
+                customer.ThanhPho}
+            </p>
+          </Card>
+        </div>
+        <div className="discount-card">
+          <Card
+            size="small"
+            title="Tiki khuyến mãi"
+            extra={<p>Chỉ chọn 1</p>}
+            style={{ width: 300 }}
+          >
+            <a>
+              <DiscountCouponIcon />
+              Chọn mã khuyến mãi
+            </a>
+          </Card>
+        </div>
+        <div className="tikixu-card">
+          <Card
+            size="small"
+            title="Tiki xu"
+            extra={<p>Bạn có {customer.TikiXu} Tiki xu</p>}
+            style={{ width: 300 }}
+          >
+            <InputNumber
+              min={0}
+              max={customer.TikiXu}
+              defaultValue={0}
+              onChange={onChangeTikiXu}
+            />
+          </Card>
+        </div>
+
+        <div className="price-total">
+          <Card style={{ width: 300 }}>
+            <Row>
+              <Col flex={2}>Tạm tính</Col>
+              <Col flex={1}>
+                <b>
+                  {bill.reduce((acc, cur) => {
+                    return acc + cur.ThanhTien;
+                  }, 0)}
+                  .000 Đồng
+                </b>
+              </Col>
+            </Row>
+            <Row>
+              <Col flex={2}>Giảm giá</Col>
+              <Col flex={1}>
+                <b>{discount}.000 Đồng</b>
+              </Col>
+            </Row>
+            <Row>
+              <Col flex={2}>Phí vận chuyển</Col>
+              <Col flex={1}>
+                <b>15.000 Đồng</b>
+              </Col>
+            </Row>
+            <Divider />
+            <Row>
+              <Col flex={2}>Tổng cộng</Col>
+              <Col flex={1}>
+                <b className="total">
+                  {bill.reduce((acc, cur) => {
+                    return acc + cur.ThanhTien;
+                  }, 0) -
+                    discount +
+                    15}
+                  .000 Đồng
+                </b>
+              </Col>
+            </Row>
+          </Card>
+        </div>
+        <div className="button-buy">
+          <Button type="primary" danger block onClick={() => createBill()}>
+            Mua hàng
+          </Button>
+        </div>
+      </Spin>
     </div>
   );
 };

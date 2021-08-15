@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Menu, Dropdown, Row, Col } from "antd";
 import Icon, { MenuOutlined, CaretDownOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 const PhoneSvg = () => (
   <svg width="15px" height="15px" viewBox="0 0 35 35">
@@ -436,72 +437,100 @@ const danhMucSanPham = (
   <Menu>
     <Menu.Item>
       <div>
-        <PhoneIcon /> Điện thoại - Máy tính bảng
+        <Link to="/phone">
+          <PhoneIcon /> Điện thoại - Máy tính bảng
+        </Link>
       </div>
     </Menu.Item>
     <Menu.Item>
       <div>
-        <TvIcon /> Điện tử - Điện lạnh
+        <Link to="/tv">
+          <TvIcon /> Điện tử - Điện lạnh
+        </Link>
       </div>
     </Menu.Item>
     <Menu.Item>
       <div>
-        <HeadphonesIcon /> Phụ kiện - Thiết bị số
+        <Link to="/accessories">
+          <HeadphonesIcon /> Phụ kiện - Thiết bị số
+        </Link>
       </div>
     </Menu.Item>
     <Menu.Item>
       <div>
-        <LaptopIcon /> Laptop - Thiết bị IT
+        <Link to="/laptop">
+          <LaptopIcon /> Laptop - Thiết bị IT
+        </Link>
       </div>
     </Menu.Item>
     <Menu.Item>
       <div>
-        <CameraIcon /> Máy ảnh - Thiết bị quay phim
+        <Link to="/camera">
+          <CameraIcon /> Máy ảnh - Thiết bị quay phim
+        </Link>
       </div>
     </Menu.Item>
     <Menu.Item>
       <div>
-        <WashingMachineIcon /> Điện gia dụng
+        <Link to="/appliance">
+          <WashingMachineIcon /> Điện gia dụng
+        </Link>
       </div>
     </Menu.Item>
     <Menu.Item>
       <div>
-        <PotIcon /> Nhà cửa đời sống
+        <Link to="/house">
+          <PotIcon /> Nhà cửa đời sống
+        </Link>
       </div>
     </Menu.Item>
     <Menu.Item>
       <div>
-        <BottleSprayIcon /> Hàng tiêu dùng - Thực phẩm
+        <Link to="/food">
+          <BottleSprayIcon /> Hàng tiêu dùng - Thực phẩm
+        </Link>
       </div>
     </Menu.Item>
     <Menu.Item>
       <div>
-        <BottleIcon /> Đồ chơi, Mẹ & bé
+        <Link to="/toys">
+          <BottleIcon /> Đồ chơi, Mẹ & bé
+        </Link>
       </div>
     </Menu.Item>
     <Menu.Item>
       <div>
-        <MakeupIcon /> Làm đẹp - Sức khỏe
+        <Link to="/beauty">
+          <MakeupIcon /> Làm đẹp - Sức khỏe
+        </Link>
       </div>
     </Menu.Item>
     <Menu.Item>
       <div>
-        <TshirtIcon /> Thời trang - Phụ kiện
+        <Link to="/fashion">
+          <TshirtIcon /> Thời trang - Phụ kiện
+        </Link>
       </div>
     </Menu.Item>
     <Menu.Item>
       <div>
-        <BallIcon /> Thể thao - Dã ngoại
+        <Link to="/sport">
+          <BallIcon /> Thể thao - Dã ngoại
+        </Link>
       </div>
     </Menu.Item>
     <Menu.Item>
       <div>
-        <BikeIcon /> Xe máy, Ô tô, Xe đạp
+        <Link to="/bike">
+          <BikeIcon /> Xe máy, Ô tô, Xe đạp
+        </Link>
       </div>
     </Menu.Item>
     <Menu.Item>
       <div>
-        <BookIcon /> Sách - VPP & Quà tặng
+        <Link to="/book">
+          <BookIcon /> Sách - VPP & Quà tặng
+        </Link>
       </div>
     </Menu.Item>
   </Menu>

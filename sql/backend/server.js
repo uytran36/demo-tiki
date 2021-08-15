@@ -46,4 +46,8 @@ server.on("listening", () => {
   console.log("listening on " + bind);
 });
 
+server.timeout = 60000;
+
 server.listen(port);
+server.setTimeout(30000);
+
