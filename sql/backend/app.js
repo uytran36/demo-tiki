@@ -8,7 +8,6 @@ var cors = require("cors");
 const timeout = require("connect-timeout");
 //Initializing connection string
 const dbConfig = {
-  
   user: "sa",
   password: "123",
   server: "localhost\\TRANUY2",

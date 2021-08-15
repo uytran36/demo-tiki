@@ -21,10 +21,9 @@ import LogIn from "./components/LogIn";
 import Promo from "./components/Promo";
 import LuongNVGH from "./components/LuongNVGH";
 import LuongNVQLK from "./components/LuongNVQLK";
-import TaoNVQLK from "./components/TaoNVQLK";
 import DSKH from "./components/DSKH";
 import NVQLK from "./components/NVQLK";
-
+import DSNB from "./components/DSNB";
 const { Header, Sider, Content, Footer } = Layout;
 
 class NVQT extends React.Component {
@@ -63,13 +62,13 @@ class NVQT extends React.Component {
                     <Link to="/LuongNVQLK">Lương nhân viên quản lý kho</Link>
                   </Menu.Item>
                   <Menu.Item key="4" icon={<UserOutlined />}>
-                    <Link to="/TaoNVQLK">Thêm nhân viên quản lý kho</Link>
-                  </Menu.Item>
-                  <Menu.Item key="5" icon={<UserOutlined />}>
                     <Link to="/DSKH">Danh sách khách hàng</Link>
                   </Menu.Item>
-                  <Menu.Item key="6" icon={<UserOutlined />}>
+                  <Menu.Item key="5" icon={<UserOutlined />}>
                     <Link to="/NVQLK">Danh sách nhân viên quản lý kho</Link>
+                  </Menu.Item>
+                  <Menu.Item key="6" icon={<ContainerOutlined />}>
+                    <Link to="/DSNB">Danh sách nhà bán</Link>
                   </Menu.Item>
                 </Menu>
             </Sider>
@@ -105,14 +104,14 @@ class NVQT extends React.Component {
                   <Route exact path="/LuongNVQLK">
                     <LuongNVQLK />
                   </Route>
-                  <Route exact path="/TaoNVQLK">
-                    <TaoNVQLK />
-                  </Route>
                   <Route exact path="/DSKH">
                     <DSKH />
                   </Route>
                   <Route exact path="/NVQLK">
                     <NVQLK />
+                  </Route>
+                  <Route exact path="/DSNB">
+                    <DSNB />
                   </Route>
                 </Switch>
             </Content>

@@ -18,7 +18,7 @@ const getKH = async (req, res, next)  => {
   } catch (error) {
     res.status(400).send(error.message);
   }
-}
+};
 
 const getBDL_NVGH = async (req, res, next)  => {
   try {
@@ -29,7 +29,7 @@ const getBDL_NVGH = async (req, res, next)  => {
   } catch (error) {
     res.status(400).send(error.message);
   }
-}
+};
 
 const SL_LSBDL_NVGH = async (req, res, next) => {
   try {
@@ -38,7 +38,7 @@ const SL_LSBDL_NVGH = async (req, res, next) => {
     } catch (error) {
       res.status(400).send(error.message);
     }
-  }
+  };
 
   const getBDL_NVQLK = async (req, res, next)  => {
     try {
@@ -49,7 +49,7 @@ const SL_LSBDL_NVGH = async (req, res, next) => {
     } catch (error) {
       res.status(400).send(error.message);
     }
-  }
+  };
   
   const SL_LSBDL_NVQLK = async (req, res, next) => {
     try {
@@ -58,7 +58,7 @@ const SL_LSBDL_NVGH = async (req, res, next) => {
       } catch (error) {
         res.status(400).send(error.message);
       }
-    }
+    };
 
   const layNVQLK = async (req, res, next)  => {
     try {
@@ -67,17 +67,59 @@ const SL_LSBDL_NVGH = async (req, res, next) => {
     } catch (error) {
       res.status(400).send(error.message);
     }
-  }
+  };
 
   const xoaNVQLK = async (req, res, next) => {
     try {
       const MaNV = req.params.MaNV;
-      const del = await nbData.deleteSP(MaNV);
+      const del = await nvData.deleteNVQLK(MaNV);
       res.send(del);
     } catch (error) {
       res.status(400).send(error.message);
     }
-  }
+  };
+
+  const editNVQLK = async (req, res, next) => {
+    try {
+      const MaNV = req.params.MaNV;
+      const data = req.body;
+      const up = await nvData.updateNVQLK(MaNV, data);
+      res.send(up);
+    } catch (error) {
+      res.status(400).send(error.message);
+    }
+  };
+
+  const getNB = async (req, res, next) => {
+    try {
+      const page = req.params.page;
+      const layNB = await nvData.getDSNB(page);
+      res.send(layNB);
+    } catch (error) {
+      res.status(400).send(error.message);
+    }
+  };
+
+  const editNB = async (req, res, next) => {
+    try {
+      const MaNhaBan = req.params.MaNhaBan;
+      const data = req.body;
+      const up = await nvData.updateNVQLK(MaNhaBan, data);
+      res.send(up);
+    } catch (error) {
+      res.status(400).send(error.message);
+    }
+  };
+
+  const xoaNB = async (req, res, next) => {
+    try {
+      const MaNhaBan = req.params.MaNhaBan;
+      const del = await nvData.deleteNhaBan(MaNhaBan);
+      res.send(del);
+    } catch (error) {
+      res.status(400).send(error.message);
+    }
+  };
 
 module.exports = {
     SL_LSBDL_NVGH,
@@ -87,5 +129,9 @@ module.exports = {
     getBDL_NVQLK,
     SL_LSBDL_NVQLK,
     layNVQLK,
-    xoaNVQLK
+    xoaNVQLK,
+    editNVQLK,
+    getNB,
+    editNB,
+    xoaNB
 };
