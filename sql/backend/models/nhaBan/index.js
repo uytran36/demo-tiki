@@ -230,17 +230,14 @@ const getOneHD = async (data) => {
   }
 };
 
-
-const dtMonthmot = async (data) => {
+const dtMonth = async (MaNhaBan) => {
   try {
     let pool = await sql.connect(config);
-    const sqlQueries = await utils.loadSqlQueries("nhaBan");
-    const getNB = await pool
+    const dt = await pool
       .request()
-      .input("MaNhaBan", sql.Int, data.MaNhaBan)
-      .input("thang", sql.Int, data.thang)
-      .query(sqlQueries.thangMot);
-    return getNB.recordset;
+      .input("MaNhaBan", sql.Int, MaNhaBan)
+      .execute("getDoanhThu");
+    return dt.recordset;
   } catch (error) {
     console.log(error.message);
   }
@@ -261,6 +258,5 @@ module.exports = {
   getSanPham,
   updateNB,
   getOneHD,
-  dtMonthmot
-
+  dtMonth,
 };

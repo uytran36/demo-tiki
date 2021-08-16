@@ -43,7 +43,7 @@ router.post("/nhaban/dttn", nhaBanController.dtTN);
 router.post("/nhaban/cthd", nhaBanController.CTHD);
 router.post("/nhaban/splist", nhaBanController.getSP);
 router.get("/nhaban/hoadon/:id", nhaBanController.get1HD);
-router.post("/nhaban/thang", nhaBanController.dtThanghmot);
+router.get("/nhaban/doanhthu/:id", nhaBanController.dtThang);
 
 router.post("/NVQT/taoNVQLK", NVQTController.addNhanVien);
 router.get("/NVQT/listKH/:page",NVQTController.getKH);
