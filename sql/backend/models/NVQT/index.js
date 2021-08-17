@@ -261,6 +261,34 @@ const createNVQLK = async (NVQTData) => {
     }
   }
 
+  const doanhThuTT = async(NamLap) => {
+    try {
+      let pool = await sql.connect(config);
+      const dt = await pool
+      .request()
+      .input("NamLap", sql.Int, NamLap)
+      .execute('doanhThuTT')
+
+      return dt.recordset;
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  const doanhThuHD = async(NamLap) => {
+    try {
+      let pool = await sql.connect(config);
+      const dt = await pool
+      .request()
+      .input("NamLap", sql.Int, NamLap)
+      .execute('doanhThuHD')
+
+      return dt.recordset;
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
   module.exports = {
     getAmountLSBD_NVGH,   
     createNVQLK,
@@ -277,6 +305,8 @@ const createNVQLK = async (NVQTData) => {
     topKH,
     createPromo,
     getKho,
-    DangNhap
+    DangNhap,
+    doanhThuTT,
+    doanhThuHD
   };
   

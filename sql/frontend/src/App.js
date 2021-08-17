@@ -14,11 +14,7 @@ function App() {
 
   return (
     <div>
-      {/* <Nhaban /> */}
-      {
-        route === "nhaban" ? <NhaBan /> : <KhachHang />
-      }
-      {/* <KhachHang /> */}
+      <NVQT/>
     </div>
   );
 }

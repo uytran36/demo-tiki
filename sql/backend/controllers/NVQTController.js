@@ -158,12 +158,35 @@ const SL_LSBDL_NVGH = async (req, res, next) => {
     try{
       const data = req.body;
       const LogIn = await nvData.DangNhap(data);
-      
+
       res.send(LogIn);
     } catch (error) {
       res.status(400).send(error.message);
     }
   }
+
+  const DTTT = async (req, res, next) => {
+    try{
+      const nl = req.params.NamLap;
+      const DTTT = await nvData.doanhThuTT(nl);
+
+      res.send(DTTT);
+    } catch (error) {
+      res.status(400).send(error.message);
+    }
+  }
+
+  const DTHD = async (req, res, next) => {
+    try{
+      const nl = req.params.NamLap;
+      const DTHD = await nvData.doanhThuHD(nl);
+
+      res.send(DTHD);
+    } catch (error) {
+      res.status(400).send(error.message);
+    }
+  }
+
 module.exports = {
     SL_LSBDL_NVGH,
     addNhanVien,
@@ -180,5 +203,7 @@ module.exports = {
     topKhachHang,
     taoKhuyenMai,
     dsKho,
-    LogIn
+    LogIn,
+    DTHD,
+    DTTT
 };
