@@ -1,0 +1,1 @@
+SELECT COUNT(*) AS SL FROM [Tiki].[dbo].[KhachHang]

@@ -1,190 +1,95 @@
-import { Layout, Typography, Row, Col, Statistic, Card } from "antd";
+import { Layout, Card } from "antd";
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Column } from "@ant-design/charts";
-import DoanhThu from "./doanhThu";
-
-const { Title } = Typography;
+import Chart from "./chart";
+import axios from "axios";
 const { Content } = Layout;
 
 const TrangChu = () => {
-  var data = [
+  const [config, setConfig] = useState({});
+  const [data, setData] = useState([
     {
       name: "Đơn hàng",
       date: "Jan.",
-      money: 18.9,
+      money: 0,
     },
     {
       name: "Đơn hàng",
       date: "Feb.",
-      money: 28.8,
+      money: 0,
     },
     {
       name: "Đơn hàng",
       date: "Mar.",
-      money: 39.3,
+      money: 0,
     },
     {
       name: "Đơn hàng",
       date: "Apr.",
-      money: 81.4,
+      money: 0,
     },
     {
       name: "Đơn hàng",
       date: "May",
-      money: 47,
+      money: 0,
     },
     {
       name: "Đơn hàng",
       date: "Jun.",
-      money: 20.3,
+      money: 0,
     },
     {
       name: "Đơn hàng",
       date: "Jul.",
-      money: 24,
+      money: 0,
     },
     {
       name: "Đơn hàng",
       date: "Aug.",
-      money: 35.6,
+      money: 0,
     },
     {
-      name: "Doanh Thu",
-      date: "Jan.",
-      money: 12.4,
+      name: "Đơn hàng",
+      date: "Sep.",
+      money: 0,
     },
     {
-      name: "Doanh Thu",
-      date: "Feb.",
-      money: 23.2,
+      name: "Đơn hàng",
+      date: "Oct.",
+      money: 0,
     },
     {
-      name: "Doanh Thu",
-      date: "Mar.",
-      money: 34.5,
+      name: "Đơn hàng",
+      date: "Nov.",
+      money: 0,
     },
     {
-      name: "Doanh Thu",
-      date: "Apr.",
-      money: 99.7,
+      name: "Đơn hàng",
+      date: "Dec.",
+      money: 0,
     },
-    {
-      name: "Doanh Thu",
-      date: "May",
-      money: 52.6,
-    },
-    {
-      name: "Doanh Thu",
-      date: "Jun.",
-      money: 35.5,
-    },
-    {
-      name: "Doanh Thu",
-      date: "Jul.",
-      money: 37.4,
-    },
-    {
-      name: "Doanh Thu",
-      date: "Aug.",
-      money: 42.4,
-    },
-  ];
-  var config = {
-    data: data,
-    isGroup: true,
-    xField: "date",
-    yField: "money",
-    seriesField: "name",
-    dodgePadding: 2,
-    label: {
-      position: "middle",
-      layout: [
-        { type: "interval-adjust-position" },
-        { type: "interval-hide-overlap" },
-        { type: "adjust-color" },
-      ],
-    },
-  };
+  ]);
+
+  useEffect(() => {
+    console.log(config);
+  },[config, data]);
+
   return (
     <Layout>
       <Content>
-        <div>
-          <Title level={2}>Trang Chủ</Title>
-        </div>
-
-        <Row>
-          <Col span="9">
-            <Row>
-              <Card title="Tổng đơn hàng" style={{ width: 700 }} extra={0}>
-                <Row gutter={16}>
-                  <Col span={12}>
-                    <Statistic
-                      title="Chờ nhận hàng"
-                      value={112893}
-                      valueStyle={{ color: "#017fff" }}
-                    />
-                  </Col>
-                  <Col span={12}>
-                    <Statistic
-                      title="Chờ xác nhận"
-                      value={112893}
-                      valueStyle={{ color: "#017fff" }}
-                    />
-                  </Col>
-                </Row>
-              </Card>
-            </Row>
-            <br />
-            <Row>
-              <Card title="Sản phẩm đang bán" style={{ width: 700 }} extra={0}>
-                <Row gutter={16}>
-                  <Col span={12}>
-                    <Statistic
-                      title="Sản phẩm đang bán"
-                      value={112893}
-                      valueStyle={{ color: "#017fff" }}
-                    />
-                  </Col>
-                  <Col span={12}>
-                    <Statistic
-                      title="Sản phẩm hết tồn"
-                      value={112893}
-                      valueStyle={{ color: "#017fff" }}
-                      tooltip="Sản phẩm không còn trong kho"
-                    />
-                  </Col>
-                </Row>
-                <Row gutter={16}>
-                  <Col span={12}>
-                    <Statistic
-                      title="Sản phẩm bị từ chối"
-                      value={112893}
-                      valueStyle={{ color: "#017fff" }}
-                      tooltip="Sản phẩm không bị hủy"
-                    />
-                  </Col>
-                  <Col span={12}>
-                    <Statistic
-                      title="Sản phẩm bị tắt"
-                      value={112893}
-                      valueStyle={{ color: "#017fff" }}
-                      tooltip="Sản phẩm không được trưng bày"
-                    />
-                  </Col>
-                </Row>
-              </Card>
-            </Row>
-          </Col>
-          <Col span="14">
-            <Card
-              title="Hiệu quả hoạt động"
-              style={{ width: 800 }}
-              extra={<a href="/doanhThu">Xem chi tiết</a>}
-            >
-              <Column {...config} />
-            </Card>
-          </Col>
-        </Row>
+        <Card
+          title="Trang Chủ"
+          title="Hiệu quả hoạt động theo tháng"
+          extra={<Link to="/nhaban/doanhThu">Xem chi tiết</Link>}
+        >
+          <Chart
+            config={config}
+            setConfig={setConfig}
+            data={data}
+            setData={setData}
+          />
+        </Card>
       </Content>
     </Layout>
   );
