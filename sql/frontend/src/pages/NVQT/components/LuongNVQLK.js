@@ -80,29 +80,6 @@ function LuongNVGH() {
           <Title level={2} classname="titlename">
             Thống kê lương Nhân Viên Quản Lý Kho
           </Title>
-          {/* <Space>
-            <div>
-              <Typography>Nhập tháng bạn muốn xem: </Typography>
-            </div>
-            <Form layout="inline">
-              <Form.Item name = "NgayBD">
-                <DatePicker 
-                  defaultValue={moment("2019/10/25", dateFormat)}
-                  format={dateFormat}>          
-                </DatePicker>
-              </Form.Item>
-              <Form.Item>
-                  <Tooltip title="search">
-                    <Button
-                      type="primary"
-                      shape="circle"
-                      icon={<SearchOutlined />}
-                      onClick={onChange}
-                    />
-                  </Tooltip>
-              </Form.Item>
-            </Form>
-          </Space> */}
 
           <Table columns={columns} dataSource={data} pagination={false} />
         </Content>

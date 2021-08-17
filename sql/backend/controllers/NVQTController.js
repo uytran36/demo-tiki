@@ -23,7 +23,6 @@ const getKH = async (req, res, next)  => {
 const getBDL_NVGH = async (req, res, next)  => {
   try {
     const page = req.params.page;
-    //const ngay = req.body.ngay
     const getLuong = await nvData.getLuongNVGH(page);
     res.send(getLuong);
   } catch (error) {
@@ -104,22 +103,89 @@ const SL_LSBDL_NVGH = async (req, res, next) => {
     try {
       const MaNhaBan = req.params.MaNhaBan;
       const data = req.body;
-      const up = await nvData.updateNVQLK(MaNhaBan, data);
+      const up = await nvData.updateNhaBan(MaNhaBan, data);
       res.send(up);
     } catch (error) {
       res.status(400).send(error.message);
     }
   };
 
-  const xoaNB = async (req, res, next) => {
-    try {
-      const MaNhaBan = req.params.MaNhaBan;
-      const del = await nvData.deleteNhaBan(MaNhaBan);
-      res.send(del);
+  const updateAuth = async (req, res, next) => {
+    try{
+      const data = req.body;
+      const MaNV = req.params.MaNV;
+      const up = await nvData.updateAuthNVQLK(MaNV,data)
+
+      res.send(up);
     } catch (error) {
       res.status(400).send(error.message);
     }
-  };
+  }
+
+  const topKhachHang = async (req, res, next) => {
+    try{
+      const ngay = req.params.NgayLap;
+      const up = await nvData.topKH(ngay)
+
+      res.send(up);
+    } catch (error) {
+      res.status(400).send(error.message);
+    }
+  }
+
+  const taoKhuyenMai = async (req, res, next) => {
+    try{
+      const data = req.body;
+      const km = await nvData.createPromo(data)
+
+      res.send(km);
+    } catch (error) {
+      res.status(400).send(error.message);
+    }
+  }
+
+  const dsKho = async (req, res, next) => {
+    try{
+      const dsKho = await nvData.getKho();
+
+      res.send(dsKho);
+    } catch (error) {
+      res.status(400).send(error.message);
+    }
+  }
+
+  const LogIn = async (req, res, next) => {
+    try{
+      const data = req.body;
+      const LogIn = await nvData.DangNhap(data);
+
+      res.send(LogIn);
+    } catch (error) {
+      res.status(400).send(error.message);
+    }
+  }
+
+  const DTTT = async (req, res, next) => {
+    try{
+      const nl = req.params.NamLap;
+      const DTTT = await nvData.doanhThuTT(nl);
+
+      res.send(DTTT);
+    } catch (error) {
+      res.status(400).send(error.message);
+    }
+  }
+
+  const DTHD = async (req, res, next) => {
+    try{
+      const nl = req.params.NamLap;
+      const DTHD = await nvData.doanhThuHD(nl);
+
+      res.send(DTHD);
+    } catch (error) {
+      res.status(400).send(error.message);
+    }
+  }
 
 module.exports = {
     SL_LSBDL_NVGH,
@@ -133,5 +199,11 @@ module.exports = {
     editNVQLK,
     getNB,
     editNB,
-    xoaNB
+    updateAuth,
+    topKhachHang,
+    taoKhuyenMai,
+    dsKho,
+    LogIn,
+    DTHD,
+    DTTT
 };

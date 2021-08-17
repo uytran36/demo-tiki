@@ -54,10 +54,15 @@ router.get("/NVQT/listLuongNVQLK/:page", NVQTController.getBDL_NVQLK)
 router.get("/NVQT/listNVQLK/", NVQTController.layNVQLK)
 router.delete("/NVQT/xoaNVQLK/:MaNV", NVQTController.xoaNVQLK)
 router.put("/NVQT/EditNVQLK/:MaNV", NVQTController.editNVQLK)
-
+router.put("/NVQT/UpdateAuthNVQLK/:MaNV", NVQTController.updateAuth)
+router.get("/NVQT/topKhachHang/:NgayLap", NVQTController.topKhachHang)
 router.get("/NVQT/listNhaBan/:page", NVQTController.getNB)
-router.put("/NVQT/editNB/:id", NVQTController.editNB)
-router.delete("/NVQT/xoaNB/:MaNB", NVQTController.xoaNB)
+router.put("/NVQT/editNB/:MaNhaBan", NVQTController.editNB)
+router.post("/NVQT/taoKhuyenMai", NVQTController.taoKhuyenMai)
+router.get("/NVQT/dsKho", NVQTController.dsKho)
+router.post("/NVQT/LogIn", NVQTController.LogIn)
+router.get("/NVQT/DTTT/:NamLap", NVQTController.DTTT)
+router.get("/NVQT/DTHD/:NamLap",NVQTController.DTHD)
 
 module.exports = {
   routes: router,

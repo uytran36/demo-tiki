@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import NhaBan from "./pages/nhaban";
 import KhachHang from "./pages/khachhang";
+import NVQT from "./pages/NVQT";
 
 function App() {
   const [route, setRoute] = useState(null);
@@ -13,11 +14,7 @@ function App() {
 
   return (
     <div>
-      {/* <Nhaban /> */}
-      {
-        route === "nhaban" ? <NhaBan /> : <KhachHang />
-      }
-      {/* <KhachHang /> */}
+      <NVQT/>
     </div>
   );
 }
