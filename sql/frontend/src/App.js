@@ -14,7 +14,13 @@ function App() {
 
   return (
     <div>
-      <NVQT/>
+      {route === "nhaban" ? (
+        <NhaBan />
+      ) : route === "QT" ? (
+        <NVQT />
+      ) : (
+        <KhachHang />
+      )}
     </div>
   );
 }

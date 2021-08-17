@@ -1,10 +1,10 @@
-// module.exports = {
-//   user: "sa",
-//   password: "123",
-//   server: "localhost\\TRANUY2",
-//   database: "Tiki",
-//   trustServerCertificate: true,
-// };
+module.exports = {
+  user: "sa",
+  password: "123",
+  server: "localhost\\TRANUY2",
+  database: "Tiki",
+  trustServerCertificate: true,
+};
 
 //  module.exports = {
 //   user: "nhanvien",
@@ -14,10 +14,10 @@
 //   trustServerCertificate: true,
 // };
 
-module.exports = {
-  user: "sa",
-  password: "123",
-  server: "localhost\\LONGHA",
-  database: "Tiki",
-  trustServerCertificate: true,
-};
+// module.exports = {
+//   user: "sa",
+//   password: "123",
+//   server: "localhost\\LONGHA",
+//   database: "Tiki",
+//   trustServerCertificate: true,
+// };

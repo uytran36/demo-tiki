@@ -59,7 +59,7 @@ const NVQT = () => {
                     <Link to="/QT/DSKho">Danh sách kho</Link>
                   </Menu.Item>
                   <Menu.Item key="8" icon={<BarChartOutlined />}>
-                    <Link to="/QT/doanhThu">Danh thu</Link>
+                    <Link to="/QT/doanhThu">Doanh thu</Link>
                   </Menu.Item>
                 </Menu>
             </Sider>
