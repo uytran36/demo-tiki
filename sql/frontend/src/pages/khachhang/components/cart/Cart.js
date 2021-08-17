@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 const Cart = () => {
   const [bill, setBill] = useState([]);
   const [spin, setSpin] = useState(false);
+  const [control, setControl] = useState(false);
 
   useEffect(() => {
     const cart = JSON.parse(window.localStorage.getItem("cart"));
@@ -22,7 +23,7 @@ const Cart = () => {
     });
     
     setBill(temp);
-  }, [bill]);
+  }, [control]);
 
   return (
     <div className="wrap-cart">
@@ -30,11 +31,22 @@ const Cart = () => {
         <h3>Giỏ hàng</h3>
         <Row>
           <Col flex={10}>
-            <TableItem bill={bill} setBill={setBill} />
+            <TableItem
+              bill={bill}
+              setBill={setBill}
+              control={control}
+              setControl={setControl}
+            />
           </Col>
           <Col flex={2}></Col>
           <Col flex="300px">
-            <InfoPanel bill={bill} setBill={setBill} setSpin={setSpin}/>
+            <InfoPanel
+              bill={bill}
+              setBill={setBill}
+              setSpin={setSpin}
+              control={control}
+              setControl={setControl}
+            />
           </Col>
         </Row>
       </Spin>

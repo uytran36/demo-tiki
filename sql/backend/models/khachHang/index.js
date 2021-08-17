@@ -19,8 +19,7 @@ const getKhachHangByEmail = async (data) => {
 const getAmountKH = async () => {
   try {
     let pool = await sql.connect(config);
-    const sqlQueries = await utils.loadSqlQueries("khachHang");
-    const amount = await pool.request().query(sqlQueries.getAmountKH);
+    const amount = await pool.request().execute("getAmountKH");
     return amount.recordset;
   } catch (error) {
     console.log(error.message);
@@ -30,14 +29,12 @@ const getAmountKH = async () => {
 const createKH = async (khachHangData) => {
   try {
     let pool = await sql.connect(config);
-    const sqlQueries = await utils.loadSqlQueries("khachHang");
-
     const insertKH = await pool
       .request()
       .input("MaKH", sql.Int, khachHangData.MaKH)
       .input("Ten", sql.NVarChar(50), khachHangData.Ten)
       .input("Sdt", sql.Char(10), khachHangData.Sdt)
-      .input("SoNha", sql.Char(10), khachHangData.SoNha)
+      .input("SoNha", sql.VarChar(50), khachHangData.SoNha)
       .input("Duong", sql.NVarChar(50), khachHangData.Duong)
       .input("Phuong", sql.NVarChar(50), khachHangData.Phuong)
       .input("Quan", sql.NVarChar(50), khachHangData.Quan)
@@ -47,24 +44,7 @@ const createKH = async (khachHangData) => {
       .input("GioiTinh", sql.NVarChar(3), khachHangData.GioiTinh)
       .input("NgaySinh", sql.Date, khachHangData.NgaySinh)
       .input("TikiXu", sql.Int, khachHangData.TikiXu)
-      .query(sqlQueries.createKhachHang);
-    return insertKH.recordset;
-  } catch (error) {
-    console.log("error");
-    return error.message;
-  }
-};
-
-const updateKM = async (maKhuyenMai, khuyenMaiData) => {
-  try {
-    let pool = await sql.connect(config);
-    const sqlQueries = await utils.loadSqlQueries("khachHang");
-    console.log(khuyenMaiData);
-    const insertKH = await pool
-      .request()
-      .input("MaKM", sql.Int, maKhuyenMai)
-      .input("Ten", sql.NVarChar(50), khuyenMaiData.Ten)
-      .query(sqlQueries.updateKhuyenMai);
+      .execute("createKH");
     return insertKH.recordset;
   } catch (error) {
     console.log("error");
@@ -125,11 +105,10 @@ const getAmountSP_type = async (MaLoaiSP) => {
 const getSPID = async (id) => {
   try {
     let pool = await sql.connect(config);
-    const sqlQueries = await utils.loadSqlQueries("khachHang");
     const sanPhamList = await pool
       .request()
       .input("MaSP", sql.Int, id)
-      .query(sqlQueries.getSPID);
+      .execute("getSPID");
     return sanPhamList.recordset;
   } catch (error) {
     console.log(error.message);
@@ -139,11 +118,10 @@ const getSPID = async (id) => {
 const getNBSP = async (id) => {
   try {
     let pool = await sql.connect(config);
-    const sqlQueries = await utils.loadSqlQueries("khachHang");
     const sanPhamList = await pool
       .request()
       .input("MaSP", sql.Int, id)
-      .query(sqlQueries.getNBSP);
+      .execute("getNBSP");
     return sanPhamList.recordset;
   } catch (error) {
     console.log(error.message);
@@ -153,11 +131,10 @@ const getNBSP = async (id) => {
 const getReview = async (id) => {
   try {
     let pool = await sql.connect(config);
-    const sqlQueries = await utils.loadSqlQueries("khachHang");
     const sanPhamList = await pool
       .request()
       .input("MaSP", sql.Int, id)
-      .query(sqlQueries.getReview);
+      .execute("getReview");
     return sanPhamList.recordset;
   } catch (error) {
     console.log(error.message);
@@ -167,7 +144,6 @@ const getReview = async (id) => {
 const createHoaDon = async (hdData) => {
   try {
     let pool = await sql.connect(config);
-
     const createHD = await pool
       .request()
       .input("MaKH", sql.Int, hdData.MaKH)
@@ -192,8 +168,6 @@ const createHoaDon = async (hdData) => {
 const createCT_HoaDon = async (cthdData) => {
   try {
     let pool = await sql.connect(config);
-    const sqlQueries = await utils.loadSqlQueries("khachHang");
-
     const createCTHD = await pool
       .request()
       .input("MaHD", sql.Int, cthdData.MaHD)
@@ -201,7 +175,7 @@ const createCT_HoaDon = async (cthdData) => {
       .input("SoLuong", sql.Int, cthdData.SoLuong)
       .input("ThanhTien", sql.BigInt, cthdData.ThanhTien)
       .input("MaCTHD", sql.Int, cthdData.MaCTHD)
-      .query(sqlQueries.createCTHD);
+      .execute("createCTHD");
     return createCTHD.recordset;
   } catch (error) {
     console.log("error");
@@ -212,8 +186,7 @@ const createCT_HoaDon = async (cthdData) => {
 const getAmountCTHD = async () => {
   try {
     let pool = await sql.connect(config);
-    const sqlQueries = await utils.loadSqlQueries("khachHang");
-    const amount = await pool.request().query(sqlQueries.getAmountCTHD);
+    const amount = await pool.request().execute("getAmountCTHD");
     return amount.recordset;
   } catch (error) {
     console.log(error.message);
@@ -283,11 +256,81 @@ const getDiscount = async (id) => {
   }
 };
 
+const getHDKH = async (MaKH) => {
+  try {
+    let pool = await sql.connect(config);
+    const listHD = await pool
+      .request()
+      .input("MaKH", sql.Int, MaKH)
+      .execute("getHDKH");
+    return listHD.recordset;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+const getCTHD = async (MaHD) => {
+  try {
+    let pool = await sql.connect(config);
+    const listCTHD = await pool
+      .request()
+      .input("MaHD", sql.Int, MaHD)
+      .execute("getCTHD");
+    return listCTHD.recordset;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+const getSPKH = async (MaKH) => {
+  try {
+    let pool = await sql.connect(config);
+    const listSP = await pool
+      .request()
+      .input("MaKH", sql.Int, MaKH)
+      .execute("getSPKH");
+    return listSP.recordset;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+const insertRating = async (MaKH, MaSP, rating) => {
+  try {
+    let pool = await sql.connect(config);
+    const insert = await pool
+      .request()
+      .input("MaKH", sql.Int, MaKH)
+      .input("MaSP", sql.Int, MaSP)
+      .input("DiemDanhGia", sql.Float, rating.DiemDanhGia)
+      .input("MoTa", sql.NVarChar(255), rating.MoTa)
+      .execute("ratingSP");
+    return insert.recordset;
+  } catch (error) {
+    console.log("error");
+    return error.message;
+  }
+};
+
+const getKM = async (MaKH, MaKM) => {
+  try {
+    let pool = await sql.connect(config);
+    const km = await pool
+      .request()
+      .input("MaKH", sql.Int, MaKH)
+      .input("MaKM", sql.Int, MaKM)
+      .execute("getKM");
+    return km.recordset;
+  } catch (error) {
+    console.log("error");
+    return error.message;
+  }
+}
+
 module.exports = {
   getKhachHangByEmail,
   getAmountKH,
   createKH,
-  updateKM,
   getSPPage,
   getAmountSP,
   getSP_Type,
@@ -302,4 +345,9 @@ module.exports = {
   findSP,
   updateKH,
   getDiscount,
+  getHDKH,
+  getCTHD,
+  getSPKH,
+  insertRating,
+  getKM,
 };

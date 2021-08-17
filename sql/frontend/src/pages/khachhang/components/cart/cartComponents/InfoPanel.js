@@ -1,6 +1,17 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Card, Divider, Row, Col, Button, InputNumber, Spin } from "antd";
-import Icon from "@ant-design/icons";
+import {
+  Card,
+  Divider,
+  Row,
+  Col,
+  Button,
+  InputNumber,
+  Spin,
+  Modal,
+  Input,
+  notification
+} from "antd";
+import Icon, { StopTwoTone } from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
 import moment from "moment";
@@ -108,11 +119,59 @@ const DiscountCouponIcon = (props) => (
   <Icon component={DiscountCouponSvg} {...props} />
 );
 
-const InfoPanel = ({ bill, setBill, setSpin }) => {
+function DiscountInput({ setDiscount, isOpen, setIsOpen, MaKH }) {
+  const [code, setCode] = useState("");
+
+  const handleOk = () => {
+    axios
+      .get("http://localhost:5000/api/khuyenmai/" + MaKH + "/" + code)
+      .then((res) => {
+        if (res.data.length !== 0) {
+          setDiscount(code);
+          setIsOpen(false);
+        } else {
+          notification.open({
+            message: "Thông báo",
+            description: "Mã không tồn tại hoặc hết hạn sử dụng",
+            icon: <StopTwoTone twoToneColor="#FF0000" />,
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+   
+  };
+
+  const handleCancel = () => {
+    setIsOpen(false);
+  };
+
+  const onChange = (e) => {
+    setCode(e.target.value);
+  };
+
+  return (
+    <div>
+      <Modal
+        title="Khuyến mãi"
+        visible={isOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <Input placeholder="Nhập mã khuyến mãi" onChange={onChange} />
+      </Modal>
+    </div>
+  );
+}
+
+const InfoPanel = ({ bill, setBill, setSpin, control, setControl }) => {
   const [customer, setCustomer] = useState({});
-  const [discount, setDiscount] = useState(0);
+  const [discount, setDiscount] = useState(-1);
+  const [discountVal, setDiscountVal] = useState(0);
   const [tikiXu, setTikiXu] = useState(0);
   const [amountCTHD, setAmountCTHD] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
 
   const history = useHistory();
 
@@ -126,6 +185,19 @@ const InfoPanel = ({ bill, setBill, setSpin }) => {
     });
   }, []);
 
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/khuyenmai/" + customer.MaKH + "/" + discount)
+      .then((res) => {
+        if (res.data.length !== 0) {
+          setDiscountVal(res.data[0].GiaTri);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [discount]);
+
   const createBill = () => {
     setSpin(true);
     let tt = 0;
@@ -136,7 +208,7 @@ const InfoPanel = ({ bill, setBill, setSpin }) => {
     const hd = {
       MaKH: customer.MaKH,
       MaNVGH: 1,
-      MaKMai: null,
+      MaKMai: discount,
       NgayLap: moment().format("MM-DD-YYYY"),
       TongTien: tt,
       TinhTrang: "Chưa bàn giao",
@@ -178,6 +250,7 @@ const InfoPanel = ({ bill, setBill, setSpin }) => {
             .then((res) => {
               setSpin(false);
               setBill([]);
+              setControl(!control);
               window.localStorage.setItem("cart", JSON.stringify([]));
               history.push("/thankyou");
             })
@@ -189,12 +262,15 @@ const InfoPanel = ({ bill, setBill, setSpin }) => {
       .catch((err) => {
         console.log(err);
       });
-
-    
   };
 
   const onChangeTikiXu = (value) => {
     console.log("tiki xu:" + value);
+    setTikiXu(value);
+  };
+
+  const onClickDiscount = () => {
+    setIsOpen(true);
   };
 
   return (
@@ -230,10 +306,10 @@ const InfoPanel = ({ bill, setBill, setSpin }) => {
             extra={<p>Chỉ chọn 1</p>}
             style={{ width: 300 }}
           >
-            <a>
+            <Button onClick={onClickDiscount}>
               <DiscountCouponIcon />
               Chọn mã khuyến mãi
-            </a>
+            </Button>
           </Card>
         </div>
         <div className="tikixu-card">
@@ -247,6 +323,7 @@ const InfoPanel = ({ bill, setBill, setSpin }) => {
               min={0}
               max={customer.TikiXu}
               defaultValue={0}
+              step={1000}
               onChange={onChangeTikiXu}
             />
           </Card>
@@ -268,7 +345,7 @@ const InfoPanel = ({ bill, setBill, setSpin }) => {
             <Row>
               <Col flex={2}>Giảm giá</Col>
               <Col flex={1}>
-                <b>{discount}.000 Đồng</b>
+                <b>{discountVal}.000 Đồng</b>
               </Col>
             </Row>
             <Row>
@@ -285,7 +362,8 @@ const InfoPanel = ({ bill, setBill, setSpin }) => {
                   {bill.reduce((acc, cur) => {
                     return acc + cur.ThanhTien;
                   }, 0) -
-                    discount +
+                    tikiXu / 1000 -
+                    discountVal +
                     15}
                   .000 Đồng
                 </b>
@@ -298,6 +376,12 @@ const InfoPanel = ({ bill, setBill, setSpin }) => {
             Mua hàng
           </Button>
         </div>
+        <DiscountInput
+          setDiscount={setDiscount}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          MaKH={customer.MaKH}
+        />
       </Spin>
     </div>
   );

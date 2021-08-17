@@ -183,6 +183,59 @@ const getDiscountKH = async (req, res, next) => {
   }
 };
 
+const getHDKhachHang = async (req, res, next) => {
+   try {
+     const id = req.params.id;
+     const hd = await khData.getHDKH(id);
+     res.send(hd);
+   } catch (error) {
+     res.status(400).send(error.message);
+   }
+}
+
+const getCTHoaDon = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const cthd = await khData.getCTHD(id);
+    res.send(cthd);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
+
+const getSPKhachHang = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const sp = await khData.getSPKH(id);
+    res.send(sp);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
+
+const insertRatingSP = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const masp = req.params.masp;
+    const body = req.body;
+    const insert = await khData.insertRating(id, masp, body);
+    res.send(insert);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
+
+const getKhuyenMai = async (req, res, next) => {
+  try {
+    const kh = req.params.kh;
+    const km = req.params.km
+    const gkm = await khData.getKM(kh, km);
+    res.send(gkm);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+}
+
 module.exports = {
   addKhachHang,
   updateKhuyenMai,
@@ -202,4 +255,9 @@ module.exports = {
   findSanPham,
   updateKhachHang,
   getDiscountKH,
+  getHDKhachHang,
+  getCTHoaDon,
+  getSPKhachHang,
+  insertRatingSP,
+  getKhuyenMai,
 };

@@ -1,54 +1,181 @@
 import { Column } from "@ant-design/charts";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-const Chart = ({config, data, setData, setConfig}) => {
+
+const Chart = () => {
+  const [data, setData] = useState([
+    {
+      name: "Đơn hàng",
+      date: "Jan.",
+      money: 0,
+    },
+    {
+      name: "Đơn hàng",
+      date: "Feb.",
+      money: 0,
+    },
+    {
+      name: "Đơn hàng",
+      date: "Mar.",
+      money: 0,
+    },
+    {
+      name: "Đơn hàng",
+      date: "Apr.",
+      money: 0,
+    },
+    {
+      name: "Đơn hàng",
+      date: "May",
+      money: 0,
+    },
+    {
+      name: "Đơn hàng",
+      date: "Jun.",
+      money: 0,
+    },
+    {
+      name: "Đơn hàng",
+      date: "Jul.",
+      money: 0,
+    },
+    {
+      name: "Đơn hàng",
+      date: "Aug.",
+      money: 0,
+    },
+    {
+      name: "Đơn hàng",
+      date: "Sep.",
+      money: 0,
+    },
+    {
+      name: "Đơn hàng",
+      date: "Oct.",
+      money: 0,
+    },
+    {
+      name: "Đơn hàng",
+      date: "Nov.",
+      money: 0,
+    },
+    {
+      name: "Đơn hàng",
+      date: "Dec.",
+      money: 0,
+    },
+  ]);
+  const [config, setConfig] = useState({
+    data: data,
+    isGroup: true,
+    xField: "date",
+    yField: "money",
+    seriesField: "name",
+    label: {
+      position: "middle",
+      layout: [
+        { type: "interval-adjust-position" },
+        { type: "interval-hide-overlap" },
+        { type: "adjust-color" },
+      ],
+    },
+  });
+  
   useEffect(() => {
     const dataW = JSON.parse(window.localStorage.getItem("auth"));
-    const fetchData = async () => {
-      for (let i = 1; i <= 12; i++) {
-        const info1 = {
-          MaNhaBan: dataW.MaNhaBan,
-          thang: i,
-        };
-        await axios
-          .post(
-            "http://localhost:5000/api/nhaban/thang",
-            JSON.stringify(info1),
+    axios
+      .get("http://localhost:5000/api/nhaban/doanhthu/" + dataW.MaNhaBan)
+      .then((res) => {
+        if (res.data.length !== 0) {
+          let temp = [
             {
-              headers: { "Content-Type": "application/json" },
-            }
-          )
-          .then((res) => {
-            const money = res.data[0].donhang;
-            const temp = data;
-            temp[i - 1] = { ...temp[i - 1], money };
-            setData(temp);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
+              name: "Đơn hàng",
+              date: "Jan.",
+              money: res.data[0].ThangMot,
+            },
+            {
+              name: "Đơn hàng",
+              date: "Feb.",
+              money: res.data[0].ThangHai,
+            },
+            {
+              name: "Đơn hàng",
+              date: "Mar.",
+              money: res.data[0].ThangBa,
+            },
+            {
+              name: "Đơn hàng",
+              date: "Apr.",
+              money: res.data[0].ThangTu,
+            },
+            {
+              name: "Đơn hàng",
+              date: "May",
+              money: res.data[0].ThangNam,
+            },
+            {
+              name: "Đơn hàng",
+              date: "Jun.",
+              money: res.data[0].ThangSau,
+            },
+            {
+              name: "Đơn hàng",
+              date: "Jul.",
+              money: res.data[0].ThangBay,
+            },
+            {
+              name: "Đơn hàng",
+              date: "Aug.",
+              money: res.data[0].ThangTam,
+            },
+            {
+              name: "Đơn hàng",
+              date: "Sep.",
+              money: res.data[0].ThangChin,
+            },
+            {
+              name: "Đơn hàng",
+              date: "Oct.",
+              money: res.data[0].ThangMuoi,
+            },
+            {
+              name: "Đơn hàng",
+              date: "Nov.",
+              money: res.data[0].ThangMuoiMot,
+            },
+            {
+              name: "Đơn hàng",
+              date: "Dec.",
+              money: res.data[0].ThangMuoiHai,
+            },
+          ];
+          setData(temp);
 
-      await setConfig({
-        data: data,
-        isGroup: true,
-        xField: "date",
-        yField: "money",
-        seriesField: "name",
-        dodgePadding: 2,
-        label: {
-          position: "middle",
-          layout: [
-            { type: "interval-adjust-position" },
-            { type: "interval-hide-overlap" },
-            { type: "adjust-color" },
-          ],
-        },
+          let config = {
+           
+            isGroup: true,
+            xField: "date",
+            yField: "money",
+            seriesField: "name",
+            label: {
+              position: "middle",
+              layout: [
+                { type: "interval-adjust-position" },
+                { type: "interval-hide-overlap" },
+                { type: "adjust-color" },
+              ],
+            },
+          };
+          setConfig(config);
+          console.log(config);
+        }
       });
-    };
-    fetchData();
-    console.log(config);
   }, []);
-  return <Column {...config} />;
+
+  return (
+    <div>
+      <Column  data={data} {...config} />
+    </div>
+  );
 };
 export default Chart;

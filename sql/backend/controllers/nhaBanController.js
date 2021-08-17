@@ -20,7 +20,7 @@ const addSanPham = async (req, res, next) => {
   }
 };
 
-const capnhatSP = async (req, res, next)  => {
+const capnhatSP = async (req, res, next) => {
   try {
     const data = req.body;
     const masp = req.params.id;
@@ -29,9 +29,9 @@ const capnhatSP = async (req, res, next)  => {
   } catch (error) {
     res.status(400).send(error.message);
   }
-}
+};
 
-const xoaSP = async (req, res, next)  => {
+const xoaSP = async (req, res, next) => {
   try {
     const masp = req.params.id;
     const del = await nbData.deleteSP(masp);
@@ -39,16 +39,16 @@ const xoaSP = async (req, res, next)  => {
   } catch (error) {
     res.status(400).send(error.message);
   }
-}
+};
 
-const getNB = async (req, res, next)  => {
+const getNB = async (req, res, next) => {
   try {
     const layNB = await nbData.getNhaBan();
     res.send(layNB);
   } catch (error) {
     res.status(400).send(error.message);
   }
-}
+};
 
 const addNB = async (req, res, next) => {
   try {
@@ -117,7 +117,7 @@ const getSP = async (req, res, next) => {
   }
 };
 
-const capnhatNB = async (req, res, next)  => {
+const capnhatNB = async (req, res, next) => {
   try {
     const data = req.body;
     const manb = req.params.id;
@@ -126,7 +126,7 @@ const capnhatNB = async (req, res, next)  => {
   } catch (error) {
     res.status(400).send(error.message);
   }
-}
+};
 
 const get1HD = async (req, res, next) => {
   try {
@@ -138,16 +138,15 @@ const get1HD = async (req, res, next) => {
   }
 };
 
-const dtThanghmot = async (req, res, next) => {
+const dtThang = async (req, res, next) => {
   try {
-    const data = req.body;
-    const sp = await nbData.dtMonthmot(data);
-    res.send(sp);
+    const id = req.params.id;
+    const dt = await nbData.dtMonth(id);
+    res.send(dt);
   } catch (error) {
     res.status(400).send(error.message);
   }
 };
-
 
 module.exports = {
   getAllHoaDon,
@@ -164,5 +163,5 @@ module.exports = {
   getSP,
   capnhatNB,
   get1HD,
-  dtThanghmot
+  dtThang,
 };

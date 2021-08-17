@@ -1,1 +1,0 @@
-SELECT COUNT(*) AS Amount FROM CT_HoaDon
