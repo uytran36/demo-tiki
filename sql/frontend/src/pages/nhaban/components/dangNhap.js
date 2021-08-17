@@ -37,12 +37,11 @@ const DangNhap = (props) => {
         item.MatKhauNhaBan === values.password
       );
     });
-    console.log(data[0]);
     if (data.length > 0) {
-      history.push("/nhaban");
       props.setAuth(data[0]);
       window.localStorage.setItem("auth", JSON.stringify(data[0]));
-    }
+      history.push("/nhaban");
+    } 
   };
 
   return (

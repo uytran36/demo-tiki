@@ -101,7 +101,7 @@ function EditModal(props) {
             <Input defaultValue={props.product.GiaBanSP} />
           </Form.Item>
           <Form.Item name="GiaGiamSP" label="Giá giảm">
-            <Input defaultValue={props.product.GiaGiam} />
+            <Input defaultValue={props.product.GiaGiamSP} />
           </Form.Item>
           <Form.Item name="ThanhTienSP" label="Thành tiền">
             <Input defaultValue={props.product.ThanhTienSP} />
@@ -280,6 +280,7 @@ const DoanhThu = (props) => {
   const [editVisible, setEditVisible] = useState(false);
   const [addVisible, setAddVisible] = useState(false);
   const [product, setProduct] = useState({});
+  const [onDelete, setOnDelete] = useState(false);
   let dataW = JSON.parse(window.localStorage.getItem("auth"));
   const info = {
     MaNhaBan: dataW.MaNhaBan,
@@ -297,7 +298,7 @@ const DoanhThu = (props) => {
       .catch((err) => {
         console.log(err);
       });
-  }, [listProduct]);
+  }, [editVisible, addVisible, onDelete]);
 
   const onClickEdit = (item) => {
     setProduct(item);
@@ -321,6 +322,7 @@ const DoanhThu = (props) => {
       })
       .then((res) => {
         setListProduct(res.data);
+        setOnDelete(!onDelete);
       })
       .catch((err) => {
         console.log(err);
