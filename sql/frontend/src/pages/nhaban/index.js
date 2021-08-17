@@ -10,10 +10,11 @@ import DangNhap from "./components/dangNhap";
 import MainP from "./components/Pmain.js";
 
 const Nhaban = (props) => {
-  const [auth, setAuth] = useState(null);
+  const [auth, setAuth] = useState(window.localStorage.getItem("auth"));
 
   useEffect(() => {
     setAuth(window.localStorage.getItem("auth"));
+    console.log(auth);
   }, [auth]);
 
   return (

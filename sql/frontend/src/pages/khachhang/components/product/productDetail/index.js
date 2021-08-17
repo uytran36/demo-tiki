@@ -1,4 +1,14 @@
-import { Image, Row, Col, Button, InputNumber, Card, Tag } from "antd";
+import {
+  Image,
+  Row,
+  Col,
+  Button,
+  InputNumber,
+  Card,
+  Tag,
+  Avatar,
+  notification,
+} from "antd";
 import Icon from "@ant-design/icons";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -22,7 +32,10 @@ const description = (
 
 function ProductDetail() {
   const [product, setProduct] = useState({});
-  const [store, setStore] = useState({})
+  const [store, setStore] = useState({});
+  const [reviews, setReviews] = useState([]);
+  const [pointReview, setPointReview] = useState(0);
+  const [buyAmount, setBuyAmount] = useState(1);
 
   useEffect(() => {
     const path = window.location.pathname;
@@ -30,8 +43,39 @@ function ProductDetail() {
     axios
       .get("http://localhost:5000/api/ctsp/" + id)
       .then((res) => {
-        if(res.data.lenght !== 0) {
+        if (res.data.lenght !== 0) {
           setProduct(res.data[0]);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    axios
+      .get("http://localhost:5000/api/nbsp/" + id)
+      .then((res) => {
+        if (res.data.lenght !== 0) {
+          setStore(res.data[0]);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    axios
+      .get("http://localhost:5000/api/review/" + id)
+      .then((res) => {
+        if (res.data.length !== 0) {
+          setReviews(res.data);
+
+          let count = 0;
+          let point = 0;
+          for (let item of res.data) {
+            point += item.DiemDanhGia;
+            count++;
+          }
+          let tot = point / count;
+          setPointReview(tot.toFixed(1));
         }
       })
       .catch((err) => {
@@ -41,29 +85,54 @@ function ProductDetail() {
 
   const { Meta } = Card;
   function onChange(value) {
-    console.log("changed", value);
+    setBuyAmount(value);
   }
 
+  const onClickBuy = () => {
+    let temp = window.localStorage.getItem("cart");
+    let cart;
+    if (temp.length !== 0) {
+      cart = JSON.parse(temp);
+    } else {
+      cart = [];
+    }
+
+    notification.open({
+      message: "Thông báo",
+      description: `Đã thêm sản phẩm ${product.TenSP} vào giỏ hàng của bạn`,
+    });
+
+    cart.push({
+      MaSP: product.MaSP,
+      Ten: product.TenSP,
+      SoLuong: buyAmount,
+      DonGia: product.ThanhTienSP,
+      ThanhTien: buyAmount * product.ThanhTienSP,
+    });
+    window.localStorage.setItem("cart", JSON.stringify(cart));
+  };
+
   return (
-    <div>
+    <div style={{ marginTop: 50 }}>
       <Row>
-        <Col span={12} offset={6}>
+        <Col span={24} offset={3}>
           <Row>
-            <Col flex="300px">
-              <Image
-                width={200}
-                src="https://salt.tikicdn.com/cache/w200/ts/product/25/fd/0b/b3c2299af08efca753341bafb7d7b627.jpg"
-              />
+            <Col flex="520px">
+              <Image width={500} src={product.url} />
             </Col>
             <Col flex="auto">
               <Row>
                 <Col flex="auto">
                   <div className="product-content">
-                    <p style={{ fontSize: 30, fontWeight: 900 }}>
-                      {product.TenSP}
-                    </p>
-                    <b>{product.ThanhTienSP}.000 Đồng</b>
-                    <div >
+                    <p style={{ fontSize: 30 }}>{product.TenSP}</p>
+                    <div style={{ paddingBottom: 150 }}>
+                      <div style={{ fontSize: 25 }}>Mô tả</div>
+                      <div style={{ fontSize: 20 }}>{product.MoTaSP}</div>
+                    </div>
+                    <b style={{ fontSize: 30 }}>
+                      {product.ThanhTienSP}.000 Đồng
+                    </b>
+                    <div>
                       <Tag color="#ff424e">
                         -
                         {Math.ceil(
@@ -72,29 +141,67 @@ function ProductDetail() {
                         %
                       </Tag>
                     </div>
-                    <div>Số lượng</div>
+                    <div style={{ marginTop: 20 }}></div>
+                    <div style={{ fontSize: 18 }}>Số lượng</div>
                     <InputNumber
                       min={1}
                       max={10}
                       defaultValue={1}
                       onChange={onChange}
                     />
-                    <Button type="primary" danger>
+                    <div style={{ marginTop: 10 }}></div>
+                    <Button
+                      type="primary"
+                      danger
+                      size="large"
+                      onClick={onClickBuy}
+                    >
                       Chọn mua
                     </Button>
                   </div>
                 </Col>
                 <Col flex="auto">
-                  <div></div>
                   <div className="product-owner">
-                    <Card style={{ width: 300, marginTop: 16 }}>
-                      <Meta title="Store 1" description={description} />
+                    <Card style={{ width: 300 }}>
+                      <Meta
+                        avatar={
+                          <Avatar src="https://salt.tikicdn.com/ts/seller/4b/54/1a/f385a79a716cb3505f152e7af8c769aa.png" />
+                        }
+                        title={store.TenNhaBan}
+                        description={description}
+                      />
                     </Card>
                   </div>
                 </Col>
               </Row>
             </Col>
           </Row>
+        </Col>
+      </Row>
+      <Row>
+        <Col span={24} offset={3}>
+          <div className="comment" style={{ marginTop: 50 }}>
+            <div style={{ fontSize: 25 }}>
+              Đánh giá - Nhận xét từ khách hàng
+            </div>
+            <div style={{ fontSize: 20 }}>
+              <b>{pointReview}/5</b>
+              <StarIcon />
+            </div>
+            {reviews.map((item) => {
+              return (
+                <div style={{ marginTop: 20 }}>
+                  <Card title={item.Ten} style={{ width: 1500 }}>
+                    <b>
+                      {item.DiemDanhGia}/5
+                      <StarIcon />
+                    </b>
+                    <div>{item.MoTa}</div>
+                  </Card>
+                </div>
+              );
+            })}
+          </div>
         </Col>
       </Row>
     </div>

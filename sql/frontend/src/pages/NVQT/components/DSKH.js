@@ -1,5 +1,4 @@
 import { Table, Pagination } from "antd";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Layout } from "antd";
 import { Typography } from "antd";
 import "./style.css";

@@ -6,7 +6,7 @@
 //   trustServerCertificate: true,
 // };
 
-// module.exports = {
+//  module.exports = {
 //   user: "nhanvien",
 //   password: "nv",
 //   server: "localhost\\SQLDU",

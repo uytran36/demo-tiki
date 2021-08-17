@@ -1,0 +1,12 @@
+.register-form {
+    margin: 100px 10px !important;
+    width: 100% !important;
+}
+
+.register-form input, .register-form .ant-form-item-control-input { 
+    width: 500px !important;
+}
+
+.date {
+    width: 130px !important;
+}

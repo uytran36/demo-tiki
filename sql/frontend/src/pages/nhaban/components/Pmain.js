@@ -30,7 +30,8 @@ const Nhaban = (props) => {
   const toggle = () => {
     setCollapsed(!collapsed);
   };
-  const loginNB = () =>{
+  const logout = () =>{
+    window.localStorage.removeItem("auth");
     history.push("/nhaban/dangnhap");
   }
   return (
@@ -38,8 +39,8 @@ const Nhaban = (props) => {
       <Layout>
         <Sider trigger={null} collapsible collapsed={collapsed}>
           <div className="login">
-            <Button type="primary" onClick={loginNB}>
-              Đăng nhập
+            <Button type="primary" onClick={logout}>
+              Đăng xuất
             </Button>
           </div>
 

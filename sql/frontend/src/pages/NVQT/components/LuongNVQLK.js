@@ -1,5 +1,4 @@
 import { Table, Form, InputNumber, Button, Space, Pagination, DatePicker, Tooltip} from "antd";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Layout } from "antd";
 import { Typography } from "antd";
 import "./style.css";
@@ -81,29 +80,6 @@ function LuongNVGH() {
           <Title level={2} classname="titlename">
             Thống kê lương Nhân Viên Quản Lý Kho
           </Title>
-          {/* <Space>
-            <div>
-              <Typography>Nhập tháng bạn muốn xem: </Typography>
-            </div>
-            <Form layout="inline">
-              <Form.Item name = "NgayBD">
-                <DatePicker 
-                  defaultValue={moment("2019/10/25", dateFormat)}
-                  format={dateFormat}>          
-                </DatePicker>
-              </Form.Item>
-              <Form.Item>
-                  <Tooltip title="search">
-                    <Button
-                      type="primary"
-                      shape="circle"
-                      icon={<SearchOutlined />}
-                      onClick={onChange}
-                    />
-                  </Tooltip>
-              </Form.Item>
-            </Form>
-          </Space> */}
 
           <Table columns={columns} dataSource={data} pagination={false} />
         </Content>

@@ -16,7 +16,6 @@ const columns = [
     dataIndex: "MaHD",
     key: "MaHD",
     sorter: (a, b) => a.MaHD - b.MaHD,
-    render: (text) => <Link to={`/nhaban/hoadon/${text}`}>{text}</Link>,
   },
   {
     title: "Tên Sản Phẩm",
@@ -32,6 +31,26 @@ const columns = [
     title: "Giá Tiền",
     dataIndex: "ThanhTien",
     key: "ThanhTien",
+  },
+  {
+    title: "Tên Khách Hàng",
+    dataIndex: "Ten",
+    key: "Ten",
+  },
+  {
+    title: "Tình trạng",
+    dataIndex: "TinhTrang",
+    key: "TinhTrang",
+  },
+  {
+    title: "Ngày giao",
+    dataIndex: "NgayGiaoTC",
+    key: "NgayGiaoTC",
+  },
+  {
+    title: "Ghi chú",
+    dataIndex: "GhiChu",
+    key: "GhiChu",
   },
 ];
 
@@ -53,7 +72,7 @@ function DsHoaDon() {
       .catch((err) => {
         console.log(err);
       });
-  }, [listProduct]);
+  }, []);
   return (
     <div>
       <Layout>

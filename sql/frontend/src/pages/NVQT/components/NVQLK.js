@@ -1,5 +1,4 @@
-import { Table, Pagination, Button, Input, Form, Select ,Space, notification } from "antd";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Table, Pagination, Button, Input, Form, Select ,Space, notification, DatePicker, InputNumber} from "antd";
 import { Layout } from "antd";
 import { Typography , Modal} from "antd";
 import "./style.css";
@@ -9,231 +8,535 @@ import moment from "moment";
 
 import { EditTwoTone, DeleteTwoTone } from "@ant-design/icons";
 
+const dateFormat = "YYYY-MM-DD";
 const { Option } = Select;
 const { Title } = Typography; 
 const { Content } = Layout;
+
 const layout = {
   labelCol: { span: 8 },
   wrapperCol: { span: 16 },
 };
 
-// function EditModal(props) {
-//   const [isModalVisible, setIsModalVisible] = useState(props.visible);
-//   const [form] = Form.useForm();
-//   const [maLoai, setMaLoai] = useState(-1);
+function EditModal(props) {
+  const [isModalVisible, setIsModalVisible] = useState(props.visible);
+  const [form] = Form.useForm();
 
-//   const handleOk = () => {
-//     let TenSP = form.getFieldValue("TenSP");
-//     let MoTaSP = form.getFieldValue("MoTaSP");
-//     let SLTonSP = form.getFieldValue("SLTonSP");
-//     let GiaBanSP = form.getFieldValue("GiaBanSP");
-//     let GiaGiamSP = form.getFieldValue("GiaGiamSP");
-//     let ThanhTienSP = form.getFieldValue("ThanhTienSP");
-//     let MaLoaiSP = form.getFieldValue("MaLoaiSP"); //coi lai
-//     let url = form.getFieldValue("url");
+  const handleOk = () => {
+    let HoTen = form.getFieldValue("name");
+    let NgaySinh = form.getFieldValue("NgaySinh");
+    let NgayVaoLam = form.getFieldValue("NgayVaoLam");
+    let SDT = form.getFieldValue("SDT");
+    let GioiTinh = form.getFieldValue("GioiTinh");
+    let SoNha = form.getFieldValue("SoNha");
+    let Duong = form.getFieldValue("Duong");
+    let Phuong = form.getFieldValue("Phuong");
+    let Quan = form.getFieldValue("Quan");
+    let ThanhPho = form.getFieldValue("ThanhPho");
+    let MatKhau = form.getFieldValue("MatKhau");
+    let Luong = form.getFieldValue("Luong");
+    let HeSoLuong = form.getFieldValue("HeSoLuong");
+    let Email = form.getFieldValue("Email");
 
-//     const info = {
-//       MaSP: props.product.MaSP,
-//       TenSP: TenSP,
-//       MoTaSP: MoTaSP,
-//       SLTonSP: SLTonSP,
-//       GiaBanSP: GiaBanSP,
-//       GiaGiamSP: GiaGiamSP,
-//       ThanhTienSP: ThanhTienSP,
-//       MaLoaiSP: maLoai,
-//       url: url,
-//     };
+    const info = {
+      HoTen: HoTen === undefined ? props.NhanVien.HoTen : HoTen,
+      Email: Email === undefined ? props.NhanVien.Email : Email,
+      NgaySinh: moment(NgaySinh === undefined ? props.NhanVien.NgaySinh : NgaySinh).format("MM-DD-YYYY"),
+      NgayVaoLam: moment(NgayVaoLam === undefined ? props.NhanVien.NgayVaoLam : NgayVaoLam).format("MM-DD-YYYY"),
+      SDT: SDT === undefined ? props.NhanVien.SDT : SDT,
+      GioiTinh: GioiTinh === undefined ? props.NhanVien.GioiTinh : GioiTinh,
+      SoNha: SoNha === undefined ? props.NhanVien.SoNha : SoNha,
+      Duong: Duong === undefined ? props.NhanVien.Duong : Duong,
+      Phuong: Phuong === undefined ? props.NhanVien.Phuong : Phuong,
+      Quan: Quan === undefined ? props.NhanVien.Quan : Quan,
+      ThanhPho: ThanhPho === undefined ? props.NhanVien.ThanhPho : ThanhPho,
+      MatKhau: MatKhau === undefined ? props.NhanVien.MatKhau : MatKhau,
+      Luong: Luong === undefined ? parseInt(props.NhanVien.Luong) : parseInt(Luong),
+      HeSoLuong: HeSoLuong === undefined ? parseFloat(props.NhanVien.HeSoLuong) : parseFloat(HeSoLuong),
+    };
 
-//     axios
-//       .put(
-//         "https://60b0f8b91f26610017fff943.mockapi.io/api/v1/todo_data/" +
-//           props.product.MaSP,
-//         JSON.stringify(info),
-//         {
-//           headers: {
-//             "Content-Type": "application/json",
-//           },
-//         }
-//       )
-//       .then((res) => {
-//         console.log(res.data);
-//         setIsModalVisible(false);
-//         props.setVisibleFalse();
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//       });
-//   };
+    axios
+      .put("http://localhost:5000/api/NVQT/EditNVQLK/" + props.NhanVien.MaNV,
+        JSON.stringify(info),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        axios
+          .get("http://localhost:5000/api/NVQT/listNVQLK/")
+          .then((res) => {
+            props.setListNhanVien(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        
+        console.log(res.data);
+        setIsModalVisible(false);
+        props.setVisibleFalse();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-//   const handleCancel = () => {
-//     setIsModalVisible(false);
-//     props.setVisibleFalse();
-//   };
+  const handleCancel = () => {
+    setIsModalVisible(false);
+    props.setVisibleFalse();
+  };
 
-//    function onChangeSelect(value) {
-//      setMaLoai(value);
-//    }
-//   return (
-//     <>
-//       <Modal
-//         title="Basic Modal"
-//         visible={isModalVisible}
-//         onOk={handleOk}
-//         onCancel={handleCancel}
-//       >
-//         <Form {...layout} name="nest-messages">
-//           <Form.Item name="TenSP" label="Tên sản phẩm">
-//             <Input defaultValue={props.product.TenSP} />
-//           </Form.Item>
-//           <Form.Item name="MoTaSP" label="Mô tả ">
-//             <Input defaultValue={props.product.MoTaSP} />
-//           </Form.Item>
-//           <Form.Item name="SLTonSP" label="Số lượng tồn">
-//             <Input defaultValue={props.product.SLTonSP} />
-//           </Form.Item>
-//           <Form.Item name="GiaBanSP" label="Giá bán">
-//             <Input defaultValue={props.product.GiaBanSP} />
-//           </Form.Item>
-//           <Form.Item name="GiaGiamSP" label="Giá giảm">
-//             <Input defaultValue={props.product.GiaGiam} />
-//           </Form.Item>
-//           <Form.Item name="ThanhTienSP" label="Thành tiền">
-//             <Input defaultValue={props.product.ThanhTienSP} />
-//           </Form.Item>
-//           <Form.Item name="MaLoaiSP" label="Loại sản phẩm">
-//             <Select
-//               placeholder="chọn loại sản phẩm"
-//               defaultValue={props.product.MaLoaiSP}
-//               onChange={onChangeSelect}
-//             >
-//               <Option value={0}>Điện thoại - Máy tính bảng</Option>
-//               <Option value={1}>Điện tử - Điện lạnh</Option>
-//               <Option value={2}>Phụ kiện - Thiết bị số</Option>
-//               <Option value="3">Laptop- Thiết bị IT</Option>
-//               <Option value="4">Máy ảnh - Thiết bị quay phim</Option>
+  
+  return (
+    <>
+      <Modal
+        title="Basic Modal"
+        visible={isModalVisible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <Layout>
+            <div>
+                <Title level="3" align="center">Sửa Nhân Viên Quản Lý Kho</Title>
+            </div>
+            <div>
+            <Form {...layout} form={form}>  
+                <Form.Item name="name" label="Nhập tên nhân viên"  >
+                    <Input defaultValue={props.NhanVien.HoTen} />
+                </Form.Item>    
+                <Form.Item name="Email" label="Email" >
+                    <Input defaultValue={props.NhanVien.Email} />
+                </Form.Item>
+                
+                <Form.Item
+                name="MatKhau"
+                label="Mật khẩu"
+                rules={[
+                    {
+                    required: true,
+                    message: "Xin vui lòng nhập mật khẩu!",
+                    },
+                ]}
+                hasFeedback
+                >
+                <Input.Password defaultValue = {props.NhanVien.MatKhau} />
+                </Form.Item>
 
-//               <Option value="5">Điện gia dùng</Option>
+                <Form.Item
+                name="confirm"
+                label="Xác nhận mật khẩu"
+                dependencies={["MatKhau"]}
+                hasFeedback
+                rules={[
+                    {
+                    required: true,
+                    message: "Xin vui lòng nhập lại mật khẩu!",
+                    },
+                    ({ getFieldValue }) => ({
+                    validator(_, value) {
+                        if (!value || getFieldValue("MatKhau") === value) {
+                        return Promise.resolve();
+                        }
 
-//               <Option value="6">Nhà cửa đời sống</Option>
-//               <Option value="7">Hàng tiêu dùng - Thực phẩm</Option>
-//               <Option value="8">Đồ chơi - Mẹ và Bé</Option>
-//               <Option value="9">Làm đẹp - Sức khỏe</Option>
-//               <Option value="10">Thời trang - phụ kiện</Option>
-//               <Option value="11">Thể thao - dã ngoại</Option>
-//               <Option value="12">Xe máy, ô tô, xe đạp</Option>
-//               <Option value="13">Sách - VPP và Quà tặng</Option>
-//             </Select>
-//           </Form.Item>
-//           <Form.Item name="url" label="Đường dẫn hình ảnh">
-//             <Input defaultValue={props.product.url} />
-//           </Form.Item>
-//         </Form>
-//       </Modal>
-//     </>
-//   );
-// }
+                        return Promise.reject(
+                        new Error("Hai mật khẩu đã nhập không khớp!")
+                        );
+                    },
+                    }),
+                ]}
+                >
+                <Input.Password defaultValue = {props.NhanVien.MatKhau}/>
+                </Form.Item>
 
-// function AddModal(props) {
-//   const [isModalVisible, setIsModalVisible] = useState(props.visible);
-//   const [form] = Form.useForm();
+                <Form.Item name="SDT" label="Số điện thoại" >
+                    <Input defaultValue={props.NhanVien.SDT} />
+                </Form.Item>
 
-//   const handleOk = () => {
-//     let HoTen = form.getFieldValue("HoTen");
-//     let NgaySinh = form.getFieldValue("NgaySinh");
-//     let SLTonSP = form.getFieldValue("SLTonSP");
-//     let GiaBanSP = form.getFieldValue("GiaBanSP");
-//     let GiaGiamSP = form.getFieldValue("GiaGiamSP");
-//     let ThanhTienSP = form.getFieldValue("ThanhTienSP");
-//     let MaLoaiSP = form.getFieldValue("MaLoaiSP");
-//     let url = form.getFieldValue("url");
+                <Form.Item name="NgaySinh" wrapperCol={{span: 8}} label="Ngày sinh" 
+                rules={[
+                  () => ({
+                  validator(_, value) {
+                      if (moment(value).year() <= 2003) {
+                      return Promise.resolve();
+                      }
 
-//     const info = {
-//       MaSP: props.product.MaSP, //lay amount tu api
-//       TenSP: TenSP,
-//       MoTaSP: MoTaSP,
-//       SLTonSP: SLTonSP,
-//       GiaBanSP: GiaBanSP,
-//       GiaGiamSP: GiaGiamSP,
-//       ThanhTienSP: ThanhTienSP,
-//       MaLoaiSP: MaLoaiSP,
-//       url: url,
-//     };
+                      return Promise.reject(
+                      new Error("Nhân viên chưa đủ tuổi làm việc")
+                      );
+                  },
+                  }),
+              ]} >
+                    <DatePicker defaultValue={moment(props.NhanVien.NgaySinh, dateFormat)} />
+                </Form.Item>
 
-//     axios
-//       .put(
-//         "https://60b0f8b91f26610017fff943.mockapi.io/api/v1/todo_data/" +
-//           props.product.MaSP,
-//         JSON.stringify(info),
-//         {
-//           headers: {
-//             "Content-Type": "application/json",
-//           },
-//         }
-//       )
-//       .then((res) => {
-//         console.log(res.data);
-//         setIsModalVisible(false);
-//         props.setVisibleFalse();
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//       });
-//   };
+                <Form.Item name="NgayVaoLam" wrapperCol={{span: 8}} label="Ngày vào làm"  >
+                    <DatePicker defaultValue={moment(props.NhanVien.NgayVaoLam, dateFormat)} />
+                </Form.Item>
 
-//   const handleCancel = () => {
-//     setIsModalVisible(false);
-//     props.setVisibleFalse();
-//   };
+                <Form.Item
+                    wrapperCol={{span: 7}}
+                    name="GioiTinh"
+                    label="Giới tính"
+                >
+                    <Select placeholder="Chọn giới tính" defaultValue={props.NhanVien.GioiTinh}>
+                        <Option value="Nam">Nam</Option>
+                        <Option value="Nữ">Nữ</Option>
+                    </Select>
+                </Form.Item>
 
-//   function onChangeSelect(value) {
-//     console.log(`selected ${value}`);
-//   }
-//   return (
-//     <>
-//       <Modal
-//         title="Basic Modal"
-//         visible={isModalVisible}
-//         onOk={handleOk}
-//         onCancel={handleCancel}
-//       >
-//         <Form {...layout} name="nest-messages">
-//           <Form.Item name="TenSP" label="Tên sản phẩm">
-//             <Input />
-//           </Form.Item>
-//           <Form.Item name="MoTaSP" label="Mô tả ">
-//             <Input />
-//           </Form.Item>
-//           <Form.Item name="SLTonSP" label="Số lượng tồn">
-//             <Input />
-//           </Form.Item>
-//           <Form.Item name="GiaBanSP" label="Giá bán">
-//             <Input />
-//           </Form.Item>
-//           <Form.Item name="GiaGiamSP" label="Giá giảm">
-//             <Input />
-//           </Form.Item>
-//           <Form.Item name="ThanhTienSP" label="Thành tiền">
-//             <Input />
-//           </Form.Item>
-          
-//         </Form>
-//       </Modal>
-//     </>
-//   );
-// }
+                <Form.Item label="Địa chỉ">
+                    <Input.Group compact>
+                    <Form.Item
+                        name="ThanhPho"
+                        noStyle 
+                    >
+                        <Input style={{ width: '35%' }} placeholder="Nhập thành phố" defaultValue={props.NhanVien.ThanhPho} />
+                    </Form.Item>
+                    <Form.Item
+                        name="Quan"
+                        noStyle
+                    >
+                        <Input style={{ width: '35%' }} placeholder="Nhập quận" defaultValue={props.NhanVien.Quan}/>
+                    </Form.Item>
+                    <Form.Item
+                        name="Phuong"
+                        noStyle
+                        
+                    >
+                        <Input style={{ width: '30%' }} placeholder="Nhập phường" defaultValue={props.NhanVien.Phuong}/>
+                    </Form.Item>
+                    <Form.Item
+                        name="SoNha"
+                        noStyle
+                    >
+                        <Input style={{ width: '50%' }} placeholder="Nhập số nhà" defaultValue={props.NhanVien.SoNha}/>
+                    </Form.Item>
+                    <Form.Item
+                        name="Duong"
+                        noStyle
+                    >
+                        <Input style={{ width: '50%' }} placeholder="Nhập tên đường"  defaultValue={props.NhanVien.Duong}/>
+                    </Form.Item>
+                    </Input.Group>
+                </Form.Item>
+
+                <Form.Item name="Luong" wrapperCol={{span: 3}} label="Lương nhân viên (Đơn vị 1.000đ)" >
+                    <Input defaultValue={props.NhanVien.Luong} />
+                </Form.Item>
+
+                <Form.Item name="HeSoLuong" wrapperCol={{span: 3}} label="Hệ số lương nhân viên" >
+                    <Input defaultValue={props.NhanVien.HeSoLuong} />
+                </Form.Item>
+            </Form>
+            </div>
+        </Layout>  
+      </Modal>
+    </>
+  );
+}
+
+function AddModal(props) {
+  const [isModalVisible, setIsModalVisible] = useState(props.visible);
+  const [form] = Form.useForm();
+
+  const handleOk = () => {
+    let HoTen = form.getFieldValue("name");
+    let NgaySinh = form.getFieldValue("ngaySinh");
+    let NgayVaoLam = form.getFieldValue("ngayVaoLam");
+    let SDT = form.getFieldValue("sdt");
+    let GioiTinh = form.getFieldValue("gioiTinh");
+    let SoNha = form.getFieldValue("soNha");
+    let Duong = form.getFieldValue("duong");
+    let Phuong = form.getFieldValue("phuong");
+    let Quan = form.getFieldValue("quan");
+    let ThanhPho = form.getFieldValue("thanhPho");
+    let MatKhau = form.getFieldValue("password");
+    let Luong = form.getFieldValue("luong");
+    let HeSoLuong = form.getFieldValue("hsl");
+    let Email = form.getFieldValue("email");
+
+    const info = {
+      HoTen: HoTen,
+      Email: Email,
+      NgaySinh: moment(NgaySinh).format("MM-DD-YYYY"),
+      NgayVaoLam: moment(NgayVaoLam).format("MM-DD-YYYY"),
+      SDT: SDT,
+      GioiTinh: GioiTinh,
+      SoNha: SoNha,
+      Duong: Duong,
+      Phuong: Phuong,
+      Quan: Quan,
+      ThanhPho: ThanhPho,
+      MatKhau: MatKhau,
+      Luong: parseInt(Luong),
+      HeSoLuong: parseFloat(HeSoLuong),
+    };
+
+    axios
+      .post("http://localhost:5000/api/NVQT/taoNVQLK", JSON.stringify(info), {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setIsModalVisible(false);
+        props.setVisibleFalse();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    axios
+      .get("http://localhost:5000/api/NVQT/listNVQLK/")
+      .then((res) => {
+        props.setListNhanVien(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+    props.setVisibleFalse();
+  };
+  
 
 
+  return (
+    <>
+      <Modal
+        title="Basic Modal"
+        visible={isModalVisible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <Layout>
+            <div>
+                <Title level="3" align="center">Thêm Nhân Viên Quản Lý Kho</Title>
+            </div>
+            <div>
+            <Form {...layout} form={form}>  
+                <Form.Item name="name" label="Nhập tên nhân viên" >
+                    <Input />
+                </Form.Item>    
+                <Form.Item name="email" label="Email" >
+                    <Input />
+                </Form.Item>
+                
+                <Form.Item
+                name="password"
+                label="Mật khẩu"
+                rules={[
+                    {
+                    required: true,
+                    message: "Xin vui lòng nhập mật khẩu!",
+                    },
+                ]}
+                hasFeedback
+                >
+                <Input.Password />
+                </Form.Item>
+
+                <Form.Item
+                name="confirm"
+                label="Xác nhận mật khẩu"
+                dependencies={["password"]}
+                hasFeedback
+                rules={[
+                    {
+                    required: true,
+                    message: "Xin vui lòng nhập lại mật khẩu!",
+                    },
+                    ({ getFieldValue }) => ({
+                    validator(_, value) {
+                        if (!value || getFieldValue("password") === value) {
+                        return Promise.resolve();
+                        }
+
+                        return Promise.reject(
+                        new Error("Hai mật khẩu đã nhập không khớp!")
+                        );
+                    },
+                    }),
+                ]}
+                >
+                <Input.Password />
+                </Form.Item>
+
+                <Form.Item name="sdt" label="Số điện thoại" >
+                    <Input />
+                </Form.Item>
+
+                <Form.Item name="ngaySinh" wrapperCol={{span: 8}} label="Ngày sinh" 
+                rules={[
+                  () => ({
+                  validator(_, value) {
+                      if (moment(value).year() <= 2003) {
+                      return Promise.resolve();
+                      }
+
+                      return Promise.reject(
+                      new Error("Nhân viên chưa đủ tuổi làm việc")
+                      );
+                  },
+                  }),
+              ]}>
+                    <DatePicker />
+                </Form.Item>
+
+                <Form.Item name="ngayVaoLam" wrapperCol={{span: 8}} label="Ngày vào làm" >
+                    <DatePicker />
+                </Form.Item>
+
+                <Form.Item
+                    wrapperCol={{span: 7}}
+                    name="gioiTinh"
+                    label="Giới tính"
+                >
+                    <Select placeholder="Chọn giới tính">
+                        <Option value="Nam">Nam</Option>
+                        <Option value="Nữ">Nữ</Option>
+                    </Select>
+                </Form.Item>
+
+                <Form.Item label="Địa chỉ">
+                    <Input.Group compact>
+                    <Form.Item
+                        name="thanhPho"
+                        noStyle
+                    >
+                        <Input style={{ width: '35%' }} placeholder="Nhập thành phố" />
+                    </Form.Item>
+                    <Form.Item
+                        name="quan"
+                        noStyle
+                    >
+                        <Input style={{ width: '35%' }} placeholder="Nhập quận" />
+                    </Form.Item>
+                    <Form.Item
+                        name="phuong"
+                        noStyle
+                    >
+                        <Input style={{ width: '30%' }} placeholder="Nhập phường" />
+                    </Form.Item>
+                    <Form.Item
+                        name="soNha"
+                        noStyle
+                    >
+                        <Input style={{ width: '50%' }} placeholder="Nhập số nhà" />
+                    </Form.Item>
+                    <Form.Item
+                        name="duong"
+                        noStyle
+                    >
+                        <Input style={{ width: '50%' }} placeholder="Nhập tên đường" />
+                    </Form.Item>
+                    </Input.Group>
+                </Form.Item>
+
+                <Form.Item name="luong" wrapperCol={{span: 3}} label="Lương nhân viên (Đơn vị 1.000đ)" >
+                    <Input />
+                </Form.Item>
+
+                <Form.Item name="hsl" wrapperCol={{span: 3}} label="Hệ số lương nhân viên" >
+                    <Input />
+                </Form.Item>
+            </Form>
+            </div>
+        </Layout>  
+      </Modal>
+    </>
+  );
+}
+
+function DeleteModal(props) {
+  const [isModalVisible, setIsModalVisible] = useState(props.visible);
+  const [form] = Form.useForm();
+  const handleCancel = () => {
+    setIsModalVisible(false);
+    props.setVisibleFalse();
+  };
+
+  const handleOk = () => {
+    let MaNV = form.getFieldValue("MaNV");
+
+    const info = {
+      MaNVmoi: MaNV,
+    };
+
+    axios
+        .put("http://localhost:5000/api/NVQT/UpdateAuthNVQLK/" + props.NhanVien.MaNV,
+          JSON.stringify(info),
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((res) => {
+          axios
+          .delete("http://localhost:5000/api/NVQT/xoaNVQLK/" + props.NhanVien.MaNV)
+          .then( () => {
+              axios
+              .get("http://localhost:5000/api/NVQT/listNVQLK/")
+              .then((res) => {
+                props.setListNhanVien(res.data);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          })
+          .catch ((error) => {console.log(error)});
+          console.log(res.data);
+          setIsModalVisible(false);
+          props.setVisibleFalse();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+  };
+  return (
+    <>
+      <Modal
+        title="Basic Modal"
+        visible={isModalVisible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <Layout>
+            <div>
+                <Title level="3" align="center">Thêm Nhân Viên Quản Lý Kho</Title>
+            </div>
+            <div>
+            <Form {...layout} form={form}>  
+                <Form.Item name="MaNV" label="Nhập nhân viên thay thế" >
+                    <InputNumber />
+                </Form.Item>    
+            </Form>
+            </div>
+        </Layout>  
+      </Modal>
+    </>
+  );
+}
 function NVQLK() {
     const [listNhanVien, setListNhanVien] = useState([]);
     const [NhanVien, setNhanVien] = useState({})
     const [editVisible, setEditVisible] = useState(false);
     const [addVisible, setAddVisible] = useState(false);
+    const [deleteVisible, setDeleteVisible] = useState(false);
 
     useEffect(() => {
         axios
           .get("http://localhost:5000/api/NVQT/listNVQLK/")
           .then((res) => {
             setListNhanVien(res.data);
+            console.log(listNhanVien);
           })
           .catch((err) => {
             console.log(err);
@@ -249,26 +552,12 @@ function NVQLK() {
     const onClickAdd = () => {
       setAddVisible(true);
     };
-  
+
     const onClickDelete = (nv) => {
-      axios
-        .delete("http://localhost:5000/api/NVQTxoaNVQLK/" + nv.MaNV)
-        .then((response) => {
-          console.log(response);
-          console.log(nv.MaNV);
-        });
+      setNhanVien(nv);
+      setDeleteVisible(true);
     };
     
-    const openNotification = () => {
-      notification.open({
-        message: 'Chúc mừng!',
-        description:
-          'Bạn đã xóa tài khoản Nhân Viên Quản Lý Kho thành công',
-        onClick: () => {
-          console.log('Notification Clicked!');
-        },
-      });
-    }
 
     const columns = [
       {
@@ -331,17 +620,22 @@ function NVQLK() {
           <Space size="middle">
             <EditTwoTone
               className="edit-button"
-              //onClick={() => onClickEdit(record)}
+              onClick={() => onClickEdit(record)}
             />
             <DeleteTwoTone
               className="delete"
               onClick={() => onClickDelete(record)}
-              onClick={openNotification}
             />
           </Space>
         ),
       },
     ];
+    
+    const setVisibleFalse = () => {
+      setEditVisible(false);
+      setAddVisible(false);
+      setDeleteVisible(false);
+    };
 
   return (
     <div>
@@ -351,22 +645,32 @@ function NVQLK() {
           <Title level={2} classname="titlename">
             Danh sách Nhân Viên Quản Lý Kho
           </Title>
+          <Button onClick={onClickAdd} >Thêm nhân viên</Button>
           <Table columns={columns} dataSource={listNhanVien} pagination={false} />
         </Content>
       </Layout>
     </div>
 
-      {/* <EditModal
+      <EditModal
           key={editVisible}
           visible={editVisible}
           NhanVien={NhanVien}
+          setListNhanVien={setListNhanVien}
           setVisibleFalse={setVisibleFalse}
         />
-        <AddModal
+      <AddModal
           key={addVisible}
           visible={addVisible}
           setVisibleFalse={setVisibleFalse}
-        /> */}
+          setListNhanVien={setListNhanVien}
+        />
+      <DeleteModal
+          key={deleteVisible}
+          visible={deleteVisible}
+          NhanVien={NhanVien}
+          setListNhanVien={setListNhanVien}
+          setVisibleFalse={setVisibleFalse}
+      />
     </div>
   );
 }
