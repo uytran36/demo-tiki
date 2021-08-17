@@ -168,34 +168,94 @@ const createNVQLK = async (NVQTData) => {
     }
   }
 
-  const deleteNhaBan = async (MaNB) => {
+  const updateNhaBan = async (MaNhaBan, NBData) => {
     try{
       let pool = await sql.connect(config);
-      const deleteNVQLK = await pool
+      const updateNhaBan = await pool
       .request()
-      .input("MaNB", sql.Int, MaNB)
-      .execute('deleteNB')
+      .input("MaNhaBan",sql.Int, MaNhaBan)
+      .input("TenNhaBan", sql.NVarChar(100), NBData.TenNhaBan)
+      .input("SDTNhaBan", sql.Char(10), NBData.SDTNhaBan)
+      .input("DiaChiNhaBan", sql.NVarChar(255), NBData.DiaChiNhaBan)
+      .input("MatKhauNhaBan", sql.VarChar(50), NBData.MatKhauNhaBan)
+      .execute('updateNhaBan')
 
-      return deleteNVQLK.recordset;
+      return updateNhaBan.recordset;
     } catch (error) {
       console.log(error.message);
     }
   }
 
-  const updateNhaBan = async (MaNB, NBData) => {
+  const updateAuthNVQLK = async (MaNV, NVData) => {
     try{
       let pool = await sql.connect(config);
-      const updateNhaBan = await pool
+      const up = await pool
       .request()
-      .input("MaNB", sql.Int, MaNB)
-      .input("TenNhaBan", sql.NVarchar(100), NBData.TenNhaBan)
-      .input("SDTNhaBan", sql.Char(10), NBData.SDTNhaBan)
-      .input("EmailNhaBan", sql.Char(100), NBData.EmailNhaBan)
-      .input("DiaChiNhaBan", sql.NVarchar(255), NBData.DiaChiNhaBan)
-      .input("MatKhauNhaBan", sql.Varchar(50), NBData.MatKhauNhaBan)
-      .execute('updateNhaBan')
+      .input("MaNVmoi",sql.Int, NVData.MaNVmoi)
+      .input("MaNV", sql.Int, MaNV)
+      .execute('NVQLKmoi')
 
-      return updateNhaBan.recordset;
+      return up.recordset;
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  const topKH = async (NgayLap) => {
+    try {
+      let pool = await sql.connect(config);
+      const topKH = await pool
+      .request()
+      .input("NgayLap", sql.Date, NgayLap)
+      .execute('topKH')
+
+      return topKH.recordset;
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  const createPromo = async (Data) => {
+      try {
+        let pool = await sql.connect(config);
+        const createPromo = await pool
+        .request()
+        .input("MaKH", sql.Int, Data.MaKH)
+        .input("Ten", sql.NVarChar(50), Data.Ten)
+        .input("GiaTri", sql.Float, Data.GiaTri)
+        .input("HanSuDung", sql.Date, Data.HanSuDung)
+        .input("LuotSuDung", sql.Int, Data.LuotSuDung)
+        .execute('createPromo')
+
+        return createPromo.recordset;
+      } catch (error) {
+        console.log(error.message);
+      }
+  }
+
+  const getKho = async () => {
+      try {
+        let pool = await sql.connect(config);
+        const getKho = await pool
+        .request()
+        .execute('getKho')
+
+        return getKho.recordset
+      } catch (error) {
+        console.log(error.message);
+      }
+  }
+  
+  const DangNhap = async(Data) => {
+    try {
+      let pool = await sql.connect(config);
+      const DangNhap = await pool
+      .request()
+      .input("Email", sql.NVarChar(50), Data.Email)
+      .input("MatKhau", sql.VarChar(50), Data.MatKhau)
+      .execute('DangNhap')
+
+      return DangNhap.recordset;
     } catch (error) {
       console.log(error.message);
     }
@@ -212,7 +272,11 @@ const createNVQLK = async (NVQTData) => {
     deleteNVQLK,
     updateNVQLK,
     getDSNB,
-    deleteNhaBan,
-    updateNhaBan
+    updateNhaBan,
+    updateAuthNVQLK,
+    topKH,
+    createPromo,
+    getKho,
+    DangNhap
   };
   

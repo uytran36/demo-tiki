@@ -1,4 +1,4 @@
-import { Table, Pagination, Button, Input, Form, Select ,Space, notification, DatePicker } from "antd";
+import { Table, Pagination, Button, Input, Form, Select ,Space, notification, DatePicker, InputNumber} from "antd";
 import { Layout } from "antd";
 import { Typography , Modal} from "antd";
 import "./style.css";
@@ -65,18 +65,18 @@ function EditModal(props) {
         }
       )
       .then((res) => {
+        axios
+          .get("http://localhost:5000/api/NVQT/listNVQLK/")
+          .then((res) => {
+            props.setListNhanVien(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        
         console.log(res.data);
         setIsModalVisible(false);
         props.setVisibleFalse();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    axios
-      .get("http://localhost:5000/api/NVQT/listNVQLK/")
-      .then((res) => {
-        props.setListNhanVien(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -454,12 +454,82 @@ function AddModal(props) {
   );
 }
 
+function DeleteModal(props) {
+  const [isModalVisible, setIsModalVisible] = useState(props.visible);
+  const [form] = Form.useForm();
+  const handleCancel = () => {
+    setIsModalVisible(false);
+    props.setVisibleFalse();
+  };
 
+  const handleOk = () => {
+    let MaNV = form.getFieldValue("MaNV");
+
+    const info = {
+      MaNVmoi: MaNV,
+    };
+
+    axios
+        .put("http://localhost:5000/api/NVQT/UpdateAuthNVQLK/" + props.NhanVien.MaNV,
+          JSON.stringify(info),
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((res) => {
+          axios
+          .delete("http://localhost:5000/api/NVQT/xoaNVQLK/" + props.NhanVien.MaNV)
+          .then( () => {
+              axios
+              .get("http://localhost:5000/api/NVQT/listNVQLK/")
+              .then((res) => {
+                props.setListNhanVien(res.data);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          })
+          .catch ((error) => {console.log(error)});
+          console.log(res.data);
+          setIsModalVisible(false);
+          props.setVisibleFalse();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+  };
+  return (
+    <>
+      <Modal
+        title="Basic Modal"
+        visible={isModalVisible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <Layout>
+            <div>
+                <Title level="3" align="center">Thêm Nhân Viên Quản Lý Kho</Title>
+            </div>
+            <div>
+            <Form {...layout} form={form}>  
+                <Form.Item name="MaNV" label="Nhập nhân viên thay thế" >
+                    <InputNumber />
+                </Form.Item>    
+            </Form>
+            </div>
+        </Layout>  
+      </Modal>
+    </>
+  );
+}
 function NVQLK() {
     const [listNhanVien, setListNhanVien] = useState([]);
     const [NhanVien, setNhanVien] = useState({})
     const [editVisible, setEditVisible] = useState(false);
     const [addVisible, setAddVisible] = useState(false);
+    const [deleteVisible, setDeleteVisible] = useState(false);
 
     useEffect(() => {
         axios
@@ -484,20 +554,8 @@ function NVQLK() {
     };
 
     const onClickDelete = (nv) => {
-      axios
-        .delete("http://localhost:5000/api/NVQT/xoaNVQLK/" + nv.MaNV)
-        .then( () => {
-            axios
-            .get("http://localhost:5000/api/NVQT/listNVQLK/")
-            .then((res) => {
-              setListNhanVien(res.data);
-              console.log(listNhanVien);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        })
-        .catch ((error) => {console.log(error)});
+      setNhanVien(nv);
+      setDeleteVisible(true);
     };
     
 
@@ -576,6 +634,7 @@ function NVQLK() {
     const setVisibleFalse = () => {
       setEditVisible(false);
       setAddVisible(false);
+      setDeleteVisible(false);
     };
 
   return (
@@ -599,12 +658,19 @@ function NVQLK() {
           setListNhanVien={setListNhanVien}
           setVisibleFalse={setVisibleFalse}
         />
-        <AddModal
+      <AddModal
           key={addVisible}
           visible={addVisible}
           setVisibleFalse={setVisibleFalse}
           setListNhanVien={setListNhanVien}
         />
+      <DeleteModal
+          key={deleteVisible}
+          visible={deleteVisible}
+          NhanVien={NhanVien}
+          setListNhanVien={setListNhanVien}
+          setVisibleFalse={setVisibleFalse}
+      />
     </div>
   );
 }

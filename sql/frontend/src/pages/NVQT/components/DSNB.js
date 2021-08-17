@@ -7,8 +7,6 @@ import axios from "axios";
 import { EditTwoTone, DeleteTwoTone } from "@ant-design/icons";
 import moment from "moment";
 
-const { Option } = Select;
-const dateFormat = "YYYY-MM-DD";
 const { Title } = Typography;
 const { Content } = Layout;
 const layout = {
@@ -43,10 +41,16 @@ function EditModal(props) {
         }
       )
       .then((res) => {
+          axios.get("http://localhost:5000/api/NVQT/listNhaBan/" + props.current)
+            .then((res) => {
+                props.setListNhaBan(res.data);
+            }).catch((err) => {
+              console.log(err);
+            });
+
         console.log(res.data);
         setIsModalVisible(false);
         props.setVisibleFalse();
-        // props.setListNhaBan(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -250,6 +254,7 @@ return (
           key={editVisible}
           visible={editVisible}
           NhaBan={NhaBan}
+          current={current}
           setListNhaBan={setListNhaBan}
           setVisibleFalse={setVisibleFalse}
         />

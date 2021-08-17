@@ -10,7 +10,7 @@ const timeout = require("connect-timeout");
 const dbConfig = {
   user: "sa",
   password: "123",
-  server: "localhost\\TRANUY2",
+  server: "localhost\\LONGHA",
   database: "Tiki",
   trustServerCertificate: true,
   

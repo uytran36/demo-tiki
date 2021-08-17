@@ -1,10 +1,32 @@
 import { Form, Input, Button } from "antd";
 import "./Login.css";
-import {Link} from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
+import axios from "axios";
 
-const Login = () => {
+const LogIn = ({ setAuth, setVerify, verify }) => {
+  const history = useHistory();
+
   const onFinish = (values) => {
-    console.log("Success:", values);
+    const data = JSON.stringify(values);
+    
+    axios
+      .post("http://localhost:5000/api/NVQT/LogIn", data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        if(res.data.length !== 0) {
+          window.localStorage.setItem("NV", JSON.stringify(res.data[0]));
+          setAuth(res.data[0]);
+          setVerify(!verify);
+          history.push("/QT");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -29,11 +51,11 @@ const Login = () => {
       >
         <Form.Item
           label="Email"
-          name="email"
+          name="Email"
           rules={[
             {
               required: true,
-              message: "Please input your email!",
+              message: "Vui lòng nhập email",
             },
           ]}
         >
@@ -42,11 +64,11 @@ const Login = () => {
 
         <Form.Item
           label="Mật khẩu"
-          name="password"
+          name="MatKhau"
           rules={[
             {
               required: true,
-              message: "Please input your password!",
+              message: "Vui lòng nhập mật khẩu",
             },
           ]}
         >
@@ -58,8 +80,8 @@ const Login = () => {
             span: 16,
           }}
         >
-          <Button type="primary" htmlType="submit" >
-            <Link to="/Promotion">Đăng nhập</Link>
+          <Button type="primary" htmlType="submit">
+            Đăng nhập
           </Button>
         </Form.Item>
       </Form>
@@ -67,4 +89,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LogIn;
