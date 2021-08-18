@@ -1,11 +1,16 @@
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { Form, Input, Checkbox, Button } from "antd";
 import { Layout } from 'antd';
 import axios from 'axios';
-
+import { useHistory } from "react-router";
+import { AlignCenterOutlined } from "@ant-design/icons";
 const { Header, Footer, Content } = Layout;
-const DangNhapGH = () => {
+
+const DangNhapGH = ({ setAuth, setVerify, verify }) => {
+
+    const history = useHistory()
+
     const onFinish = (value) => {
         console.log(value)
         axios.post(
@@ -20,9 +25,17 @@ const DangNhapGH = () => {
             }
         )
         .then((res) => {
-            if (res.data[0].checkLogin == 0) {
-                
+            if (res.data.length !== 0) {
+                window.localStorage.setItem("NVGH", JSON.stringify(res.data[0].MaNV));
+                setAuth(res.data[0]);
+                setVerify(!verify);
+                history.push("/GH");
             }
+            else {
+                console.log(res.data)
+                console.log("false")
+            }
+            console.log(res.data)
         })
         .catch((e) => {
             console.log(e)
@@ -32,12 +45,12 @@ const DangNhapGH = () => {
 
     return(
         <Layout>
-            <h1>Đăng nhập nhân viên giao hàng</h1>
+            <h1 style={{ textAlign: "center" }}>Đăng nhập nhân viên giao hàng</h1>
             <Content>
                 <Form id="login-form" 
                     name="basic"
                     labelCol={{ span: 8 }}
-                    wrapperCol={{ span: 16 }}
+                    wrapperCol={{ span: 8 }}
                     initialValues={{ remember: true }}
                     onFinish={onFinish}
                     >

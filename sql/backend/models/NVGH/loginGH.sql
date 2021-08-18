@@ -1,1 +1,0 @@
-SELECT COUNT(*) FROM Tiki.dbo.NhanVienGiaoHang WHERE Email = @Email AND MatKhau = @MatKhau

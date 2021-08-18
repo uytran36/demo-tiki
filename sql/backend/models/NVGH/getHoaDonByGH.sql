@@ -1,1 +1,0 @@
-SELECT MaHD, TinhTrang, ThanhTienHD FROM HoaDon WHERE MaNVGH = @MaNVGH

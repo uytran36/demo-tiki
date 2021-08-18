@@ -77,7 +77,6 @@ const createNVQLK = async (NVQTData) => {
       const getLuong = await pool
       .request()
       .input("page", sql.Int, page)
-      //.input("ngay", sql.Date, ngay)
       .execute('getLuongNVQLK');
 
       return getLuong.recordset;

@@ -35,4 +35,4 @@ const QlNhanVien = () => {
         </Layout>
     )
 }
-export default SpTrongKho;
+export default QlNhanVien;

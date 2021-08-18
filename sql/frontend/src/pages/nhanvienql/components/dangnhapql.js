@@ -7,12 +7,12 @@ const { Header, Footer, Content } = Layout;
 const DangNhapQL = () => {
     return(
         <Layout>
-            <Header><div>Đăng nhập Nhân viên quản lý</div></Header>
+            <div>Đăng nhập Nhân viên quản lý</div>
             <Content>
                 <Form id="login-form"
                     name="basic"
                     labelCol={{ span: 8 }}
-                    wrapperCol={{ span: 16 }}
+                    wrapperCol={{ span: 8 }}
                     initialValues={{ remember: true }}
                     >
                     <Form.Item

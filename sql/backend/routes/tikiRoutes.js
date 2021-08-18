@@ -64,6 +64,7 @@ router.get("/NVQT/dsKho", NVQTController.dsKho)
 router.post("/NVQT/LogIn", NVQTController.LogIn)
 
 router.post("/NVGH/login", NVGHController.loginNVGH)
+router.get("/NVGH/listHD/:id/:page", NVGHController.getAllHoaDonByID)
 module.exports = {
   routes: router,
 };
