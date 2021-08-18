@@ -14,7 +14,6 @@ const Nhaban = (props) => {
 
   useEffect(() => {
     setAuth(window.localStorage.getItem("auth"));
-    console.log(auth);
   }, [auth]);
 
   return (

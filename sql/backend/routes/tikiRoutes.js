@@ -62,6 +62,8 @@ router.put("/NVQT/editNB/:MaNhaBan", NVQTController.editNB)
 router.post("/NVQT/taoKhuyenMai", NVQTController.taoKhuyenMai)
 router.get("/NVQT/dsKho", NVQTController.dsKho)
 router.post("/NVQT/LogIn", NVQTController.LogIn)
+router.get("/NVQT/DTTT/:NamLap", NVQTController.DTTT)
+router.get("/NVQT/DTHD/:NamLap",NVQTController.DTHD)
 
 router.post("/NVGH/login", NVGHController.loginNVGH)
 router.get("/NVGH/listHD/:id/:page", NVGHController.getAllHoaDonByID)

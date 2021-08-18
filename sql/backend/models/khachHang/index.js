@@ -13,6 +13,7 @@ const getKhachHangByEmail = async (data) => {
     return kh.recordset;
   } catch (error) {
     console.log(error.message);
+    return error.message;
   }
 };
 
@@ -23,6 +24,7 @@ const getAmountKH = async () => {
     return amount.recordset;
   } catch (error) {
     console.log(error.message);
+    return error.message;
   }
 };
 
@@ -47,7 +49,7 @@ const createKH = async (khachHangData) => {
       .execute("createKH");
     return insertKH.recordset;
   } catch (error) {
-    console.log("error");
+    console.log(error.message);
     return error.message;
   }
 };
@@ -62,6 +64,7 @@ const getSPPage = async (page) => {
     return sanPhamList.recordset;
   } catch (error) {
     console.log(error.message);
+    return error.message;
   }
 };
 
@@ -72,6 +75,7 @@ const getAmountSP = async () => {
     return amount.recordset;
   } catch (error) {
     console.log(error.message);
+    return error.message;
   }
 };
 
@@ -86,6 +90,7 @@ const getSP_Type = async (MaLoaiSP, PageNumber) => {
     return sanPhamList.recordset;
   } catch (error) {
     console.log(error.message);
+    return error.message;
   }
 };
 
@@ -99,6 +104,7 @@ const getAmountSP_type = async (MaLoaiSP) => {
     return amount.recordset;
   } catch (error) {
     console.log(error.message);
+    return error.message;
   }
 };
 
@@ -112,6 +118,7 @@ const getSPID = async (id) => {
     return sanPhamList.recordset;
   } catch (error) {
     console.log(error.message);
+    return error.message;
   }
 };
 
@@ -125,6 +132,7 @@ const getNBSP = async (id) => {
     return sanPhamList.recordset;
   } catch (error) {
     console.log(error.message);
+    return error.message;
   }
 };
 
@@ -138,6 +146,7 @@ const getReview = async (id) => {
     return sanPhamList.recordset;
   } catch (error) {
     console.log(error.message);
+    return error.message;
   }
 };
 
@@ -160,7 +169,7 @@ const createHoaDon = async (hdData) => {
       .execute("createHD_CTHD");
     return createHD.recordset;
   } catch (error) {
-    console.log("error");
+    console.log(error.message);
     return error.message;
   }
 };
@@ -178,7 +187,7 @@ const createCT_HoaDon = async (cthdData) => {
       .execute("createCTHD");
     return createCTHD.recordset;
   } catch (error) {
-    console.log("error");
+    console.log(error.message);
     return error.message;
   }
 };
@@ -190,6 +199,7 @@ const getAmountCTHD = async () => {
     return amount.recordset;
   } catch (error) {
     console.log(error.message);
+    return error.message;
   }
 };
 
@@ -203,6 +213,7 @@ const getAmountSPByName = async (str) => {
     return listSP.recordset;
   } catch (error) {
     console.log(error.message);
+    return error.message;
   }
 };
 
@@ -217,6 +228,7 @@ const findSP = async (str, page) => {
     return listSP.recordset;
   } catch (error) {
     console.log(error.message);
+    return error.message;
   }
 };
 
@@ -240,6 +252,7 @@ const updateKH = async (MaKH, khachHangData) => {
     return listSP.recordset;
   } catch (error) {
     console.log(error.message);
+    return error.message;
   }
 };
 
@@ -253,6 +266,7 @@ const getDiscount = async (id) => {
     return discount.recordset;
   } catch (error) {
     console.log(error.message);
+    return error.message;
   }
 };
 
@@ -266,6 +280,7 @@ const getHDKH = async (MaKH) => {
     return listHD.recordset;
   } catch (error) {
     console.log(error.message);
+    return error.message;
   }
 };
 
@@ -279,6 +294,7 @@ const getCTHD = async (MaHD) => {
     return listCTHD.recordset;
   } catch (error) {
     console.log(error.message);
+    return error.message;
   }
 };
 
@@ -292,6 +308,7 @@ const getSPKH = async (MaKH) => {
     return listSP.recordset;
   } catch (error) {
     console.log(error.message);
+    return error.message;
   }
 };
 
@@ -307,7 +324,7 @@ const insertRating = async (MaKH, MaSP, rating) => {
       .execute("ratingSP");
     return insert.recordset;
   } catch (error) {
-    console.log("error");
+    console.log(error.message);
     return error.message;
   }
 };
@@ -322,10 +339,10 @@ const getKM = async (MaKH, MaKM) => {
       .execute("getKM");
     return km.recordset;
   } catch (error) {
-    console.log("error");
+    console.log(error.message);
     return error.message;
   }
-}
+};
 
 module.exports = {
   getKhachHangByEmail,

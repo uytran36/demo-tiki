@@ -22,6 +22,7 @@ import DSKH from "./DSKH";
 import NVQLK from "./NVQLK";
 import DSNB from "./DSNB";
 import DSKho from "./DSKho";
+import DT from "./doanhThu";
 
 const { Header, Sider, Content, Footer } = Layout;
 
@@ -57,6 +58,9 @@ const NVQT = () => {
                   <Menu.Item key="7" icon={<ContainerOutlined />}>
                     <Link to="/QT/DSKho">Danh sách kho</Link>
                   </Menu.Item>
+                  <Menu.Item key="8" icon={<BarChartOutlined />}>
+                    <Link to="/QT/doanhThu">Doanh thu</Link>
+                  </Menu.Item>
                 </Menu>
             </Sider>
             <Layout >
@@ -91,6 +95,9 @@ const NVQT = () => {
                   </Route>
                   <Route exact path="/QT/DSKho">
                     <DSKho />
+                  </Route>
+                  <Route exact path="/QT/doanhThu">
+                    <DT />
                   </Route>
                 </Switch>
             </Content>

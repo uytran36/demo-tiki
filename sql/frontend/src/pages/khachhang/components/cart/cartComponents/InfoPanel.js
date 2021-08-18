@@ -166,7 +166,9 @@ function DiscountInput({ setDiscount, isOpen, setIsOpen, MaKH }) {
 }
 
 const InfoPanel = ({ bill, setBill, setSpin, control, setControl }) => {
-  const [customer, setCustomer] = useState({});
+  const [customer, setCustomer] = useState(
+    JSON.parse(window.localStorage.getItem("KH"))
+  );
   const [discount, setDiscount] = useState(-1);
   const [discountVal, setDiscountVal] = useState(0);
   const [tikiXu, setTikiXu] = useState(0);
@@ -190,6 +192,7 @@ const InfoPanel = ({ bill, setBill, setSpin, control, setControl }) => {
       .get("http://localhost:5000/api/khuyenmai/" + customer.MaKH + "/" + discount)
       .then((res) => {
         if (res.data.length !== 0) {
+          console.log(res)
           setDiscountVal(res.data[0].GiaTri);
         }
       })
@@ -214,7 +217,7 @@ const InfoPanel = ({ bill, setBill, setSpin, control, setControl }) => {
       TinhTrang: "Chưa bàn giao",
       SLTikiXu: tikiXu,
       PhiVC: 15,
-      ThanhTienHD: tt - tikiXu - discount + 15,
+      ThanhTienHD: tt - tikiXu/1000 - discount + 15,
       NgayGiaoTC: null,
       GhiChu: "",
     };
@@ -248,6 +251,10 @@ const InfoPanel = ({ bill, setBill, setSpin, control, setControl }) => {
               }
             )
             .then((res) => {
+              const xu = customer.TikiXu;
+              const temp = { ...customer, TikiXu: xu - tikiXu };
+              window.localStorage.setItem("KH", JSON.stringify(temp))
+
               setSpin(false);
               setBill([]);
               setControl(!control);
@@ -362,7 +369,7 @@ const InfoPanel = ({ bill, setBill, setSpin, control, setControl }) => {
                   {bill.reduce((acc, cur) => {
                     return acc + cur.ThanhTien;
                   }, 0) -
-                    tikiXu / 1000 -
+                    (tikiXu/1000) -
                     discountVal +
                     15}
                   .000 Đồng
