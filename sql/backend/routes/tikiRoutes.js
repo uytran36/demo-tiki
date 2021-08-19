@@ -72,6 +72,7 @@ router.get("/NVGH/cthd/:id", NVGHController.getCTHDByID)
 router.get("/NVGH/updateStatus1/:id", NVGHController.updateSuccessHD)
 router.get("/NVGH/updateStatus0/:id", NVGHController.updateCancelHD)
 router.get("/NVGH/getStatusHD/:id", NVGHController.getStatusHD)
+router.get("/NVGH/getlisthd/:id", NVGHController.getListHD)
 module.exports = {
   routes: router,
 };

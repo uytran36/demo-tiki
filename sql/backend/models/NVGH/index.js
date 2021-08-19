@@ -31,6 +31,19 @@ const getAllHoaDon = async(id, page) => {
     }
 }
 
+const getDSHDByID = async(id) => {
+    try {
+        let pool = await sql.connect(config)
+        const list = await pool
+        .request()
+        .input("MaNVGH", sql.Int, id)
+        .execute("getDSHDByID");
+        return list.recordset
+    } catch(error) {
+        console.log(error.message);
+    }
+}
+
 const updateSuccessHD = async(NVGHData) => {
     try {
         let pool = await sql.connect(config)
@@ -104,6 +117,7 @@ module.exports = {
     updateCancelHD,
     getAllHD,
     getCTHD,
-    getTTHD
+    getTTHD,
+    getDSHDByID
 
 }

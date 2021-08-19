@@ -71,6 +71,16 @@ const getStatusHD = async(req, res, next) => {
         res.status(400).send(error.message)
     }
 }
+
+const getListHD = async(req, res, next) => {
+    try {
+        const id = req.params.id;
+        const list = await ghData.getDSHDByID(id)
+        res.send(list)
+    } catch (error) {
+        res.status(400).send(error.message)
+    }
+}
 module.exports = {
     loginNVGH,
     getAllHoaDonByID,
@@ -78,6 +88,7 @@ module.exports = {
     updateSuccessHD,
     getAmountHD,
     getCTHDByID,
-    getStatusHD
+    getStatusHD,
+    getListHD
     
 }
