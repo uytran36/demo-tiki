@@ -511,7 +511,9 @@ function AddModal(props) {
 
 function DeleteModal(props) {
   const [isModalVisible, setIsModalVisible] = useState(props.visible);
+
   const [form] = Form.useForm();
+
   const handleCancel = () => {
     setIsModalVisible(false);
     props.setVisibleFalse();
@@ -520,41 +522,84 @@ function DeleteModal(props) {
   const handleOk = () => {
     let MaNV = form.getFieldValue("MaNV");
 
-    const info = {
-      MaNVmoi: MaNV,
-    };
-
     axios
-      .put(
-        "http://localhost:5000/api/NVQT/UpdateAuthNVQLK/" + props.NhanVien.MaNV,
-        JSON.stringify(info),
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
+      .get("http://localhost:5000/api/NVQT/dsKho/")
       .then((res) => {
-        axios
-          .delete(
-            "http://localhost:5000/api/NVQT/xoaNVQLK/" + props.NhanVien.MaNV
-          )
-          .then(() => {
-            axios
-              .get("http://localhost:5000/api/NVQT/listNVQLK/")
-              .then((res) => {
-                props.setListNhanVien(res.data);
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-        console.log(res.data);
-        setIsModalVisible(false);
-        props.setVisibleFalse();
+        const list = res.data;
+        const temp = list.filter((item) => {
+          return item.MaNVQL === props.NhanVien.MaNV;
+        });
+
+        let info;
+        if (temp.length !== 0) {
+          info = {
+            MaNVmoi: MaNV,
+            MaKho: temp[0].MaKho,
+          };
+
+          axios
+            .put(
+              "http://localhost:5000/api/NVQT/UpdateAuthNVQLK/" +
+                props.NhanVien.MaNV,
+              JSON.stringify(info),
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              }
+            )
+            .then((res) => {
+              axios
+                .delete(
+                  "http://localhost:5000/api/NVQT/xoaNVQLK/" +
+                    props.NhanVien.MaNV
+                )
+                .then(() => {
+                  axios
+                    .get("http://localhost:5000/api/NVQT/listNVQLK/")
+                    .then((res) => {
+                      props.setListNhanVien(res.data);
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
+              console.log(res.data);
+              setIsModalVisible(false);
+              props.setVisibleFalse();
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        } else {
+          info = {
+            MaNVmoi: MaNV,
+            MaKho: 0,
+          };
+          axios
+            .delete(
+              "http://localhost:5000/api/NVQT/xoaNVQLK/" + props.NhanVien.MaNV
+            )
+            .then(() => {
+              axios
+                .get("http://localhost:5000/api/NVQT/listNVQLK/")
+                .then((res) => {
+                  props.setListNhanVien(res.data);
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+          console.log(res.data);
+          setIsModalVisible(false);
+          props.setVisibleFalse();
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -571,7 +616,7 @@ function DeleteModal(props) {
         <Layout>
           <div>
             <Title level="3" align="center">
-              Thêm Nhân Viên Quản Lý Kho
+              Xóa Nhân Viên Quản Lý Kho
             </Title>
           </div>
           <div>
@@ -598,7 +643,6 @@ function NVQLK() {
       .get("http://localhost:5000/api/NVQT/listNVQLK/")
       .then((res) => {
         setListNhanVien(res.data);
-        console.log(listNhanVien);
       })
       .catch((err) => {
         console.log(err);
