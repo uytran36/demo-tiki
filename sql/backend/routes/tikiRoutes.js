@@ -2,6 +2,7 @@ const express = require("express");
 const khachHangController = require("../controllers/khachHangController");
 const nhaBanController = require("../controllers/nhaBanController");
 const NVQTController = require("../controllers/NVQTController");
+const NVGHController = require("../controllers/NVGHController");
 const router = express.Router();
 
 //khach hang
@@ -64,6 +65,13 @@ router.post("/NVQT/LogIn", NVQTController.LogIn)
 router.get("/NVQT/DTTT/:NamLap", NVQTController.DTTT)
 router.get("/NVQT/DTHD/:NamLap",NVQTController.DTHD)
 
+router.post("/NVGH/login", NVGHController.loginNVGH)
+router.get("/NVGH/listHD/:id/:page", NVGHController.getAllHoaDonByID)
+router.get("/NVGH/getAmountHD/:id", NVGHController.getAmountHD)
+router.get("/NVGH/cthd/:id", NVGHController.getCTHDByID)
+router.put("/NVGH/updateStatus1/:id", NVGHController.updateSuccessHD)
+router.put("/NVGH/updateStatus0/:id", NVGHController.updateCancelHD)
+router.get("/NVGH/getStatusHD/:id", NVGHController.getStatusHD)
 module.exports = {
   routes: router,
 };

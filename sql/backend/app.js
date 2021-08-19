@@ -21,6 +21,11 @@ const dbConfig = {
   // server: "localhost\\SQLDU",
   // database: "Tiki",
   // trustServerCertificate: true,
+  user: "sa",
+  password: "0512DeviL1212",
+  server: "localhost\\SQLEXPRESS",
+  database: "Tiki",
+  trustServerCertificate: true,
 };
 
 function connectToMSSQL() {

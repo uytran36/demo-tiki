@@ -1,7 +1,12 @@
+import axios from "axios";
+import NhanVienGH from "./pages/nhanviengh";
+import NhanVienQL from "./pages/nhanvienql";
 import { useState, useEffect } from "react";
 import NhaBan from "./pages/nhaban";
 import KhachHang from "./pages/khachhang";
 import NVQT from "./pages/NVQT";
+import NVGH from "./pages/nhanviengh";
+import NVQL from "./pages/nhanvienql/components/main";
 
 function App() {
   const [route, setRoute] = useState(null);
@@ -14,13 +19,12 @@ function App() {
 
   return (
     <div>
-      {route === "nhaban" ? (
-        <NhaBan />
-      ) : route === "QT" ? (
-        <NVQT />
-      ) : (
-        <KhachHang />
-      )}
+      {/* <Nhaban /> */}
+      {
+        // route === "nhaban" ? <NhaBan /> : <KhachHang />
+      }
+      {/* <KhachHang /> */}
+      <NVGH/>
     </div>
   );
 }

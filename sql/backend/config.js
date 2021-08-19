@@ -21,3 +21,11 @@ module.exports = {
 //   database: "Tiki",
 //   trustServerCertificate: true,
 // };
+
+module.exports = {
+  user: "sa",
+  password: "0512DeviL1212",
+  server: "localhost\\SQLEXPRESS",
+  database: "Tiki",
+  trustServerCertificate: true,
+};
