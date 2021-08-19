@@ -45,7 +45,7 @@ const DanhSachDH = () => {
 
     useEffect(() => {
       axios
-        .get("http://localhost:5000/api/NVGH/listHD/" + JSON.parse(window.localStorage.getItem("NVGH")) + "/1" )
+        .get("http://localhost:5000/api/NVGH/getlisthd/" + JSON.parse(window.localStorage.getItem("NVGH")))
         .then((res) => {
             setListHD(res.data);
         })
@@ -76,17 +76,17 @@ const DanhSachDH = () => {
                     <Title level={2} classname="titlename">
                     Danh sách đơn hàng
                     </Title>
-                    <Table columns={columns} dataSource={listHD} pagination={false} />
+                    <Table columns={columns} dataSource={listHD}/>
                 </Content>
             </Layout>
             <div className="paging" style={{ marginLeft: 500 }}>
-        <Pagination
+        {/* <Pagination
         current={current}
         pageSize={10}
         total={amount}
         onChange={onChange}
         showSizeChanger={false}
-        />
+        /> */}
       </div>
     </div>
     );
