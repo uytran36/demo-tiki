@@ -1,23 +1,38 @@
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import React from "react";
+import {React, useEffect, useState} from "react";
 import { render } from "react-dom";
 import DangNhapQL from "./components/dangnhapql";
 import ChuyenKho from "./components/chuyenkho";
 import SpTrongKho from "./components/sanphamtrongkho";
 import QlDonHang from "./components/quanlydonhang";
-class NhanVienQL extends React.Component {
-    render() {
-        return(
-            <Router>
-                <div>
-                    <Route exact path="/loginql"><DangNhapQL/></Route>
-                    <Route exact path="/chuyenkho"><ChuyenKho/></Route>
-                    <Route exact path="/spkho"><SpTrongKho/></Route>
-                    <Route exact path="/quanlynv"></Route>
-                    <Route exact path="/quanlydh"><QlDonHang/></Route>
-                </div>
-            </Router>
-        );
-    };
-}
-export default NhanVienQL;
+import { Redirect } from "react-router";
+
+const NVQL = () => {
+    const [auth, setAuth] = useState(window.localStorage.getItem("NV"));
+    const [verify,setVerify] = useState(false)
+  
+    useEffect(() => {
+      setAuth(window.localStorage.getItem("NV"));
+    }, [verify]);
+  
+  
+    return (
+      <Router>
+        <Switch>
+          <Route exact path="/QL/Login">
+            <DangNhapQL auth={auth} setAuth={setAuth}  setVerify={setVerify} verify={verify} />
+          </Route>
+  
+          <Route exact path="/QL">
+            {auth === null ? (
+              <Redirect to="/QL/login" />
+            ) : (
+              <NVQL/>
+            )}
+          </Route>
+        </Switch>
+      </Router>
+    );
+  };
+  
+  export default NVQL;

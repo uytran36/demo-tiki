@@ -15,10 +15,10 @@ import {
   DownOutlined,
 } from "@ant-design/icons";
 
-
-import NVQLK from "./NVQLK";
 import QlNhanVien from "./quanlynhanvien";
 import QlDonHang from "./quanlydonhang";
+import SpTrongKho from "./sanphamtrongkho";
+import ChuyenKho from "./chuyenkho";
 
 const { Header, Sider, Content, Footer } = Layout;
 
@@ -75,7 +75,7 @@ const NVQL = () => {
                     <ChuyenKho />
                   </Route>
                   <Route exact path="/QL/TaoTK">
-                    <NVQLK />
+
                   </Route>
                 </Switch>
             </Content>

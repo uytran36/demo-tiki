@@ -29,18 +29,16 @@ const DangNhapGH = ({ setAuth, setVerify, verify }) => {
                 window.localStorage.setItem("NVGH", JSON.stringify(res.data[0].MaNV));
                 setAuth(res.data[0]);
                 setVerify(!verify);
-                history.push("/GH");
+                history.push("/gh");
             }
             else {
                 console.log(res.data)
                 console.log("false")
             }
-            console.log(res.data)
         })
         .catch((e) => {
             console.log(e)
         }) 
-
     }
 
     return(
@@ -56,7 +54,7 @@ const DangNhapGH = ({ setAuth, setVerify, verify }) => {
                     >
                     <Form.Item
                         label="Username"
-                        name="username"
+                        name="Email"
                         rules={[{ required: true, message: 'Please input your username!' }]}
                     >
                         <Input size="middle"/>
@@ -64,14 +62,10 @@ const DangNhapGH = ({ setAuth, setVerify, verify }) => {
 
                     <Form.Item
                         label="Password"
-                        name="password"
+                        name="MatKhau"
                         rules={[{ required: true, message: 'Please input your password!' }]}
                     >
                         <Input.Password size="middle"/>
-                    </Form.Item>
-
-                    <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>
-                        <Checkbox>Remember me</Checkbox>
                     </Form.Item>
 
                     <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
@@ -81,9 +75,7 @@ const DangNhapGH = ({ setAuth, setVerify, verify }) => {
                     </Form.Item>
                 </Form>
             </Content>
-            <Footer></Footer>
-        </Layout>
-                        
+        </Layout>            
     );
 };
 export default DangNhapGH;

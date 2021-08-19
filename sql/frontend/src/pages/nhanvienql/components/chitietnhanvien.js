@@ -7,9 +7,8 @@ const {Header, Content, Footer} = Layout;
 const ChiTietNv = () => {
     return(
         <Layout>
-            <Header>
+
                 <t1>Thông tin chi tiết</t1>
-            </Header>
             <Content>
                 <Form>
                     

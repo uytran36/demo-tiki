@@ -5,7 +5,7 @@ import DangNhapGH from "./components/dangnhapgh";
 import DanhSachDH from "./components/danhsachDH";
 import { Redirect } from "react-router";
 import { useState, useEffect } from "react";
-
+import Main from "./components/Main";
 const NVGH = () => {
     const [auth, setAuth] = useState(window.localStorage.getItem("NVGH"));
     const [verify, setVerify] = useState(false)
@@ -18,15 +18,15 @@ const NVGH = () => {
     return (
       <Router>
         <Switch>
-          <Route exact path="/GH/login">
+          <Route exact path="/gh/login">
             <DangNhapGH auth={auth} setAuth={setAuth}  setVerify={setVerify} verify={verify} />
           </Route>
   
-          <Route exact path="/GH">
+          <Route exact path="/gh">
             {auth === null ? (
-              <Redirect to="/GH/login"/>
+              <Redirect to="/gh/login"/>
             ) : (
-              <DanhSachDH/>
+              <Main/>
             )}
           </Route>
         </Switch>

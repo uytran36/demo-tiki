@@ -15,6 +15,7 @@ import {
   DownOutlined,
 } from "@ant-design/icons";
 import DanhSachDH from "./danhsachDH";
+import ChiTietDH from "./chitietDH";
 
 
 
@@ -32,7 +33,7 @@ const NVGH = ( setAuth, setVerify, verify ) => {
                 </div>
                 <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
                   <Menu.Item key="1" icon={<GiftOutlined />}>
-                    <Link to="/GH">Danh sách đơn hàng</Link>
+                    <Link to="/gh">Danh sách đơn hàng</Link>
                   </Menu.Item>
                 </Menu>
             </Sider>
@@ -48,10 +49,13 @@ const NVGH = ( setAuth, setVerify, verify ) => {
               }}
             >
                 <Switch>
-                  <Route exact path="/QT">
+                  <Route exact path="/gh">
                     <DanhSachDH/>
                   </Route>
-                  </Switch>
+                  <Route exact path="/gh/cthd">
+                    <ChiTietDH/>
+                  </Route>
+                </Switch>
             </Content>
             <Footer style={{ textAlign: "center" }}>
               Ant Design ©2018 Created by Ant UED

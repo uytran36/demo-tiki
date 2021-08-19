@@ -6,6 +6,7 @@ import NhaBan from "./pages/nhaban";
 import KhachHang from "./pages/khachhang";
 import NVQT from "./pages/NVQT";
 import NVGH from "./pages/nhanviengh";
+import NVQL from "./pages/nhanvienql/components/main";
 
 function App() {
   const [route, setRoute] = useState(null);
@@ -18,22 +19,12 @@ function App() {
 
   return (
     <div>
-<<<<<<< HEAD
       {/* <Nhaban /> */}
       {
         // route === "nhaban" ? <NhaBan /> : <KhachHang />
       }
       {/* <KhachHang /> */}
       <NVGH/>
-=======
-      {route === "nhaban" ? (
-        <NhaBan />
-      ) : route === "QT" ? (
-        <NVQT />
-      ) : (
-        <KhachHang />
-      )}
->>>>>>> a2c59b5d358e5746f956e2a6732bfa138e987285
     </div>
   );
 }

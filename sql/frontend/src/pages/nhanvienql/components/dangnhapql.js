@@ -7,7 +7,7 @@ const { Header, Footer, Content } = Layout;
 const DangNhapQL = () => {
     return(
         <Layout>
-            <div>Đăng nhập Nhân viên quản lý</div>
+            <h1 style={{ textAlign: "center" }}>Đăng nhập nhân viên quản lý kho</h1>
             <Content>
                 <Form id="login-form"
                     name="basic"
@@ -17,7 +17,7 @@ const DangNhapQL = () => {
                     >
                     <Form.Item
                         label="Username"
-                        name="username"
+                        name="Email"
                         rules={[{ required: true, message: 'Please input your username!' }]}
                     >
                         <Input size="middle"/>
@@ -25,15 +25,13 @@ const DangNhapQL = () => {
 
                     <Form.Item
                         label="Password"
-                        name="password"
+                        name="MatKhau"
                         rules={[{ required: true, message: 'Please input your password!' }]}
                     >
                         <Input.Password size="middle"/>
                     </Form.Item>
 
-                    <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>
-                        <Checkbox>Remember me</Checkbox>
-                    </Form.Item>
+
 
                     <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
                         <Button type="primary" htmlType="submit">

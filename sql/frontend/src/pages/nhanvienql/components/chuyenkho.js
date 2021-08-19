@@ -7,7 +7,7 @@ const {Header, Content, Footer} = Layout;
 const ChuyenKho = () => {
     return(
         <Layout>
-            <Header><div>Phiếu yêu cầu chuyển kho</div></Header>
+            <h1 style={{ textAlign: "center" }}>Phiếu yêu cầu chuyển kho</h1>
             <Content>
                 <Form>
                     <Form.Item label="Tên quản lý">

@@ -24,8 +24,7 @@ const getAllHoaDonByID = async(req, res, next) => {
 
 const updateSuccessHD = async(req, res, next) => {
     try {
-        const data = req.body;
-        const status = await ghData.updateSuccessHD(data)
+        const status = await ghData.updateSuccessHD()
         res.send(status)
     } catch (error) {
         res.status(400).send(error.message)
@@ -34,17 +33,49 @@ const updateSuccessHD = async(req, res, next) => {
 
 const updateCancelHD = async(req, res, next) => {
     try {
-        const data = req.body;
-        const status = await ghData.updateCancelHD(data)
+        const status = await ghData.updateCancelHD()
         res.send(status)
     } catch (error) {
         res.status(400).send(error.message)
     }
 }
 
+const getAmountHD = async(req, res, next) => {
+    try {
+        const id = req.params.id
+        const list = await ghData.getAllHD(id)
+        res.send(list)
+    } catch (error) {
+        res.status(400).send(error.message)
+    }
+}
+
+const getCTHDByID = async(req, res, next) => {
+    try {
+        const id = req.params.id;
+        const cthd = await ghData.getCTHD(id)
+        res.send(cthd)
+    } catch (error) {
+        res.status(400).send(error.message)
+    }
+}
+
+const getStatusHD = async(req, res, next) => {
+    try {
+        const id = req.params.id;
+        const status = await ghData.getTTHD(id)
+        res.send(status)
+    } catch (error) {
+        res.status(400).send(error.message)
+    }
+}
 module.exports = {
     loginNVGH,
     getAllHoaDonByID,
     updateCancelHD,
-    updateSuccessHD
+    updateSuccessHD,
+    getAmountHD,
+    getCTHDByID,
+    getStatusHD
+    
 }
