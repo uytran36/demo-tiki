@@ -6,7 +6,7 @@ import ChuyenKho from "./components/chuyenkho";
 import SpTrongKho from "./components/sanphamtrongkho";
 import QlDonHang from "./components/quanlydonhang";
 import { Redirect } from "react-router";
-
+import Main from "./components/main";
 const NVQL = () => {
     const [auth, setAuth] = useState(window.localStorage.getItem("NV"));
     const [verify,setVerify] = useState(false)
@@ -27,7 +27,7 @@ const NVQL = () => {
             {auth === null ? (
               <Redirect to="/QL/login" />
             ) : (
-              <NVQL/>
+              <Main/>
             )}
           </Route>
         </Switch>

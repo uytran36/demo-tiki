@@ -1,10 +1,45 @@
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { Form, Input, Checkbox, Button } from "antd";
 import { Layout } from 'antd';
-
+import axios from 'axios';
+import { useHistory } from "react-router";
+import { AlignCenterOutlined } from "@ant-design/icons";
 const { Header, Footer, Content } = Layout;
-const DangNhapQL = () => {
+
+const DangNhapQL = ({ setAuth, setVerify, verify }) => {
+
+    const history = useHistory()
+
+    const onFinish = (value) => {
+        console.log(value)
+        axios.post(
+            "http://localhost:5000/api/NVQL/login",
+        
+            JSON.stringify(value),
+
+            {
+            headers: {
+              "Content-Type": "application/json",
+                },
+            }
+        )
+        .then((res) => {
+            if (res.data.length !== 0) {
+                window.localStorage.setItem("NVQL", JSON.stringify(res.data[0].MaNV));
+                setAuth(res.data[0]);
+                setVerify(!verify);
+                history.push("/gl");
+            }
+            else {
+                console.log(res.data)
+                console.log("false")
+            }
+        })
+        .catch((e) => {
+            console.log(e)
+        }) 
+    }
     return(
         <Layout>
             <h1 style={{ textAlign: "center" }}>Đăng nhập nhân viên quản lý kho</h1>
@@ -14,6 +49,7 @@ const DangNhapQL = () => {
                     labelCol={{ span: 8 }}
                     wrapperCol={{ span: 8 }}
                     initialValues={{ remember: true }}
+                    onFinish={onFinish}
                     >
                     <Form.Item
                         label="Username"

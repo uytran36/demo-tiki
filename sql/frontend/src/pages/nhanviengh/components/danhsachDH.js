@@ -40,8 +40,6 @@ const onClickEdit = (record) => {
 const DanhSachDH = () => {
 
     const [listHD, setListHD] = useState([]);
-    const [current, setCurrent] = useState(1);
-    const [amount, setAmount] = useState(0);
 
     useEffect(() => {
       axios
@@ -52,23 +50,7 @@ const DanhSachDH = () => {
         .catch((err) => {
           console.log(err);
         });
-        
-        axios
-          .get("http://localhost:5000/api/NVGH/getAmountHD/" + JSON.parse(window.localStorage.getItem("NVGH")))
-          .then((res) => {
-            console.log(res)
-            setAmount(res.data[0].SL);
-          })
-          .catch((err) => {
-            console.log(err);
-          })
     }, []);
-  const onChange = (page) => {
-      setCurrent(page);
-      axios.get("http://localhost:5000/api/NVQT/listLuongNVGH/" + JSON.parse(window.localStorage.getItem("NVGH")) +"/" + page ).then((res) => {
-        setListHD(res.data);
-      });
-  };
     return(
     <div>
             <Layout>
@@ -79,15 +61,6 @@ const DanhSachDH = () => {
                     <Table columns={columns} dataSource={listHD}/>
                 </Content>
             </Layout>
-            <div className="paging" style={{ marginLeft: 500 }}>
-        {/* <Pagination
-        current={current}
-        pageSize={10}
-        total={amount}
-        onChange={onChange}
-        showSizeChanger={false}
-        /> */}
-      </div>
     </div>
     );
 }

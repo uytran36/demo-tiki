@@ -34,19 +34,19 @@ const NVQL = () => {
                 </div>
                 <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
                   <Menu.Item key="1" icon={<GiftOutlined />}>
-                    <Link to="/QL">Danh sách nhân viên</Link>
+                    <Link to="/ql">Danh sách nhân viên</Link>
                   </Menu.Item>
                   <Menu.Item key="2" icon={<BarChartOutlined />}>
-                    <Link to="/QL/ListDH">Danh sách đơn hàng</Link>
+                    <Link to="/ql/dshd">Danh sách đơn hàng</Link>
                   </Menu.Item>
                   <Menu.Item key="3" icon={<BarChartOutlined />}>
-                    <Link to="/QL/ListSP">Danh sách sản phẩm</Link>
+                    <Link to="/ql/dssp">Danh sách sản phẩm</Link>
                   </Menu.Item>
                   <Menu.Item key="4" icon={<UserOutlined />}>
-                    <Link to="/QL/ChuyenKho">Yêu cầu chuyển kho</Link>
+                    <Link to="/ql/ck">Yêu cầu chuyển kho</Link>
                   </Menu.Item>
                   <Menu.Item key="5" icon={<UserOutlined />}>
-                    <Link to="/QL/TaoTK">Tạo tài khoản nhân viên</Link>
+                    <Link to="/ql/taotk">Tạo tài khoản nhân viên</Link>
                   </Menu.Item>
                 </Menu>
             </Sider>
@@ -62,20 +62,19 @@ const NVQL = () => {
               }}
             >
                 <Switch>
-                  <Route exact path="/QT">
+                  <Route exact path="/ql">
                     <QlNhanVien/>
                   </Route>
-                  <Route exact path="/QL/ListDH">
+                  <Route exact path="/ql/dshd">
                     <QlDonHang/>
                   </Route>
-                  <Route exact path="/QL/ListSP">
+                  <Route exact path="/ql/dssp">
                     <SpTrongKho/>
                   </Route>
-                  <Route exact path="/QL/ChuyenKho">
+                  <Route exact path="/ql/ck">
                     <ChuyenKho />
                   </Route>
-                  <Route exact path="/QL/TaoTK">
-
+                  <Route exact path="/ql/taotk">
                   </Route>
                 </Switch>
             </Content>
