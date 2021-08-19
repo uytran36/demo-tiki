@@ -46,8 +46,7 @@ const ChiTietDH = () => {
     axios
       .get("http://localhost:5000/api/NVGH/getStatusHD/" + JSON.parse(window.localStorage.getItem("MaHD")))
       .then((res) => {
-        console(res.data)
-        setStatus(res.data)
+        setStatus(res.data[0].TinhTrang)
       })
       .catch((err) => {
         console.log(err)
@@ -56,7 +55,7 @@ const ChiTietDH = () => {
 
   const onSuccess = () => {
 
-    axios.put("http://localhost:5000/api/NVGH/updateStatus1/" + JSON.parse(window.localStorage.getItem("MaHD")), 
+    axios.get("http://localhost:5000/api/NVGH/updateStatus1/" + JSON.parse(window.localStorage.getItem("MaHD")), 
     {
       headers: {
         "Content-Type": "application/json",
@@ -72,7 +71,7 @@ const ChiTietDH = () => {
 
   const onCancel = () => {
 
-    axios.put("http://localhost:5000/api/NVGH/updateStatus0/" + JSON.parse(window.localStorage.getItem("MaHD")), 
+    axios.get("http://localhost:5000/api/NVGH/updateStatus0/" + JSON.parse(window.localStorage.getItem("MaHD")), 
     {
       headers: {
         "Content-Type": "application/json",
@@ -93,7 +92,7 @@ const ChiTietDH = () => {
         <h1 style={{ textAlign: "center" }}>Danh sách chi tiết hóa đơn</h1>
           <Table columns={columns} dataSource={listCTHD} pagination={false}/>
           <label>Tình trạng: </label>
-          <div defaultValue={defStatus}></div>
+          <div>{defStatus}</div>
           <Button onClick={onSuccess}>Vận chuyển thành công</Button>
           <Button onClick={onCancel}>Hủy vận chuyển</Button>
         </Content>
