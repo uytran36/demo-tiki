@@ -69,8 +69,8 @@ router.post("/NVGH/login", NVGHController.loginNVGH)
 router.get("/NVGH/listHD/:id/:page", NVGHController.getAllHoaDonByID)
 router.get("/NVGH/getAmountHD/:id", NVGHController.getAmountHD)
 router.get("/NVGH/cthd/:id", NVGHController.getCTHDByID)
-router.put("/NVGH/updateStatus1/:id", NVGHController.updateSuccessHD)
-router.put("/NVGH/updateStatus0/:id", NVGHController.updateCancelHD)
+router.get("/NVGH/updateStatus1/:id", NVGHController.updateSuccessHD)
+router.get("/NVGH/updateStatus0/:id", NVGHController.updateCancelHD)
 router.get("/NVGH/getStatusHD/:id", NVGHController.getStatusHD)
 module.exports = {
   routes: router,

@@ -36,8 +36,7 @@ const updateSuccessHD = async(NVGHData) => {
         let pool = await sql.connect(config)
         const update = await pool
         .request()
-        .input("MaHD", sql.Int, NVGHData.MaHD)
-        .input("MaNVGH", sql.Int, NVGHData.MaNVGH)
+        .input("MaHD", sql.Int, NVGHData)
         .execute("updateStatusHD_1");
         return update.recordset
     } catch(error) {
@@ -50,8 +49,7 @@ const updateCancelHD = async(NVGHData) => {
         let pool = await sql.connect(config)
         const update = await pool
         .request()
-        .input("MaHD", sql.Int, NVGHData.MaHD)
-        .input("MaNVGH", sql.Int, NVGHData.MaNVGH)
+        .input("MaHD", sql.Int, NVGHData)
         .execute("updateStatusHD_2");
         return update.recordset
     } catch(error) {

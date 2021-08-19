@@ -24,7 +24,8 @@ const getAllHoaDonByID = async(req, res, next) => {
 
 const updateSuccessHD = async(req, res, next) => {
     try {
-        const status = await ghData.updateSuccessHD()
+        const id = req.params.id;
+        const status = await ghData.updateSuccessHD(id)
         res.send(status)
     } catch (error) {
         res.status(400).send(error.message)
@@ -33,7 +34,8 @@ const updateSuccessHD = async(req, res, next) => {
 
 const updateCancelHD = async(req, res, next) => {
     try {
-        const status = await ghData.updateCancelHD()
+        const id = req.params.id;
+        const status = await ghData.updateCancelHD(id)
         res.send(status)
     } catch (error) {
         res.status(400).send(error.message)
