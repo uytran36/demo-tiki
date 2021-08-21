@@ -40,10 +40,53 @@ const getListHD = async(req, res, next) => {
       }
 }
 
+const insertNewGH = async(req, res, next) => {
+    try {
+        const data = req.body;
+        const newgh = await nvData.createNVGH(data)
+        res.send(newgh)
+    } catch (error) {
+        res.status(400).send(error.message);
+      }
+}
+
+const getNVGHByID_QL = async(req, res, next) => {
+    try {
+        const id = req.params.id;
+        const nvgh = await nvData.getNVGHById(id)
+        res.send(nvgh)
+    } catch (error) {
+        res.status(400).send(error.message);
+      }
+}
+
+const deleteNVGH_QL = async(req, res, next) => {
+    try {
+        const id = req.params.id;
+        const nvgh = await nvData.deleteNVGH(id)
+        res.send(nvgh)
+    } catch (error) {
+        res.status(400).send(error.message);
+      }
+}
+
+const updateNVGH_QL = async(req, res, next) => {
+    try {
+        const id = req.params.id;
+        const data = req.body;
+        const nvgh = await nvData.updateNVGH(data, id)
+        res.send(nvgh)
+    } catch (error) {
+        res.status(400).send(error.message);
+      }
+}
 module.exports = {
     getListNVGH,
     checkLoginNVQL,
     getListHD,
-    getListSP
-
+    getListSP,
+    insertNewGH,
+    getNVGHByID_QL, 
+    deleteNVGH_QL,
+    updateNVGH_QL
 }

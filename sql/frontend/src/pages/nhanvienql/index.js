@@ -19,13 +19,13 @@ const NVQL = () => {
     return (
       <Router>
         <Switch>
-          <Route exact path="/QL/Login">
+          <Route exact path="/ql/Login">
             <DangNhapQL auth={auth} setAuth={setAuth}  setVerify={setVerify} verify={verify} />
           </Route>
   
-          <Route exact path="/QL">
+          <Route exact path="/ql">
             {auth === null ? (
-              <Redirect to="/QL/login" />
+              <Redirect to="/ql/login" />
             ) : (
               <Main/>
             )}

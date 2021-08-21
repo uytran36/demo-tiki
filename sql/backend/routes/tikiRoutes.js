@@ -79,6 +79,8 @@ router.post("/NVQL/login", NVQLController.checkLoginNVQL)
 router.get("/NVQL/dshd/:id", NVQLController.getListHD)
 router.get("/NVQL/dsnv/:id", NVQLController.getListNVGH)
 router.get("/NVQL/dssp/:id", NVQLController.getListSP)
+router.post("/NVQL/newgh", NVQLController.insertNewGH)
+router.get("/NVQL/ctnv/:id", NVQLController.getNVGHByID_QL)
 module.exports = {
   routes: router,
 };

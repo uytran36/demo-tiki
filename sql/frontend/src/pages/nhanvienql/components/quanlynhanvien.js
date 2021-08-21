@@ -36,8 +36,19 @@ const columns = [
         title: "Lương",
         dataIndex: "Luong",
         key: "Luong"
+    },
+    {
+        title: "Hành động",
+            key: "action",
+            render: (_, record) => (
+            <Button onClick={() => onClickEdit(record)}><Link to="/ql/ctnv">Xem chi tiết</Link></Button>
+            ),
     }
 ]
+
+const onClickEdit = (record) => {
+    window.localStorage.setItem("MaNV", JSON.stringify(record.MaNV))
+}
 
 const QlNhanVien = () => {
     const [listNV, setListNV] = useState([]);
