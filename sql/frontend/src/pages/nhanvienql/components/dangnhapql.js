@@ -1,10 +1,8 @@
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import React, {useEffect, useState} from "react";
-import { Form, Input, Checkbox, Button } from "antd";
+import { useHistory } from "react-router-dom";
+
+import { Form, Input, Button } from "antd";
 import { Layout } from 'antd';
 import axios from 'axios';
-import { useHistory } from "react-router";
-import { AlignCenterOutlined } from "@ant-design/icons";
 const { Header, Footer, Content } = Layout;
 
 const DangNhapQL = ({ setAuth, setVerify, verify }) => {
@@ -24,17 +22,23 @@ const DangNhapQL = ({ setAuth, setVerify, verify }) => {
                 },
             }
         )
+
         .then((res) => {
-            if (res.data.length !== 0) {
-                window.localStorage.setItem("NVQL", JSON.stringify(res.data[0].MaNV));
-                setAuth(res.data[0]);
-                setVerify(!verify);
-                history.push("/ql");
-            }
-            else {
-                console.log(res.data)
-                console.log("false")
-            }
+            // if (res.data.length !== 0) {
+            //     window.localStorage.setItem("NVQL", JSON.stringify(res.data[0].MaNV));
+            //     setAuth(res.data[0]);
+            //     setVerify(!verify);
+            //     history.push("/ql");
+            // }
+            // else {
+            //     console.log(res)
+            //     console.log(false)
+            // }
+            window.localStorage.setItem("NVQL", JSON.stringify(res.data[0].MaNV));
+            setAuth(res.data[0]);
+            setVerify(!verify);
+            history.push("/ql");
+            console.log(res)
         })
         .catch((e) => {
             console.log(e)
@@ -66,8 +70,6 @@ const DangNhapQL = ({ setAuth, setVerify, verify }) => {
                     >
                         <Input.Password size="middle"/>
                     </Form.Item>
-
-
 
                     <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
                         <Button type="primary" htmlType="submit">

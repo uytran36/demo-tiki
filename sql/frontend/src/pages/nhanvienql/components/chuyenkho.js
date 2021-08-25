@@ -1,10 +1,17 @@
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
 import React, {useState} from "react";
 import { Form, Input, Checkbox, Button, Col } from "antd";
 import { Layout } from 'antd';
 const {Header, Content, Footer} = Layout;
 
 const ChuyenKho = () => {
+
+    const history = useHistory();
+    const chuyenkho = () => {
+        alert("Đã gửi yêu cầu thành công")
+        history.push("/ql")
+    }
+
     return(
         <Layout>
             <h1 style={{ textAlign: "center" }}>Phiếu yêu cầu chuyển kho</h1>
@@ -25,8 +32,8 @@ const ChuyenKho = () => {
                     <Form.Item label="Nơi đến">
                         <Input/>
                     </Form.Item>
-                    <Button type="primary">Xác nhận yêu cầu</Button>
-                    <Button>Hủy yêu cầu</Button>
+                    <Button type="primary" onClick={chuyenkho}>Xác nhận yêu cầu</Button>
+                    <Button >Hủy yêu cầu</Button>
                 </Form>
                 
             </Content>

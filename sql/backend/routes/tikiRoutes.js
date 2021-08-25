@@ -79,6 +79,10 @@ router.post("/NVQL/login", NVQLController.checkLoginNVQL)
 router.get("/NVQL/dshd/:id", NVQLController.getListHD)
 router.get("/NVQL/dsnv/:id", NVQLController.getListNVGH)
 router.get("/NVQL/dssp/:id", NVQLController.getListSP)
+router.post("/NVQL/newgh", NVQLController.insertNewGH)
+router.put("/NVQL/updategh/:id", NVQLController.updateNVGH_QL)
+router.get("/NVQL/ctnv/:id", NVQLController.getNVGHByID_QL)
+router.delete("/NVQL/deletegh/:id", NVQLController.deleteNVGH_QL)
 module.exports = {
   routes: router,
 };
