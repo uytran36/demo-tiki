@@ -19,11 +19,13 @@ import QlNhanVien from "./quanlynhanvien";
 import QlDonHang from "./quanlydonhang";
 import SpTrongKho from "./sanphamtrongkho";
 import ChuyenKho from "./chuyenkho";
+import ChiTietNV from "./chitietnhanvien";
+import ThemNV from "./themnhanvien";
 
 const { Header, Sider, Content, Footer } = Layout;
 
 const NVQL = () => {
-
+  const [deleted, setDeleted] = useState(false);
     return (
       <div>
         <Router>
@@ -46,7 +48,7 @@ const NVQL = () => {
                     <Link to="/ql/ck">Yêu cầu chuyển kho</Link>
                   </Menu.Item>
                   <Menu.Item key="5" icon={<UserOutlined />}>
-                    <Link to="/ql/taotk">Tạo tài khoản nhân viên</Link>
+                    <Link to="/ql/newgh">Tạo tài khoản nhân viên</Link>
                   </Menu.Item>
                 </Menu>
             </Sider>
@@ -63,7 +65,7 @@ const NVQL = () => {
             >
                 <Switch>
                   <Route exact path="/ql">
-                    <QlNhanVien/>
+                    <QlNhanVien deleted={deleted}/>
                   </Route>
                   <Route exact path="/ql/dshd">
                     <QlDonHang/>
@@ -75,6 +77,12 @@ const NVQL = () => {
                     <ChuyenKho />
                   </Route>
                   <Route exact path="/ql/taotk">
+                  </Route>
+                  <Route exact path="/ql/ctnv">
+                    <ChiTietNV setDeleted={setDeleted} deleted={deleted}/>
+                  </Route>
+                  <Route exact path="/ql/newgh">
+                    <ThemNV setDeleted={setDeleted} deleted={deleted}/>
                   </Route>
                 </Switch>
             </Content>

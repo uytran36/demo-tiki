@@ -21,7 +21,7 @@ const danhSachNVGH_QL = async(NVQLData) => {
         const listNVGH = await pool
         .request()
         .input("MaNV", sql.Int, NVQLData)
-        execute("getDSGHByIDQL")
+        .execute("getDSGHByIDQL")
         return listNVGH.recordset
     } catch (e) {
         console.log(e)
@@ -34,7 +34,7 @@ const danhSachHD_QL = async(NVQLData) => {
         const listHD = await pool
         .request()
         .input("MaNV", sql.Int, NVQLData)
-        execute("getDSHDByID_QL")
+        .execute("getDSHDByID_QL")
         return listHD.recordset
     } catch (e) {
         console.log(e)
@@ -47,7 +47,7 @@ const danhSachSP_QL = async(NVQLData) => {
         const listHD = await pool
         .request()
         .input("MaNV", sql.Int, NVQLData)
-        execute("getDSSPByIDQL")
+        .execute("getDSSPByIDQL")
         return listHD.recordset
     } catch (e) {
         console.log(e)
@@ -63,13 +63,14 @@ const createNVGH = async(NVQLData) => {
         .input("Ten", sql.NVarChar(50), NVQLData.Ten)
         .input("GioiTinh", sql.NChar(3), NVQLData.GioiTinh)
         .input("Sdt" , sql.Char(10), NVQLData.Sdt)
-        .input("NgaySinh".Char(10), NVQLData.NgaySinh)
+        .input("NgaySinh", sql.Date, NVQLData.NgaySinh)
         .input("SoNha", sql.Char(20), NVQLData.SoNha)
         .input("Duong", sql.NVarChar(50), NVQLData.Duong)
         .input("Phuong", sql.NVarChar(50), NVQLData.Phuong)
         .input("Quan", sql.NVarChar(50), NVQLData.Quan)
         .input("ThanhPho", sql.NVarChar(50), NVQLData.ThanhPho)
         .input("Email", sql.NVarChar(50), NVQLData.Email)
+        .input("MatKhau", sql.VarChar(20), NVQLData.MatKhau)
         .input("NgayVaoLam", sql.Date, NVQLData.NgayVaoLam)
         .input("Luong", sql.BigInt, NVQLData.Luong)
         .input("DonHangDaGiao", sql.Int, NVQLData.DonHangDaGiao)
@@ -120,16 +121,13 @@ const updateNVGH = async(NVQLData, id) => {
         .input("Ten", sql.NVarChar(50), NVQLData.Ten)
         .input("GioiTinh", sql.NChar(3), NVQLData.GioiTinh)
         .input("Sdt" , sql.Char(10), NVQLData.Sdt)
-        .input("NgaySinh".Char(10), NVQLData.NgaySinh)
         .input("SoNha", sql.Char(20), NVQLData.SoNha)
         .input("Duong", sql.NVarChar(50), NVQLData.Duong)
+        .input("MatKhau", sql.VarChar(20), NVQLData.MatKhau)
         .input("Phuong", sql.NVarChar(50), NVQLData.Phuong)
         .input("Quan", sql.NVarChar(50), NVQLData.Quan)
         .input("ThanhPho", sql.NVarChar(50), NVQLData.ThanhPho)
-        .input("Email", sql.NVarChar(50), NVQLData.Email)
-        .input("NgayVaoLam", sql.Date, NVQLData.NgayVaoLam)
         .input("Luong", sql.BigInt, NVQLData.Luong)
-        .input("DonHangDaGiao", sql.Int, NVQLData.DonHangDaGiao)
         .input("MaQL", sql.Int, NVQLData.MaQL)
         .execute("updateNVGH_QL")
         return data.recordset
