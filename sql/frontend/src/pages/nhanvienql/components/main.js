@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, Redirect, useHistory } from "react-router-dom";
 import "antd/dist/antd.css";
 import React from "react";
 import LogoTiki from "../../khachhang/logoTiki.png";
@@ -26,6 +26,11 @@ const { Header, Sider, Content, Footer } = Layout;
 
 const NVQL = () => {
   const [deleted, setDeleted] = useState(false);
+  const history = useHistory();
+  const logout = () => {
+    window.localStorage.clear();
+    history.push("/ql/login")
+  }
     return (
       <div>
         <Router>
@@ -49,6 +54,9 @@ const NVQL = () => {
                   </Menu.Item>
                   <Menu.Item key="5" icon={<UserOutlined />}>
                     <Link to="/ql/newgh">Tạo tài khoản nhân viên</Link>
+                  </Menu.Item>
+                  <Menu.Item key="6">
+                    <Button onClick={logout}>Đăng xuất</Button>
                   </Menu.Item>
                 </Menu>
             </Sider>

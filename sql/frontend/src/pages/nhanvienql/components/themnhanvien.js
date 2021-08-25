@@ -23,6 +23,7 @@ const ThemNV = ({deleted, setDeleted}) => {
       let MatKhau = form.getFieldValue("MatKhau");
       let NgayVaoLam = form.getFieldValue("NgayVaoLam");
       let Luong = form.getFieldValue("Luong");
+      let DonHangDaGiao = form.getFieldValue("DonHangDaGiao");
       let MaQL = form.getFieldValue("MaQL");
 
       const info = {
@@ -38,6 +39,7 @@ const ThemNV = ({deleted, setDeleted}) => {
         ThanhPho: ThanhPho,
         Email: Email,
         MatKhau: MatKhau,
+        DonHangDaGiao: DonHangDaGiao,
         NgayVaoLam: moment(NgayVaoLam).format("MM-DD-YYYY"),
         Luong: parseInt(Luong),
         MaQL: parseInt(MaQL)
