@@ -29,7 +29,7 @@ const DangNhapQL = ({ setAuth, setVerify, verify }) => {
                 window.localStorage.setItem("NVQL", JSON.stringify(res.data[0].MaNV));
                 setAuth(res.data[0]);
                 setVerify(!verify);
-                history.push("/gl");
+                history.push("/ql");
             }
             else {
                 console.log(res.data)

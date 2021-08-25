@@ -15,18 +15,18 @@ const checkLogin = async(NVQLData) => {
     }
 }
 
-const danhSachNVGH_QL = async(NVQLData) => {
-    try {
-        let pool = await sql.connect(config);
-        const listNVGH = await pool
-        .request()
-        .input("MaQL", sql.Int, NVQLData.MaQL)
-        execute("getDSGHByIDQL")
-        return listNVGH.recordset
-    } catch (e) {
-        console.log(e)
-    }
-}
+const danhSachNVGH_QL = async (MaQL) => {
+  try {
+    let pool = await sql.connect(config);
+    const listNVGH = await pool
+      .request()
+      .input("MaNV", sql.Int, MaQL)
+      .execute("getDSGHByIDQL");
+    return listNVGH.recordset;
+  } catch (e) {
+    console.log(e);
+  }
+};
 
 const danhSachHD_QL = async(NVQLData) => {
     try {
@@ -34,7 +34,7 @@ const danhSachHD_QL = async(NVQLData) => {
         const listHD = await pool
         .request()
         .input("MaNV", sql.Int, NVQLData)
-        execute("getDSHDByID_QL")
+        .execute("getDSHDByID_QL")
         return listHD.recordset
     } catch (e) {
         console.log(e)
@@ -47,7 +47,7 @@ const danhSachSP_QL = async(NVQLData) => {
         const listHD = await pool
         .request()
         .input("MaNV", sql.Int, NVQLData)
-        execute("getDSSPByIDQL")
+        .execute("getDSSPByIDQL")
         return listHD.recordset
     } catch (e) {
         console.log(e)
