@@ -37,7 +37,7 @@ const SpTrongKho = () => {
             <Layout>
                 <Content>
                     <Title level={2} classname="titlename">
-                    Danh sách đơn hàng
+                    Danh sách sản phẩm
                     </Title>
                     <Table columns={columns} dataSource={listSP}/>
                 </Content>

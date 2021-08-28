@@ -84,7 +84,7 @@ const QlNhanVien = ({deleted}) => {
             <Layout>
                 <Content>
                     <Title level={2} classname="titlename">
-                    Danh sách đơn hàng
+                    Danh sách nhân viên
                     </Title>
                     <Table columns={columns} dataSource={listNV}/>
                 </Content>
